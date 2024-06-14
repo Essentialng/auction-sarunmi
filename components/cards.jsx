@@ -18,6 +18,9 @@ export default function Cards(){
             "hidden_detail" : "Our story began with a vision to revolutionize the way people buy and sell online. Fueled by a passion for innovation and a commitment to customer satisfaction."
         },
     ]
+    
+    const list_style = "flex flex-col gap-3 cursor-pointer"
+    
     return(
         <div className="px-[4rem] py-24 flex flex-col gap-12">
             <h1 className="text-[30px] font-[700] pt-12 text-[#EF6509]">Why Essential E-Auction</h1>
@@ -34,7 +37,7 @@ export default function Cards(){
                     </div>
                 ))}
             </div>
-            <div className="bg-[#E8E9E8]  font-[700] text-[24px] h-[492px] rounded-2xl flex gap-8">
+            <div className="bg-[#E8E9E8]  font-[700] text-[24px] h-[492px] rounded-2xl flex gap-24">
                 <div className="w-[375px] px-[20px] rounded-2xl bg-white font-[700] text-[24px] py-6 shadow-2xl">
                     <h1 className="text-[#EF6509]">What is Essential E-Auction?</h1>
                     <div className="info text-[14px] flex flex-col gap-10 py-4">
@@ -51,6 +54,56 @@ export default function Cards(){
                         Leveraging cutting-edge technology, the company provides <span>seamless bidding opportunities,</span> facilitating efficient transactions and delivering unparalleled customer satisfaction. 
                         </small>
                     </div>
+                </div>
+                <div className="flex gap-12 text-[16px] font-[400] py-20">
+                    <ul className={list_style}>
+                        <li>CAR</li>
+                        <li>SECURITY CAMERA</li>
+                        <li>SMART GLASSES</li>
+                        <li>BLENDER</li>
+                        <li>XIAOMI</li>
+                        <li>SCANNER</li>
+                        <li>PROJECTOR</li>
+                        <li>FAX MACHINE</li>
+                        <li>ELECTRIC KELLTE</li>
+                        <li>AIR FRYER</li>
+                    </ul>
+                    <ul className={list_style}>
+                        <li>PRORERTIES</li>
+                        <li>HOME FURNITURE </li>
+                        <li>OFFICE FURNITURE</li>
+                        <li>CABINET</li>
+                        <li>OUTDOOR</li>
+                        <li>DECORATIVE</li>
+                        <li>3D PRINTER</li>
+                        <li>DRONES</li>
+                        <li>SECURITY CAMERA</li>
+                        <li>TOASTER </li>
+                    </ul>
+                    <ul className={list_style}>
+                        <li>DRYER</li>
+                        <li>HEATER</li>
+                        <li>DISHWASHER</li>
+                        <li>DESKTOP COMPUTER</li>
+                        <li>PRINTER</li>
+                        <li>REFRIGERATOR</li>
+                        <li>WASHING MACHINE</li>
+                        <li>MICROWAVE OVEN</li>
+                        <li>VACUUM CLEANER</li>
+                        <li>AIR CONDITIONER</li>
+                    </ul>
+                    <ul className={list_style}>
+                        <li>SMARTPHONES</li>
+                        <li>TABLETS</li>
+                        <li>LAPTOPS</li>
+                        <li>DIGITAL CAMERA</li>
+                        <li>SMARTWATCHES</li>
+                        <li>SPEAKERS</li>
+                        <li>SOUND BARS</li>
+                        <li>GAME CONSOLE</li>
+                        <li>TELEVISION</li>
+                        <li>HOME THEATER </li>
+                    </ul>
                 </div>
                 <div>
 

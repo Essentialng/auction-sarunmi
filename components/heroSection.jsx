@@ -16,7 +16,6 @@ export default function Hero(){
             "image1": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290591/building.png",
             "image2": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290583/full-light.png",
             "image3": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290557/generator.png",
-            "bg_color": "gradient-to-r from-[#9D8CED] to-[#35318E]",
             "button": "REGISTER & START BIDDING",
             "cards":[
                 {
@@ -40,7 +39,6 @@ export default function Hero(){
             "details": "Discover unbeatable deals on top-quality home appliances at our appliance auctions, perfect for upgrading your home with style and savings. Bid now and transform your living space into the haven of your dreams!",
             "image": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290608/machines.png",
             "image3": "",
-            "bg_color": "gradient-to-r from-[#83DE7D] to-[#8474DA]",
             "button": "CATEGORIES"
         },
         {
@@ -50,7 +48,6 @@ export default function Hero(){
             "bf_orange_text": "Treasures",
             "details": "Dive into a world of tech wonders at our gadget auctions, where you can uncover coveted gadgets and secure fantastic savings. Don't miss out on the opportunity to elevate your tech game while keeping your budget intact!",
             "image": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290624/iphones.png",
-            "bg_color": "gradient-to-r from-[#6B5EC1] to-[#FF9354]",
             "button": "CATEGORIES"
         }
     ]
@@ -71,7 +68,12 @@ export default function Hero(){
             <Slider {...settings} className="h-[80vh] relative">
             
             {hero_section.map((hero, index)=>(
-            <div className={`h-[85vh] bg-${hero.bg_color} justify-center flex px-[4rem]`}>
+            <div className={classnames({
+                "bg-gradient-to-r from-[#9D8CED] to-[#35318E]" : index === 0,
+                "bg-gradient-to-r from-[#83DE7D] to-[#8474DA]" : index === 1,
+                "bg-gradient-to-r from-[#6B5EC1] to-[#FF9354]" : index === 2,
+                "h-[85vh] justify-center flex px-[4rem]" : true,
+                })}>
                 <div className="flex justify-center items-center h-full">
                 <div className="flex flex-col">
 

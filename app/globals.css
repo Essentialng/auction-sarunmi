@@ -19,3 +19,7 @@
   font-family: var(--manrope-font);
 }
 
+.card:hover .hidden_detail{
+  display: block;
+}
+

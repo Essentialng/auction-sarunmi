@@ -35,7 +35,7 @@ export default function Cards(){
                 ))}
             </div>
             <div className="bg-[#E8E9E8]  font-[700] text-[24px] h-[492px] rounded-2xl flex gap-8">
-                <div className="w-[375px] px-[20px] rounded-2xl bg-white font-[700] text-[24px] py-6">
+                <div className="w-[375px] px-[20px] rounded-2xl bg-white font-[700] text-[24px] py-6 shadow-2xl">
                     <h1 className="text-[#EF6509]">What is Essential E-Auction?</h1>
                     <div className="info text-[14px] flex flex-col gap-10 py-4">
                         <small>

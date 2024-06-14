@@ -1,6 +1,7 @@
 import NavBar from "@/components/navBar";
 import Hero from "@/components/heroSection";
 import Auctions from "@/components/auctions";
+import Cards from "@/components/cards";
 export default function DashBorad(){
 
 
@@ -10,6 +11,7 @@ export default function DashBorad(){
         <NavBar/>
         <Hero/>
         <Auctions/>
+        <Cards/>
     </main>
     )
 }

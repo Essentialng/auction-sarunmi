@@ -68,7 +68,7 @@ export  default function Auctions(){
         const btn_class = "bg-[#EF6509] text-white text-[16px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm"
     
     return(
-        <div className="px-[4rem] py-24">
+        <div className="px-[4rem] py-24 bg-gray-100">
             <h1 className="text-[30px] font-[700] py-12">Top Auctions</h1>
             <div className="flex flex-col gap-20">
                 <div className="flex flex-col gap-6">

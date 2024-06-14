@@ -19,7 +19,7 @@ export default function Cards(){
         },
     ]
     
-    const list_style = "flex flex-col gap-3 cursor-pointer"
+    const list_style = "flex flex-col gap-3 cursor-pointer transition-all duration-500 ease-in-out"
     
     return(
         <div className="px-[4rem] py-24 flex flex-col gap-12">

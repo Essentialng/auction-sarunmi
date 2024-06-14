@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function NavBar(){
+    const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
         <nav className="bg-[#35318E] py-[1rem] px-[4rem] flex flex-col gap-[2rem] text-[16px] font-[500]">
             <div className="flex justify-between items center text-white">
@@ -21,16 +22,16 @@ export default function NavBar(){
             </div>
             <div className="text-white flex justify-between">
                 <div className="flex justify-between w-1/2">
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">Home</span>
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">Auctions</span>
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">Cars</span>
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">Properties</span>
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">Others Categories</span>
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">About</span>
+                    <span className={nav_btn}>Home</span>
+                    <span className={nav_btn}>Auctions</span>
+                    <span className={nav_btn}>Cars</span>
+                    <span className={nav_btn}>Properties</span>
+                    <span className={nav_btn}>Others Categories</span>
+                    <span className={nav_btn}>About</span>
                 </div>
                 <div className="flex gap-12">
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">Our Valuers</span>
-                    <span className="cursor-pointer hover:bg-[#FFB485] px-3 py-3">Our Vendors</span>
+                    <span className={nav_btn}>Our Valuers</span>
+                    <span className={nav_btn}>Our Vendors</span>
                 </div>
             </div>
         </nav>

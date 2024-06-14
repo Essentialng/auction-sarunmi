@@ -15,3 +15,7 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+.manrope{
+  font-family: var(--manrope-font);
+}
+

@@ -68,7 +68,9 @@ export default function Hero(){
             <Slider {...settings} className="h-[80vh] relative">
             
             {hero_section.map((hero, index)=>(
-            <div className={classnames({
+            <div
+            key={index} 
+            className={classnames({
                 "bg-gradient-to-r from-[#9D8CED] to-[#35318E]" : index === 0,
                 "bg-gradient-to-r from-[#83DE7D] to-[#8474DA]" : index === 1,
                 "bg-gradient-to-r from-[#6B5EC1] to-[#FF9354]" : index === 2,

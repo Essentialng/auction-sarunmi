@@ -77,8 +77,10 @@ export  default function Auctions(){
                         <small className="text-[20px] font-[500] text-[#EF6509]">View all</small>
                     </div>
                     <div className="flex gap-4 relative">
-                        {auctions.cars.map((car)=>(
-                        <div className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">
+                        {auctions.cars.map((car, index)=>(
+                        <div
+                        key={index} 
+                        className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">
                             <div className={classnames({
                                 "w-1/3 text-center py-4 rounded-[10px] border border-[#7BC27A] font-[700] shadow-md ": true,
                                 "border-[#FF9354] text-[#FF9354]": car.status === "Upcoming Auction",
@@ -139,8 +141,10 @@ export  default function Auctions(){
                         <small className="text-[20px] font-[500] text-[#EF6509]">View all</small>
                     </div>
                     <div className="flex gap-4 relative">
-                        {auctions.properties.map((car)=>(
-                        <div className="flex flex-col gap-2 items-center  hover:scale-95 
+                        {auctions.properties.map((car, index)=>(
+                        <div 
+                        key={index}
+                        className="flex flex-col gap-2 items-center  hover:scale-95 
                         transition-all duration-500 ease-in-out">
                             <div className={classnames({
                                 "w-1/3 text-center py-4 rounded-[10px] border border-[#7BC27A] font-[700] shadow-md ": true,
@@ -201,8 +205,10 @@ export  default function Auctions(){
                         <small className="text-[20px] font-[500] text-[#EF6509]">View all</small>
                     </div>
                     <div className="flex gap-4 relative">
-                        {auctions.electronics.map((car)=>(
-                        <div className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">
+                        {auctions.electronics.map((car, index)=>(
+                        <div 
+                        key={index}
+                        className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">
                             <div className={classnames({
                                 "w-1/3 text-center py-4 rounded-[10px] border border-[#7BC27A] font-[700] shadow-md ": true,
                                 "border-[#FF9354] text-[#FF9354]": car.status === "Upcoming Auction",

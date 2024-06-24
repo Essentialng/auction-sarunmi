@@ -25,8 +25,10 @@ export default function Cards(){
         <div className="px-[4rem] py-24 flex flex-col gap-12">
             <h1 className="text-[30px] font-[700] pt-12 text-[#EF6509]">Why Essential E-Auction</h1>
             <div className=" w-full flex gap-4">
-                {items.map((item)=>(
-                    <div className="card h-[275px] bg-[#554AA2] rounded-[20px] px-[20px] py-[48px] w-full flex flex-col gap-6 
+                {items.map((item, index)=>(
+                    <div 
+                    key={index}
+                    className="card h-[275px] bg-[#554AA2] rounded-[20px] px-[20px] py-[48px] w-full flex flex-col gap-6 
                     justify-center text-center text-[24px] font-[700] text-white items-center transition-all duration-500 ease-in-out
                     hover:bg-white hover:border border-[#554AA2] hover:h-[367px] hover:text-[#EF6509]">
                         <div className="flex flex-col gap-16 justify-center text-center items-center">

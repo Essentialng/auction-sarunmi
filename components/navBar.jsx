@@ -1,6 +1,7 @@
 "use state";
 import Image from "next/image";
 import Link from "next/link";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 export default function NavBar(){
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
@@ -26,7 +27,10 @@ export default function NavBar(){
                     <span className={nav_btn}>Auctions</span>
                     <span className={nav_btn}>Cars</span>
                     <span className={nav_btn}>Properties</span>
-                    <span className={nav_btn}>Others Categories</span>
+                    <div className={`${nav_btn} flex gap-2 items-center`}>
+                        <span>Others Categories</span>
+                        <MdKeyboardArrowDown size={14}/>
+                    </div>
                     <span className={nav_btn}>About</span>
                 </div>
                 <div className="flex gap-12">

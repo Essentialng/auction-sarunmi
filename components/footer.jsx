@@ -72,7 +72,7 @@ export default function Footer(){
             </div>
             <div className="relative  bg-[#676E68] text-white px-[4rem] font-[400]">
                 <div className="flex gap-56 justify-between border-b-2 border-white py-10">
-                    <div className="w-full flex flex-col gap-2 text-[16px] ">
+                    <div className="w-full flex flex-col gap-6 text-[16px] ">
                         <Image src="/logo.png" width={150} height={59}/>
                         <p>We pride ourselves on being pioneers in the online marketplace, driven by a commitment
                             to excellence and customer satisfaction.
@@ -83,7 +83,7 @@ export default function Footer(){
                             <ul key={index} className="flex flex-col gap-4 text-[14px] font-[400] text-white cursor-pointer">
                                 <li className="text-[24px] font-[700] text-[#EF6509] pb-4">{items.header}</li>
                                 {items.data.map((values)=>(
-                                    <li>
+                                    <li key={index}>
                                         {values}
                                     </li>
                                 ))}

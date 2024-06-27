@@ -2,11 +2,12 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-export function Sliders({slideShow, margin, scroll, play}){
+
+export function Sliders({slideShow, margin, scroll, play, speed}){
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: {speed},
         slidesToShow: {slideShow},
         slideMargin: {margin},
         slidesToScroll: {scroll},
@@ -105,3 +106,4 @@ export const cars =
                 "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
             },
     ]
+

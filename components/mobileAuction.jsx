@@ -10,7 +10,7 @@ import { FaCircle } from "react-icons/fa";
 export default function MobileItems({auctions}){
     const settings = {
         infinite: true,
-        speed: 500,
+        speed: 300,
         slidesToShow: 1,
         slideMargin: 4,
         slidesToScroll: 1,

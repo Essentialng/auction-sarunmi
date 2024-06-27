@@ -52,7 +52,7 @@ export default function Hero(){
     
     return(
         <div className="2xl:block hidden">
-            <Sliders slideShow = {1} margin = {40} scroll = {1} play = {true} className="h-[80vh] relative">
+            <Sliders slideShow = {1} margin = {40} scroll = {1} play = {true} speed = {500} className="h-[80vh] relative">
             
             {hero_section.map((hero, index)=>(
             <div

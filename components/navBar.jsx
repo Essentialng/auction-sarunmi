@@ -10,15 +10,15 @@ import { IoIosSearch } from "react-icons/io";
 export default function NavBar(){
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
-        <nav className="fixed top-0 right-0 w-full bg-[#35318E] py-[1rem] 2xl:px-[4rem] px-[2rem] 
+        <nav className="fixed top-0 right-0 w-full bg-[#35318E] py-[1rem] 2xl:px-[4rem] px-[1rem] 
         flex flex-col gap-[1rem] text-[16px] font-[500] overflow-visible z-50"
         >
             <div className="flex justify-between items-center text-white">
-                <div className="flex gap-4 items-center">
+                <div className="flex gap-1 items-center">
                     <TiThMenu size={30} color="white"
                     className="2xl:hidden"
                     />
-                    <Image src="/logo.png" width={150} height={59}/>
+                    <Image src="/logo.png" width={120} height={59}/>
                 </div>
                 <div className="2xl:flex hidden gap-2 w-1/4">
                     <input 

@@ -13,7 +13,7 @@ export default function NavBar(){
         <nav className="fixed top-0 right-0 w-full bg-[#35318E] py-[1rem] 2xl:px-[4rem] px-[2rem] 
         flex flex-col gap-[1rem] text-[16px] font-[500] overflow-visible z-50"
         >
-            <div className="flex justify-between items center text-white">
+            <div className="flex justify-between items-center text-white">
                 <div className="flex gap-4 items-center">
                     <TiThMenu size={30} color="white"
                     className="2xl:hidden"
@@ -31,14 +31,14 @@ export default function NavBar(){
                     <span className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</span>
                     <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</span>
                 </div>
-                <FaUserLarge size={30} color="white"
+                <FaUserLarge size={25} color="white"
                 className="2xl:hidden"/>
             </div>
             <div className="2xl:hidden flex justify-center gap-3 items-center py-2 px-4 w-full bg-white rounded-2xl">
                 <IoIosSearch size={30}/>
                 <input 
                 placeholder="Search auctions"
-                className="w-full bg-[#F4FDFF] px-4 py-3 border-[#B1B1B1] rounded-md
+                className="w-full bg-[#F4FDFF] px-4 border-[#B1B1B1] rounded-md
                     text-[18px] text-[#6C6C6C] font-[400]" type="text" 
                     />
             </div>

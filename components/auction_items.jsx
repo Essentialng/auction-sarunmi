@@ -2,12 +2,40 @@ import Image from "next/image";
 import classnames from "classnames";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
+const cars = 
+            [
+                {
+                    "image": "/car-one.png",
+                    "status": "Live Auction",
+                    "type" : "Toyota Camry",
+                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
+                },
+                {
+                    "image": "/car-two.png",
+                    "status": "Live Auction",
+                    "type" : "Toyota Camry",
+                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
+                },
+                {
+                    "image": "/car-three.png",
+                    "status": "Live Auction",
+                    "type" : "Toyota Camry",
+                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
+                },
+                {
+                    "image": "/car-four.png",
+                    "status": "Upcoming Auction",
+                    "type" : "Toyota Camry",
+                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
+                },
 
-export default function Items({auctions}){
+            ]
+
+export function Items({auctions}){
+
     const btn_class = "bg-[#EF6509] text-white text-[16px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm"
-
     return(
-        <div className="flex gap-4 relative">
+        <div className="2xl:flex gap-4 relative hidden">
                         {auctions.map((item, index)=>(
                         <div
                         key={index} 
@@ -65,4 +93,5 @@ export default function Items({auctions}){
                         ))}
                     </div>
     )
-}
+};
+

@@ -23,8 +23,8 @@ export default function NavBar(){
                 <div className="2xl:flex hidden gap-2 w-1/4">
                     <input 
                     placeholder="Search auctions"
-                    className="w-5/6 bg-[#F4FDFF] px-4 py-2 border-[#B1B1B1] rounded-md
-                     text-[12px] text-[#6C6C6C] font-[400]" type="text" />
+                    className="w-5/6 px-4 py-2 border-[#B1B1B1] rounded-md
+                     text-[12px] text-[#6C6C6C] font-[400] bg-white outline-none border-none" type="text" />
                     <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Search</span>
                 </div>
                 <div className="2xl:flex hidden gap-6 text-center items-center ">
@@ -38,8 +38,8 @@ export default function NavBar(){
                 <IoIosSearch size={30}/>
                 <input 
                 placeholder="Search auctions"
-                className="w-full bg-[#F4FDFF] px-4 border-[#B1B1B1] rounded-md
-                    text-[18px] text-[#6C6C6C] font-[400]" type="text" 
+                className="w-full  px-4 border-[#B1B1B1] rounded-md
+                    text-[18px] text-[#6C6C6C] font-[400] bg-white outline-none border-none" type="text" 
                     />
             </div>
             <div className="text-white 2xl:flex hidden justify-between">

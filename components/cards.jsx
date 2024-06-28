@@ -22,9 +22,9 @@ export default function Cards(){
     const list_style = "flex flex-col gap-3 cursor-pointer transition-all duration-500 ease-in-out"
     
     return(
-        <div className="2xl:px-[4rem] px-[2rem] 2xl:py-24 py-12 flex flex-col gap-12">
-            <h1 className="2xl:text-[30px] text-[24px] font-[700] pt-12 text-[#EF6509]">Why Essential E-Auction</h1>
-            <div className=" w-full flex 2xl:flex-row flex-col gap-4">
+        <div className="2xl:px-[4rem] xl:px-[4rem] px-[2rem] 2xl:py-24 xl:py-24 py-12 flex flex-col gap-12">
+            <h1 className="2xl:text-[30px] xl:text-[30px] text-[24px] font-[700] pt-12 text-[#EF6509]">Why Essential E-Auction</h1>
+            <div className=" w-full flex 2xl:flex-row xl:flex-row flex-col gap-4">
                 {items.map((item, index)=>(
                     <div 
                     key={index}
@@ -39,7 +39,7 @@ export default function Cards(){
                     </div>
                 ))}
             </div>
-            <div className="bg-[#E8E9E8]  font-[700] text-[24px] h-[492px] rounded-2xl 2xl:flex hidden gap-24">
+            <div className="bg-[#E8E9E8]  font-[700] text-[24px] h-[492px] rounded-2xl 2xl:flex xl:flex hidden gap-24">
                 <div className="w-[375px] px-[20px] rounded-2xl bg-white font-[700] text-[24px] py-6 shadow-2xl">
                     <h1 className="text-[#EF6509]">What is Essential E-Auction?</h1>
                     <div className="info text-[14px] flex flex-col gap-10 py-4">

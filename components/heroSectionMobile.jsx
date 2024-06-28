@@ -51,7 +51,7 @@ export default function HeroSectionMobile(){
     ]
     
     return(
-        <div className="2xl:hidden block ">
+        <div className="2xl:hidden xl:hidden block ">
             <Sliders slideShow = {1} margin = {40} scroll = {1} play = {true} className="h-[80vh] relative">
             
             {hero_section.map((hero, index)=>(

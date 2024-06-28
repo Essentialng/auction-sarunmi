@@ -35,7 +35,7 @@ export function Items({auctions}){
 
     const btn_class = "bg-[#EF6509] text-white text-[16px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm"
     return(
-        <div className="2xl:flex gap-4 relative hidden">
+        <div className="2xl:flex xl:flex gap-4 relative hidden">
                         {auctions.map((item, index)=>(
                         <div
                         key={index} 

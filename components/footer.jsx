@@ -42,24 +42,24 @@ export default function Footer(){
     const icons = "p-2 rounded-[50%] border border-white cursor-pointer hover:scale-90"
     return(
         <div className="flex flex-col gap-20 ">
-            <div className="footer relative py-10 2xl:px-20 px-4 text-white text-[20px]
-            rounded-2xl font-[500] text-center 2xl:mx-72 mx-4 overflow-hidden">
+            <div className="footer relative py-10 2xl:px-20 xl:px-20 px-4 text-white text-[20px]
+            rounded-2xl font-[500] text-center 2xl:mx-72 xl:mx-72 mx-4 overflow-hidden">
                 <div className="relative z-40 w-full flex flex-col justify-center items-center gap-8">
                     <p>
                         Join now to explore a diverse range of items such as used cars, home appliances, gadgets, 
                         and much more through our 100% online auction platform.
                     </p>
                     <div className="relative flex gap-4 py-2 px-4 justify-center items-center
-                    bg-[#EF6509] rounded-2xl 2xl:w-1/2 cursor-pointer hover:opacity-85">
+                    bg-[#EF6509] rounded-2xl 2xl:w-1/2 xl:w-1/2 cursor-pointer hover:opacity-85">
                         <small>REGISTER & START BIDDING</small>
                         <FaArrowRight size={20}/>
                     </div>
                 </div>
                 <div className="absolute w-full h-full top-0 right-0 bg-gradient-to-r to-[#9D8CED] from-[#35318E] z-10 opacity-90"/>
             </div>
-            <div className="flex flex-col gap-4 justify-center items-center 2xl:px-[4rem] px-[2rem]">
+            <div className="flex flex-col gap-4 justify-center items-center 2xl:px-[4rem] xl:px-[4rem] px-[2rem]">
                 <p className="text-[24px] font-[600] text-[#EF6509]">Our Other Services</p>
-                <div className="w-full 2xl:flex hidden justify-between">
+                <div className="w-full 2xl:flex xl:flex hidden justify-between">
                     {otherService.map((service, index)=>(
                         <div 
                         key={index}
@@ -74,18 +74,20 @@ export default function Footer(){
                 </div>
                 <OtherServiceMobile/>
             </div>
-            <div className="relative  bg-[#676E68] text-white 2xl:px-[4rem] px-[2rem] font-[400]">
-                <div className="flex 2xl:flex-row flex-col 2xl:gap-56 gap-12 justify-between border-b-2 border-white py-10">
-                    <div className="2xl:w-full w-2/3 flex flex-col gap-6 text-[16px] ">
+            <div className="relative  bg-[#676E68] text-white 2xl:px-[4rem] xl:px-[4rem] px-[2rem] font-[400]">
+                <div className="flex 2xl:flex-row xl:flex-row flex-col 2xl:gap-56 xl:gap-56 gap-12 justify-between 
+                border-b-2 border-white py-10"
+                >
+                    <div className="2xl:w-full xl:w-full w-2/3 flex flex-col gap-6 text-[16px] ">
                         <Image src="/logo.png" width={150} height={59}/>
                         <p>We pride ourselves on being pioneers in the online marketplace, driven by a commitment
                             to excellence and customer satisfaction.
                         </p>
                     </div>
-                    <div className="w-full flex 2xl:flex-row flex-col gap-6 justify-between">
+                    <div className="w-full flex 2xl:flex-row xl:flex-row flex-col gap-12 justify-between">
                         {footer.map((items, index)=>(
-                            <ul key={index} className="flex flex-col 2xl:gap-4 gap-2 text-[14px] font-[400] text-white cursor-pointer">
-                                <li className="2xl:text-[24px] text-[18px] font-[700] text-[#EF6509] 2xl:pb-4 pb-2">{items.header}</li>
+                            <ul key={index} className="flex flex-col 2xl:gap-4 xl:gap-4 gap-2 text-[14px] font-[400] text-white cursor-pointer">
+                                <li className="2xl:text-[24px] xl:text-[24px] text-[18px] font-[700] text-[#EF6509] 2xl:pb-4 xl:pb-4 pb-2">{items.header}</li>
                                 {items.data.map((values)=>(
                                     <li key={index}>
                                         {values}
@@ -94,8 +96,8 @@ export default function Footer(){
                             </ul>
                         ))}
                     </div>
-                    <div className="2xl:w-1/2 w-3/4 flex flex-col gap-4 text-[#EF6509] 2xl:text-[20px] text-[14px] font-[500]">
-                        <p>CONNECT WITH US</p>
+                    <div className="2xl:w-1/2 xl:w-1/2 w-3/4 flex flex-col gap-4 text-[#EF6509] 2xl:text-[20px] xl:text-[20px] text-[14px] font-[500]">
+                        <p className=" text-nowrap">CONNECT WITH US</p>
                         <div className="flex gap-4">
                             <FaTwitter size={38} color="#EF6509" className={icons}/>
                             <FaInstagram size={38} color="#EF6509" className={icons}/>
@@ -103,7 +105,7 @@ export default function Footer(){
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-center 2xl:gap-10 gap-4 2xl:text-[14px] text-[10px] py-10">
+                <div className="w-full flex justify-center 2xl:gap-10 xl:gap-10 gap-4 2xl:text-[14px] xl:text-[14px] text-[10px] py-10">
                     <a href="#" >Cookies Policy</a>
                     <a href="#" >Terms and condition</a>
                     <a href="#" >Copyright</a>
@@ -143,7 +145,7 @@ function OtherServiceMobile(){
         
       };
     return(
-        <div className="w-full 2xl:hidden block justify-between">
+        <div className="w-full 2xl:hidden xl:hidden block justify-between">
         <Slider {...settings}>
         {otherService.map((service, index)=>(
             <div 

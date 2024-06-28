@@ -103,10 +103,10 @@ export default function Footer(){
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-center gap-10 2xl:text-[14px] text-[8px] py-10">
-                    <a href="#">Cookies Policy</a>
-                    <a href="#">Terms and condition</a>
-                    <a href="#">Copyright</a>
+                <div className="w-full flex justify-center 2xl:gap-10 gap-4 2xl:text-[14px] text-[10px] py-10">
+                    <a href="#" >Cookies Policy</a>
+                    <a href="#" >Terms and condition</a>
+                    <a href="#" >Copyright</a>
                 </div>
             </div>
         </div>

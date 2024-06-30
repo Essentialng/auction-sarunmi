@@ -20,7 +20,7 @@ export default function MobileItems({auctions}){
         
       };
       
-    const btn_class = "bg-[#EF6509] text-white text-[16px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm"
+    const btn_class = "bg-[#EF6509] text-white 2xl:text-[16px] xl:text-[16px] text-[12px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm"
     return(
         <div className="block gap-4 relative 2xl:hidden xl:hidden">
             <Slider {...settings} className='mobile-auction overflow-y-hidden'>

@@ -38,6 +38,13 @@ ul li:hover{
   background-size: cover;
 }
 
+.auctions{
+  background-image: url("../public/action.png");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
 .mobile-auction .slick-slide{
   margin-inline: 2px;
 }

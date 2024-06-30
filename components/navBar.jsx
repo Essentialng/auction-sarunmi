@@ -1,13 +1,23 @@
-"use state";
+"use client";
 import Image from "next/image";
 import MobileNav from "./mobileNav";
 import Link from "next/link";
+import { useState } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserLarge } from "react-icons/fa6";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
+import classNames from "classnames";
 
 export default function NavBar(){
+    const [active, setActive] = useState("Home");
+    const [menuToggle, setMenuToggle] = useState(false)
+
+
+    const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
+   
+    
+
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
         <nav className="fixed top-0 right-0 w-full bg-[#35318E] py-[1rem] 2xl:px-[4rem] xl:px-[4rem] px-[1rem] 
@@ -17,8 +27,11 @@ export default function NavBar(){
                 <div className="flex gap-1 items-center">
                     <TiThMenu size={30} color="white"
                     className="2xl:hidden xl:hidden"
+                    onClick={()=> setMenuToggle(true)}
                     />
-                    <Image src="/logo.png" width={120} height={59}/>
+                    <Link className="cursor-pointer" href="/">
+                        <Image src="/logo.png" width={120} height={59}/>
+                    </Link>
                 </div>
                 <div className="2xl:flex xl:flex hidden gap-2 w-1/4">
                     <input 
@@ -43,23 +56,44 @@ export default function NavBar(){
                     />
             </div>
             <div className="text-white 2xl:flex xl:flex hidden justify-between">
-                <div className="flex justify-between w-1/2">
-                    <span className={nav_btn}>Home</span>
-                    <span className={nav_btn}>Auctions</span>
-                    <span className={nav_btn}>Cars</span>
-                    <span className={nav_btn}>Properties</span>
-                    <div className={`${nav_btn} flex gap-2 items-center`}>
-                        <span>Others Categories</span>
+                <div className="flex items-center justify-between w-1/2">
+                    {menuContents.map((menu, index)=>(
+                        <div>
+                        {
+                        menu !== "Others Categories" ? 
+                        <Link 
+                        href={
+                            menu !== "Home" ?
+                             `${menu.toLowerCase()}`
+                              : "/" 
+                            } 
+                            className={classNames(nav_btn,{
+                            "bg-[#FFB485]" :  active === `${menu}`
+                            })}
+                            onClick={()=>setActive(menu)}
+                            >
+                                {menu}
+                        </Link> :
+                        <div className={classNames(
+                            `${nav_btn} flex gap-2 items-center`,{
+                                "bg-[#FFB485]" :  active === `${menu}`
+                            })}
+                            onClick={()=>setActive(menu)}
+                            >
+                        <Link href="categories">Others Categories</Link>
                         <MdKeyboardArrowDown size={14}/>
                     </div>
-                    <span className={nav_btn}>About</span>
+                    }
+                        </div>
+                        
+                    ))}
                 </div>
                 <div className="flex gap-12">
-                    <span className={nav_btn}>Our Valuers</span>
-                    <span className={nav_btn}>Our Vendors</span>
+                    <Link href="/valuers" className={nav_btn}>Our Valuers</Link>
+                    <Link href="/vendors" className={nav_btn}>Our Vendors</Link>
                 </div>
             </div>
-            <MobileNav/>
+            {menuToggle && <MobileNav setMenuToggle = {setMenuToggle}/>}
         </nav>
     )
 }

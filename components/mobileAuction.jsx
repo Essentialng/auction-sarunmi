@@ -1,4 +1,4 @@
-
+"use client";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,7 +7,7 @@ import Image from "next/image";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
 
-export default function MobileItems({auctions}){
+export default function MobileAuctions({auctions}){
     const settings = {
         dots: true,
         infinite: true,

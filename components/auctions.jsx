@@ -1,7 +1,7 @@
 "use client"
 import {AuctionItems} from "./auction_items";
 import { cars, properties, electronics } from "@/app/items";
-import MobileItems from "./mobileAuction";
+import MobileAuctions from "./mobileAuction";
 
 
 
@@ -21,7 +21,7 @@ export  default function Auctions(){
                             <small className={small}>View all</small>
                         </div>
                         <AuctionItems auctions={cars}/>
-                        <MobileItems auctions = {cars}/>
+                        {/* <MobileAuctions auctions = {cars}/> */}
                     </div>
                     <div className="flex flex-col gap-6">
                         <div className="flex justify-between ">
@@ -29,7 +29,7 @@ export  default function Auctions(){
                             <small className={small}>View all</small>
                         </div>
                         <AuctionItems auctions={properties}/>
-                        <MobileItems auctions = {properties}/>
+                        {/* <MobileAuctions auctions = {properties}/> */}
                     </div>
                     <div className="flex flex-col gap-6">
                         <div className="flex justify-between ">
@@ -37,7 +37,7 @@ export  default function Auctions(){
                             <small className={small}>View all</small>
                         </div>
                         <AuctionItems auctions={electronics}/>
-                        <MobileItems auctions = {electronics}/>
+                        {/* <MobileAuctions auctions = {electronics}/> */}
                     </div>
                 </div>
             </div>

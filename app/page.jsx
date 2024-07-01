@@ -13,7 +13,6 @@ export default function DashBorad(){
         <HeroSectionMobile/>
         <Auctions/>
         <Cards/>
-        <Footer/>
     </main>
     )
 }

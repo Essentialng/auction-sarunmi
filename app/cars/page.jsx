@@ -86,7 +86,7 @@ export default function Page(){
             detail="Discover a wide selection of vehicles to suit every 
             taste, budget and bid with confidence."
             category="Cars"
-            style="auctions"
+            style="cars"
             data={data}/>
         </>
     )

@@ -7,20 +7,21 @@ import { TiThMenu } from "react-icons/ti";
 import { FaUserLarge } from "react-icons/fa6";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
+import { useParams } from "next/navigation";
 import classNames from "classnames";
 
 export default function NavBar(){
     const [active, setActive] = useState("Home");
     const [menuToggle, setMenuToggle] = useState(false)
 
-
+    // const page = useParams()
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
    
     
 
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
-        <nav className="fixed top-0 right-0 w-full bg-[#35318E] py-[1rem] 2xl:px-[4rem] xl:px-[4rem] px-[1rem] 
+        <div className="fixed top-0 right-0 w-full bg-[#35318E] py-[1rem] 2xl:px-[4rem] xl:px-[4rem] px-[1rem] 
         flex flex-col gap-[1rem] text-[16px] font-[500] overflow-visible z-50"
         >
             <div className="flex justify-between items-center text-white">
@@ -94,6 +95,6 @@ export default function NavBar(){
                 </div>
             </div>
             {menuToggle && <MobileNav setMenuToggle = {setMenuToggle}/>}
-        </nav>
+        </div>
     )
 }

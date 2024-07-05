@@ -86,7 +86,7 @@ export default function Page(){
             detail="Explore a diverse range of properties to suit every need and 
             budget. Secure and transparent bidding process for peace of mind."
             category="Properties"
-            style="auctions"
+            style="properties"
             data={data}/>
         </>
     )

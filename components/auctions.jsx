@@ -1,7 +1,6 @@
 "use client"
 import {AuctionItems} from "./auction_items";
 import { cars, properties, electronics } from "@/app/items";
-import MobileAuctions from "./mobileAuction";
 
 
 

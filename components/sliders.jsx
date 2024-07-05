@@ -1,8 +1,9 @@
+"use client";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-export default function Sliders({children, slideShow, margin, scroll, play}){
+export default function Sliders({children, slideShow, margin, scroll, play, responsive}){
 
     const settings = {
         dots: true,
@@ -13,7 +14,7 @@ export default function Sliders({children, slideShow, margin, scroll, play}){
         slidesToScroll: scroll,
         autoplay: play,
         autoplaySpeed: 3000,
-      
+        responsive: responsive
       };
 
     return(

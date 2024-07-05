@@ -1,16 +1,16 @@
 import { FaAngleRight } from "react-icons/fa6";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { AuctionItems } from "./auction_items";
-import MobileAuctions from "./mobileAuction";
 
 export default function Products({page, headline, detail, category, style, data}){
 
     const filter_con = "flex 2xl:flex-row xl:flex-row md:flex-row flex-col gap-2 2xl:items-center xl:items-center md:items-center";
-    const filter_text = "flex items-center gap-2 border broder-white 2xl:px-12 xl:px-12 md:px-12 px-2 py-4 rounded-md";
+    const filter_text = "flex items-center gap-2 border broder-white 2xl:px-12 xl:px-12 md:px-12 px-2 2xl:py-4 xl:py-4 md:py-4 py-1 rounded-md";
 
 
     return(
-        <div className="flex flex-col gap-8 2xl:px-[4rem] xl:px-[4rem] px-[1rem] py-[10rem] ">
+        <div className={`flex flex-col gap-8 2xl:px-[4rem] xl:px-[4rem] px-[1rem] py-[10rem] ${page === "" && "py-0"}`}>
+            {page !== "" &&
             <div className="flex flex-col gap-4">
                 <div className="flex items-center 2xl:gap-4 xl:gap-4 gap-2 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]">
                     <span>Home</span>
@@ -30,17 +30,14 @@ export default function Products({page, headline, detail, category, style, data}
                             {detail}
                         </small>
                     </div>
-                    <div className={`${style} absolute top-[-2rem] 2xl:right-[-10rem] 
-                    xl:right-[-10rem] right-[-4rem] w-full h-[60vh] z-10`}
-                    >
-                        
-                    </div>
+                    <div className={`${style} absolute top-[-2rem]  w-full h-[60vh] z-10`}/>
                     <div className="absolute h-full w-full bg-gradient-to-r from-[#35318E]
                      to-[#9D8CED] opacity-60 right-0 top-0 z-20"/>
                 </div>
             </div>
+            }
             <div className="flex justify-between items-center bg-[#35318E] rounded-2xl 2xl:px-12 
-            xl:px-12 px-4 py-4 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
+            xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
             >
                 <div className="flex gap-2 items-center">
                     <span>{category}</span>
@@ -61,8 +58,7 @@ export default function Products({page, headline, detail, category, style, data}
                     </div>
                 </div>
             </div>
-            <AuctionItems auctions = {data}/>
-            {/* <MobileAuctions auctions= {data}/> */}
+            <AuctionItems auctions={data} page={page}/>
         </div>
     )
 }

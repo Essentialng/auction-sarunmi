@@ -13,7 +13,6 @@ export function Sliders({slideShow, margin, scroll, play, speed}){
         slidesToScroll: {scroll},
         autoplay: {play},
         autoplaySpeed: 3000,
-        
       };
     return(
         settings

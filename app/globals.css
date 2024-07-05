@@ -43,21 +43,64 @@ ul li:hover{
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
+  right: -10rem;
+}
+
+.cars{
+  background-image: url("../public/carsBg.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.properties{
+  background-image: url("../public/propertyBG.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .mobile-auction .slick-slide{
   margin-inline: 2px;
 }
 
+.categories .slick-slide{
+  margin-inline: 10px;
+}
+
+
 @media(max-width : 1050px) {
   .mobile-auction{
     height: 34rem !important;
   }
+
+  .categories{
+    height: 44rem !important;
+  }
+
+  .auctions{
+    right: -4rem;
+  }
 }
 
-@media(max-width : 325px) {
+
+@media(max-width : 485px) {
+
+  .categories{
+    height: 24rem !important;
+  }
+
+}
+
+@media(max-width : 385px) {
   .mobile-auction{
     height: 36rem !important;
   }
+
+  
+  .categories{
+    height: 30rem !important;
+  }
+
 }
 

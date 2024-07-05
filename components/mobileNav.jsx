@@ -37,7 +37,7 @@ export default function MobileNav({setMenuToggle}){
                     {
                     menuContents.map((menu, index)=>(
                     <>
-                        {menu !== "Others Categories" ?
+                        {menu.value !== "Others Categories" ?
                     
                     <Link href={
                         menu.value !== "Home" ?

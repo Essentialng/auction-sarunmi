@@ -97,7 +97,36 @@ const categories = [
 export default function Page(){
 
     const btn_class = "bg-[#EF6509] text-white 2xl:text-[16px] xl:text-[16px] text-[12px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm"
-
+   const responsive = [
+        {
+          breakpoint: 1034,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: false,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            initialSlide: 2,
+            infinite: false,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: false,
+            dots: false
+          }
+        }
+      ]
     return(
         <div className="flex flex-col relative pt-[10rem] ">
             <div className="flex flex-col gap-4 2xl:px-[4rem] xl:px-[4rem] px-[1rem]">
@@ -109,7 +138,7 @@ export default function Page(){
             </div>
             <div className=" flex flex-col gap-8 pt-20 2xl:px-[4rem] xl:px-[4rem] px-[1rem]">
                 <p className="2xl:text-[24px] xl:text-[24px] md:text-[24px] text-[18px] font-[600] text-[#EF6509]">Top Auctions</p>
-                <Sliders slideShow ={4} margin ={4} scroll ={1} play ={false}>
+                <Sliders slideShow ={4} margin ={4} scroll ={1} play ={false} responsive={responsive}>
                     {data.map((item, index)=>(
                     <div
                     key={index} 

@@ -46,7 +46,7 @@ export default function NavBar(){
                     {router.pathname === '/login' && 
                         <small className="font-bold text-[14px]">Already have an account?</small>
                     }
-                        <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</span>
+                        <Link href="/login" className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</Link>
                     </div>
                 </div>
                 <FaUserLarge size={25} color="white"

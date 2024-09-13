@@ -53,11 +53,51 @@ ul li:hover{
   background-size: cover;
 }
 
+.valuers{
+  background-image: url("../public/valuersBg.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.vendors{
+  background-image: url("../public/vendorsBg.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .properties{
   background-image: url("../public/propertyBG.jpeg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.company-hero{
+  background-image: url("../public/company.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.company-bg{
+  background-image: url("../public/company-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.bg{
+  background-image: url("../public/action.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .mobile-auction .slick-slide{
@@ -67,7 +107,6 @@ ul li:hover{
 .categories .slick-slide{
   margin-inline: 10px;
 }
-
 
 @media(max-width : 1050px) {
   .mobile-auction{

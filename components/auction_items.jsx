@@ -9,10 +9,10 @@ export function AuctionItems({auctions, page}){
     return(
         <div className={classnames({
             "grid md:grid-cols-2 grid-cols-1 gap-4 relative" : true,
-            "2xl:grid-cols-4 xl:grid-cols-4" : page !== "",
-             "2xl:grid-cols-3 xl:grid-cols-3" : page === ""
+            "2xl:grid-cols-4 xl:grid-cols-4" : page !== "categories",
+             "2xl:grid-cols-3 xl:grid-cols-3" : page === "categories"
             })}>
-            {auctions.map((item, index)=>(
+            {auctions?.map((item, index)=>(
             <div
             key={index} 
             className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">

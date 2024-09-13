@@ -7,14 +7,13 @@ import { TiThMenu } from "react-icons/ti";
 import { FaUserLarge } from "react-icons/fa6";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
-import { useParams } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import classNames from "classnames";
 
 export default function NavBar(){
     const [active, setActive] = useState("Home");
     const [menuToggle, setMenuToggle] = useState(false)
-
-    // const page = useParams()
+    const router = useRouter();
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
    
     
@@ -42,8 +41,13 @@ export default function NavBar(){
                     <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Search</span>
                 </div>
                 <div className="2xl:flex xl:flex hidden gap-6 text-center items-center ">
-                    <span className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</span>
-                    <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</span>
+                    <Link href="/sign-up" className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</Link>
+                    <div className="flex items-center gap-4">
+                    {router.pathname === '/login' && 
+                        <small className="font-bold text-[14px]">Already have an account?</small>
+                    }
+                        <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</span>
+                    </div>
                 </div>
                 <FaUserLarge size={25} color="white"
                 className="2xl:hidden xl:hidden"/>
@@ -90,7 +94,7 @@ export default function NavBar(){
                     ))}
                 </div>
                 <div className="flex gap-12">
-                    <Link href="/valuers" className={nav_btn}>Our Valuers</Link>
+                    <Link href="/our-valuers" className={nav_btn}>Our Valuers</Link>
                     <Link href="/vendors" className={nav_btn}>Our Vendors</Link>
                 </div>
             </div>

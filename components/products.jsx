@@ -7,10 +7,9 @@ export default function Products({page, headline, detail, category, style, data}
     const filter_con = "flex 2xl:flex-row xl:flex-row md:flex-row flex-col gap-2 2xl:items-center xl:items-center md:items-center";
     const filter_text = "flex items-center gap-2 border broder-white 2xl:px-12 xl:px-12 md:px-12 px-2 2xl:py-4 xl:py-4 md:py-4 py-1 rounded-md";
 
-
     return(
-        <div className={`flex flex-col gap-8 2xl:px-[4rem] xl:px-[4rem] px-[1rem] py-[10rem] ${page === "" && "py-0"}`}>
-            {page !== "" &&
+        <div className={`flex flex-col gap-8 2xl:px-[4rem] xl:px-[4rem] px-[1rem] py-[10rem] ${(page === "categories" || page === "valuers") && "py-[0rem] pb-[5rem]"}`}>
+            {page !== "categories" &&
             <div className="flex flex-col gap-4">
                 <div className="flex items-center 2xl:gap-4 xl:gap-4 gap-2 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]">
                     <span>Home</span>
@@ -23,7 +22,7 @@ export default function Products({page, headline, detail, category, style, data}
                     <div className="relative 2xl:px-[5rem] xl:px-[5rem] px-2 text-white 
                     flex flex-col justify-center h-full 2xl:w-2/3 xl:w-2/3 w-full z-30 font-[700]"
                     >
-                        <p className="2xl:text-[32px] xl:text-[32px] md:text-[24px] text-[18px] ">{headline}</p>
+                        <p className="2xl:text-[32px] xl:text-[32px] md:text-[24px] text-[18px] text- ">{headline}</p>
                         <small className="2xl:text-[24px] xl:text-[24px] md:text-[18px] 
                         text-[10px] 2xl:w-3/4 xl:w-3/4 w-5/6"
                         >
@@ -36,29 +35,33 @@ export default function Products({page, headline, detail, category, style, data}
                 </div>
             </div>
             }
-            <div className="flex justify-between items-center bg-[#35318E] rounded-2xl 2xl:px-12 
-            xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
-            >
-                <div className="flex gap-2 items-center">
-                    <span>{category}</span>
-                    <RiArrowDownSFill size={18} color="gray"/>
-                </div>
-                <div className={filter_con}>
-                    <p className="pr-4">Location:</p>
-                    <div className={filter_text}>
-                        <span>Lagos</span>
+            {(page !== "valuers" || page !== "vendors") &&
+            <>            
+                <div className="flex justify-between items-center bg-[#35318E] rounded-2xl 2xl:px-12 
+                xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
+                >
+                    <div className="flex gap-2 items-center">
+                        <span>{category}</span>
                         <RiArrowDownSFill size={18} color="gray"/>
                     </div>
-                </div>
-                <div className={filter_con}>
-                    <p className="pr-4">Sort:</p>
-                    <div className={filter_text}>
-                        <span>Ending soon</span>
-                        <RiArrowDownSFill size={18} color="gray"/>
+                    <div className={filter_con}>
+                        <p className="pr-4">Location:</p>
+                        <div className={filter_text}>
+                            <span>Lagos</span>
+                            <RiArrowDownSFill size={18} color="gray"/>
+                        </div>
+                    </div>
+                    <div className={filter_con}>
+                        <p className="pr-4">Sort:</p>
+                        <div className={filter_text}>
+                            <span>Ending soon</span>
+                            <RiArrowDownSFill size={18} color="gray"/>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <AuctionItems auctions={data} page={page}/>
+                <AuctionItems auctions={data} page={page}/>
+            </>
+        }
         </div>
     )
 }

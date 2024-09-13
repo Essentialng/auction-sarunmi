@@ -8,6 +8,7 @@ import { BiSolidRightArrow } from "react-icons/bi";
 import Sliders from "@/components/sliders";
 import Products from "@/components/products";
 import FooterCard from "@/components/footerCard";
+import { useState } from "react";
 
 export const data = 
             [
@@ -96,6 +97,7 @@ const categories = [
 
 export default function Page(){
 
+    const [filter, setFilter] = useState("Furniture")
     const btn_class = "bg-[#EF6509] text-white 2xl:text-[16px] xl:text-[16px] text-[12px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm"
    const responsive = [
         {
@@ -108,7 +110,7 @@ export default function Page(){
           }
         },
         {
-          breakpoint: 600,
+          breakpoint: 840,
           settings: {
             slidesToShow: 2,
             slidesToScroll: 1,
@@ -204,13 +206,13 @@ export default function Page(){
                         {categories.map((value, index)=>(
                             <li key={index} className="flex items-center gap-12 cursor-pointer">
                                 {value}
-                                <BiSolidRightArrow size={10} color={value === "Furniture" && "[#EF6509]"}/>
+                                <BiSolidRightArrow size={10} color={value === filter && "#EF6509"}/>
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div className="col-span-3 ">
-                    <Products page="" headline="" detail="" category="funiture" style="" data={data}/>
+                <div className="col-span-3">
+                    <Products page="categories" headline="" detail="" category="funiture" style="" data={data}/>
                 </div>
             </div>
             <div className="mb-24 w-full">

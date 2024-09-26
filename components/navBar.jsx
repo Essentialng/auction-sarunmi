@@ -7,16 +7,15 @@ import { TiThMenu } from "react-icons/ti";
 import { FaUserLarge } from "react-icons/fa6";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
-import { useRouter } from 'next/navigation';
+import { usePathname } from "next/navigation";
 import classNames from "classnames";
 
 export default function NavBar(){
     const [active, setActive] = useState("Home");
     const [menuToggle, setMenuToggle] = useState(false)
-    const router = useRouter();
+    const pathname = usePathname()
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
    
-    
 
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
@@ -33,6 +32,7 @@ export default function NavBar(){
                         <Image src="/logo.png" width={120} height={59}/>
                     </Link>
                 </div>
+                {pathname !== '/sign-up' && pathname !== '/login' && 
                 <div className="2xl:flex xl:flex hidden gap-2 w-1/4">
                     <input 
                     placeholder="Search auctions"
@@ -40,13 +40,21 @@ export default function NavBar(){
                      text-[12px] text-[#6C6C6C] font-[400] bg-white outline-none border-none" type="text" />
                     <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Search</span>
                 </div>
+                }
                 <div className="2xl:flex xl:flex hidden gap-6 text-center items-center ">
+                {pathname === '/login' && 
+                        <small className="font-bold text-[14px]">Don’t  have an account?</small>
+                    }
+                {pathname !== '/sign-up' && 
                     <Link href="/sign-up" className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</Link>
+                }
                     <div className="flex items-center gap-4">
-                    {router.pathname === '/login' && 
+                    {pathname === '/sign-up' && 
                         <small className="font-bold text-[14px]">Already have an account?</small>
                     }
+                    {pathname !== "/login" &&
                         <Link href="/login" className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</Link>
+                    }
                     </div>
                 </div>
                 <FaUserLarge size={25} color="white"
@@ -61,6 +69,7 @@ export default function NavBar(){
                     />
             </div>
             <div className="text-white 2xl:flex xl:flex hidden justify-between">
+            {pathname !== '/sign-up' && pathname !== '/login' && 
                 <div className="flex items-center justify-between w-1/2">
                     {menuContents.map((menu, index)=>(
                         <div>
@@ -93,10 +102,13 @@ export default function NavBar(){
                         
                     ))}
                 </div>
+                }
+                {pathname !== '/sign-up' && pathname !== '/login' && 
                 <div className="flex gap-12">
                     <Link href="/our-valuers" className={nav_btn}>Our Valuers</Link>
                     <Link href="/vendors" className={nav_btn}>Our Vendors</Link>
                 </div>
+                }
             </div>
             {menuToggle && <MobileNav setMenuToggle = {setMenuToggle}/>}
         </div>

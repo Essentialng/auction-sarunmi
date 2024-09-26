@@ -1,10 +1,13 @@
 "use client";
 import React from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Background from '@/components/backgroundImg';
 
 export default function SignUp() {
+  const [vendor, setVendor] = useState(true);
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -31,22 +34,23 @@ export default function SignUp() {
 
   return (
     <div  className="px-24 py-12 grid grid-cols-5 mt-28">
-      <form onSubmit={formik.handleSubmit} className="px-8 pb-12 col-span-3 text-center items-center relative shadow-md border">
+      <form onSubmit={formik.handleSubmit} className="px-8 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl">
+      <div className='h-2 w-1/3 bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>
         <header className='font-semibold text-[20px] py-8'>SIGN UP</header>
         <div className="flex gap-2  w-full text-end">
           <p className="font-semibold w-full text-[12px] text-[#949B96] "><span className="text-red-500 px-2">*</span>All fields are required</p>
         </div>
 
         <div className="flex mx-60 justify-between bg-[#6B5EC1] rounded-md p-4 text-[14px] text-white font-normal">
-          <div className="flex gap-3 items-center ">
-            <input type="radio" name="role" value="vendor" className='w-6 h-6' />
+          <div className="flex gap-3 items-center">
+            <input type="radio" checked={vendor}  name="role" value="vendor" className='w-6 h-6' onClick={()=>{setVendor(true)}} />
             <div className="flex flex-col gap-1 ">
               <h6>VENDOR</h6>
               <small>SELLER</small>
             </div>
           </div>
           <div className="flex gap-3 items-center ">
-            <input type="radio" name="role" value="bidder" className='w-6 h-6'  />
+            <input type="radio" name="role" checked={!vendor}  value="bidder" className='w-6 h-6' onClick={()=>{setVendor(false)}}  />
             <div className="flex flex-col gap-1">
               <h6>BIDDER</h6>
               <small>BUYER</small>
@@ -115,7 +119,8 @@ export default function SignUp() {
               <div className="text-red-500 text-sm">{formik.errors.phoneNumber}</div>
             ) : null}
           </div>
-
+          {vendor &&
+          <>
           <div className="flex flex-col">
             <label htmlFor="state">State</label>
             <input
@@ -145,6 +150,8 @@ export default function SignUp() {
               <div className="text-red-500 text-sm">{formik.errors.nin}</div>
             ) : null}
           </div>
+          </>
+          }
         </div>
         <div className='flex gap-4 items-center pb-6'>
           <div >
@@ -154,9 +161,11 @@ export default function SignUp() {
             I agree that i am at least 18 years of age and that i have read and agreed to the <span className='text-[#35318E]'>Terms and Condition</span>, and <span className='text-[#35318E]'> Privacy policy</span>
             </span>
         </div>
+        <Link href = "/password">
         <button type="submit" className="mt-8 w-3/4 bg-[#EF6509] text-white py-2 rounded-md">
           Submit
         </button>
+        </Link>
       </form>
       <Background/>
     </div>

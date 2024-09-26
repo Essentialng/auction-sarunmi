@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import FooterContact from "./footerContact";
 import FooterCard from "./footerCard";
-import { useRouter } from 'next/navigation';
+
 
 
 const otherService = [
@@ -16,11 +16,9 @@ const otherService = [
     "Essential Rentals"
 ]
 export default function Footer(){
-    const router = useRouter();
+    
     
     return(
-        <>
-        {router.pathname !== "/sign-up" && 
         <div className="flex flex-col gap-20 ">
            <FooterCard/>
             <div className="flex flex-col gap-4 justify-center items-center 2xl:px-[4rem] xl:px-[4rem] px-[2rem]">
@@ -42,8 +40,6 @@ export default function Footer(){
             </div>
             <FooterContact/>
         </div>
-        }
-    </>
     )
 }
 

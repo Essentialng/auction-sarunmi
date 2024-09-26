@@ -64,7 +64,7 @@ export default function Page(){
                     We strive to provide a platform that fosters fair competition, integrity, and accessibility for all users. 
                     </small>
                 </div>
-                <div className="flex flex-col gap-8 col-span-2 pl-32 py-8 shadow-lg rounded-2xl">
+                <div className="flex flex-col gap-8 col-span-2 pl-32 py-8 shadow-xl border rounded-2xl">
                     <p className="text-[24px] text-[#EF6509] font-[700]">WHAT WE OFFER</p>
                     <ul className="flex flex-col gap-8 text-[22px] font-[500]">
                         {contents.map((content, index)=>(
@@ -79,7 +79,7 @@ export default function Page(){
                 <p className="text-[24px] text-[#EF6509] font-[700]">WHY CHOOSE US?</p>
                 <div className="grid grid-cols-3 gap-6">
                     {cards.map((card, index)=>(
-                    <div key={index} className="flex flex-col items-center gap-12 py-12 px-4 border border-[#35318E] rounded-2xl text-[22px] font-[500] text-[#EF6509]">
+                    <div key={index} className="flex flex-col items-center gap-12 py-12 px-4 border border-[#35318E] rounded-2xl text-[22px] font-[500] text-[#EF6509] shadow-xl">
                         <p>{card.hearder}</p>
                         <small className="text-[18px] text-black">{card.details}</small>
                     </div>

@@ -1,3 +1,5 @@
+"use client";
+import Link from "next/link";
 import Image from "next/image";
 import classnames from "classnames";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
@@ -13,6 +15,7 @@ export function AuctionItems({auctions, page}){
              "2xl:grid-cols-3 xl:grid-cols-3" : page === "categories"
             })}>
             {auctions?.map((item, index)=>(
+            <Link href="/description">
             <div
             key={index} 
             className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">
@@ -66,6 +69,7 @@ export function AuctionItems({auctions, page}){
                     
                 </div>
             </div>
+            </Link>
             ))}
         </div>
     )

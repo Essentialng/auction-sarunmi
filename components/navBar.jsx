@@ -9,6 +9,9 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
+import { FaUser } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+
 
 export default function NavBar(){
     const [active, setActive] = useState("Home");
@@ -55,6 +58,13 @@ export default function NavBar(){
                     {pathname !== "/login" &&
                         <Link href="/login" className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</Link>
                     }
+                    <div className="flex gap-3 items-center text-[#EF6509] cursor-pointer">
+                        <div className="border border-[#EF6509] p-2 rounded-full">
+                            <FaUser color="white"/>
+                        </div>
+                        <p>JAMES OLAYINKA</p>
+                        <IoIosArrowDown color="#EF6509"/>
+                    </div>
                     </div>
                 </div>
                 <FaUserLarge size={25} color="white"

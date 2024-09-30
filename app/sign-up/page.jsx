@@ -5,9 +5,11 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Background from '@/components/backgroundImg';
+import PopUp from '@/components/signup-pop';
 
 export default function SignUp() {
   const [vendor, setVendor] = useState(true);
+  const [status, setStatus] = useState(false)
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -33,6 +35,7 @@ export default function SignUp() {
   const inputStyle= "border px-2 py-4 rounded-md bg-[#F4FDFF]"
 
   return (
+    <>
     <div  className="px-24 py-12 grid grid-cols-5 mt-28">
       <form onSubmit={formik.handleSubmit} className="px-8 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl">
       <div className='h-2 w-1/3 bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>
@@ -161,13 +164,19 @@ export default function SignUp() {
             I agree that i am at least 18 years of age and that i have read and agreed to the <span className='text-[#35318E]'>Terms and Condition</span>, and <span className='text-[#35318E]'> Privacy policy</span>
             </span>
         </div>
-        <Link href = "/password">
-        <button type="submit" className="mt-8 w-3/4 bg-[#EF6509] text-white py-2 rounded-md">
+        <button 
+        type="submit" 
+        className="mt-8 w-3/4 bg-[#EF6509] text-white py-2 rounded-md"
+        onClick={()=>setStatus(false)}
+        >
           Submit
         </button>
-        </Link>
       </form>
       <Background/>
     </div>
+    { status &&
+    <PopUp/>
+    }
+  </>
   );
 }

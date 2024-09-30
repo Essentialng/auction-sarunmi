@@ -8,7 +8,7 @@ export default function page(){
       <div className='h-2 w-1/3 bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>
         <header className='font-semibold text-[20px] py-8'>PASSWORD</header>
         <div className="flex gap-2  w-full text-start">
-          <p className=" w-full text-[18px] font-medium border">Enter the verification code sent to your email</p>
+          <p className=" w-full text-[18px] font-medium ">Enter the verification code sent to your email</p>
         </div>
 
         {/* Input Fields */}

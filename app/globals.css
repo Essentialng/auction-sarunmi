@@ -19,6 +19,45 @@
   font-family: var(--manrope-font);
 }
 
+::-webkit-scrollbar{
+  width: 0px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; }
+::-webkit-scrollbar-thumb {
+  background: white; 
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: white; 
+}
+
+
+::-webkit-scrollbar-track-piece:start {
+  background: transparent; 
+  margin-top: 10px; 
+}
+
+::-webkit-scrollbar-track-piece:end {
+  background: transparent; 
+  margin-bottom: 10px; 
+}
+/* input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; 
+}
+
+input[type="number"]:focus {
+  border: none;
+  outline: none;
+} */
+
 .card:hover .hidden_detail{
   display: block;
 }

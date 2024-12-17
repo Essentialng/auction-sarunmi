@@ -2,7 +2,9 @@ import { FaUser } from "react-icons/fa";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 
+
 export default function SideBar(){
+    
     return(
         <div className="flex flex-col gap-8  text-[16px]">
             <div className="p-6 flex flex-col gap-2 bg-[#35318E] rounded-xl text-white ">
@@ -20,9 +22,9 @@ export default function SideBar(){
                 </div>
             </div>
             <ul className="flex flex-col gap-3 border shadow-xl py-8 px-12 rounded-xl font-medium">
-                <li>Profile</li>
-                <li>Notification</li>
-                <li>History</li>
+                <li className="cursor-pointer">Profile</li>
+                <li className="cursor-pointer">Notification</li>
+                <li className="cursor-pointer">History</li>
             </ul>
             <div>
                 <button className="w-full bg-[#EF6509] rounded-xl text-white font-medium py-3">LOG OUT</button>

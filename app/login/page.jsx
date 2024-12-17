@@ -4,19 +4,23 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Background from '@/components/backgroundImg';
 import Image from 'next/image';
+import useStore from '../store';
 
 export default function SignUp() {
+  const {auth, setAuth, clearAuth} = useStore()
+  
   const formik = useFormik({
     initialValues: {
       password: '',
       email: ''
     },
     validationSchema: Yup.object({
-      password: Yup.string().required('First Name is required'),
-      email: Yup.string().required('Email is required')
+      password: Yup.string().required('Password is required'),
+      email: Yup.string().email('Invalid email').required('Email is required')
     }),
     onSubmit: (values) => {
       console.log(values);
+      setAuth()
     },
   });
 
@@ -24,7 +28,10 @@ export default function SignUp() {
 
   return (
     <div  className="px-24 py-12 grid grid-cols-5 mt-28 ">   
-        <form onSubmit={formik.handleSubmit} className="px-8 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl">
+        <form 
+        onSubmit={formik.handleSubmit} 
+        className="px-8 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl"
+        >
         <div className='h-2 w-1/3 bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>   
         <div className='flex items-center justify-center pt-12 pl-12 '>
             <Image src="/logo.png" width={100} height={100}/>
@@ -58,8 +65,8 @@ export default function SignUp() {
               value={formik.values.password}
               className={inputStyle}
             />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-              <div className="text-red-500 text-sm">{formik.errors.phoneNumber}</div>
+            {formik.touched.password && formik.errors.password ? (
+              <div className="text-red-500 text-sm">{formik.errors.password}</div>
             ) : null}
           </div>
         </div>

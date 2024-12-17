@@ -1,9 +1,9 @@
 import React from "react";
 
-const Page = () => {
+const Page = ({product}) => {
   return (
     <div className="p-8 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-6">Upload Car</h2>
+      <h2 className="text-2xl font-semibold mb-6">Upload {product}</h2>
       <form className="space-y-6">
         {/* Product Name and Upload Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

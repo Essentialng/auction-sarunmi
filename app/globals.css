@@ -58,6 +58,7 @@ input[type="number"]:focus {
   outline: none;
 } */
 
+
 .card:hover .hidden_detail{
   display: block;
 }

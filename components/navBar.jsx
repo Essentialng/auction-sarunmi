@@ -11,13 +11,38 @@ import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { FaUser } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
+import useStore from "@/app/store";
+import { FaAngleRight } from "react-icons/fa6";
 
 
 export default function NavBar(){
+const {auth} = useStore()
+
     const [active, setActive] = useState("Home");
     const [menuToggle, setMenuToggle] = useState(false)
     const pathname = usePathname()
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
+    const categories = [
+        {
+            name:"Frniture", 
+            link:"", 
+            class:"furniture", 
+            nest:[
+                "Home",
+                "Office",
+                "Outdoor",
+                "Cabinets",
+                "Decorative"
+            ]
+        },
+        {name:"Personal Electronics", link:"", class:"personal-elect"},
+        {name:"Home Entertainment", link:"", class:"home-ent"},
+        {name:"House Appliance", link:"", class:"house-app"},
+        {name:"Office Appliance", link:"", class:"office-app"},
+        {name:"Personal Care Electronics", link:"", class:"personal-elect"},
+        {name:"Kitchen Electronics", link:"", class:"kitchen-elect"},
+        {name:"Others", link:"", class:"others"},
+    ]
    
 
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
@@ -35,7 +60,7 @@ export default function NavBar(){
                         <Image src="/logo.png" width={120} height={59}/>
                     </Link>
                 </div>
-                {pathname !== '/sign-up' && pathname !== '/login' && 
+                {pathname !== '/register' && pathname !== '/login' && 
                 <div className="2xl:flex xl:flex hidden gap-2 w-1/4">
                     <input 
                     placeholder="Search auctions"
@@ -48,16 +73,17 @@ export default function NavBar(){
                 {pathname === '/login' && 
                         <small className="font-bold text-[14px]">Don’t  have an account?</small>
                     }
-                {pathname !== '/sign-up' && 
-                    <Link href="/sign-up" className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</Link>
+                {!auth && 
+                    <Link href="/register" className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</Link>
                 }
                     <div className="flex items-center gap-4">
-                    {pathname === '/sign-up' && 
+                    {pathname === '/register' && 
                         <small className="font-bold text-[14px]">Already have an account?</small>
                     }
-                    {pathname !== "/login" &&
+                    {!auth &&
                         <Link href="/login" className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</Link>
                     }
+                    { auth && 
                     <div className="flex gap-3 items-center text-[#EF6509] cursor-pointer">
                         <div className="border border-[#EF6509] p-2 rounded-full">
                             <FaUser color="white"/>
@@ -65,6 +91,7 @@ export default function NavBar(){
                         <p>JAMES OLAYINKA</p>
                         <IoIosArrowDown color="#EF6509"/>
                     </div>
+                    }
                     </div>
                 </div>
                 <FaUserLarge size={25} color="white"
@@ -79,7 +106,7 @@ export default function NavBar(){
                     />
             </div>
             <div className="text-white 2xl:flex xl:flex hidden justify-between">
-            {pathname !== '/sign-up' && pathname !== '/login' && 
+            {pathname !== '/register' && pathname !== '/login' && 
                 <div className="flex items-center justify-between w-1/2">
                     {menuContents.map((menu, index)=>(
                         <div>
@@ -98,26 +125,50 @@ export default function NavBar(){
                             >
                                 {menu}
                         </Link> :
-                        <div className={classNames(
-                            `${nav_btn} flex gap-2 items-center`,{
-                                "bg-[#FFB485]" :  active === `${menu}`
-                            })}
-                            onClick={()=>setActive(menu)}
-                            >
-                        <Link href="categories">Others Categories</Link>
-                        <MdKeyboardArrowDown size={14}/>
-                    </div>
+                        <div className="relative group">
+                            <div className={classNames(
+                                `${nav_btn}  flex gap-2 items-center`,{
+                                    "bg-[#FFB485]" :  active === `${menu}`
+                                })}
+                                onClick={()=>setActive(menu)}
+                                >
+                            <Link href="categories">Others Categories </Link>
+                            <MdKeyboardArrowDown size={14}/>
+                            </div>
+                            <div 
+                            className=" hidden absolute w-[250px] border-[#35318E] top-14 bg-[#35318E] group-hover:block group-focus-within:block hover:block">
+                                {categories.map((item, index)=>(
+                                <div className="relative group">
+                                    <div className={`${item?.class} flex justify-between items-center p-4`}>
+                                        <small className="text-[12p6]">{item?.name}</small>
+                                        <FaAngleRight/>
+                                    </div>
+                                    <div className="absolute top-0 right-[-15.6rem] w-full flex flex-col bg-[#B7A5F9]">
+                                        {item?.nest?.map((detail)=>(
+                                            <small className="p-4">{detail}</small>
+                                        ))}
+                                    </div>   
+                                </div> 
+                                ))}
+                            </div>
+                        </div>
                     }
                         </div>
                         
                     ))}
                 </div>
                 }
-                {pathname !== '/sign-up' && pathname !== '/login' && 
+                {pathname !== '/register' && pathname !== '/login' &&
+                <> 
+                {!auth ?
                 <div className="flex gap-12">
                     <Link href="/our-valuers" className={nav_btn}>Our Valuers</Link>
                     <Link href="/vendors" className={nav_btn}>Our Vendors</Link>
                 </div>
+                :
+                <Link href="/hub?user=user&action=upload" className="bg-[#EF6509] px-4 py-2 rounded-2xl text-center">Upload Product to Auction</Link>
+                }
+                </>
                 }
             </div>
             {menuToggle && <MobileNav setMenuToggle = {setMenuToggle}/>}

@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,3 +6,75 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+
+model User {
+  id              String    @default(uuid()) @id
+  firstName       String
+  lastName        String
+  email           String    @unique 
+  password        String
+  phoneNumber     String    @unique 
+  state           String?
+  nin             String?
+  profilePicture  String?
+  type            String
+  cashBalance     Float     @default(0.00)
+  orders          Order[]    @relation("UserOrders") 
+  uploads         Upload[]   @relation("UserUploads")
+  notifications   Notification[] @relation("notification") 
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Upload {
+  id                String   @default(uuid()) @id
+  userId            String
+  type              String
+  image             String
+  description       String
+  vin               String?
+  color             String?
+  fuel              String?
+  lotNumber         Int?
+  location          String
+  yearsUsed         String?
+  primaryDamage     String?
+  oldMeter          String?
+  certificateOfOrigin Int?
+  sizeAndLayout     String?
+  proofOfOwnership  String?
+  bid               String
+  specification     String?
+  user              User     @relation("UserUploads", fields: [userId], references: [id]) 
+  orders            Order[]  @relation("ProductOrders")  
+  status            Boolean
+  createdAt         DateTime @default(now())
+  expireDate        DateTime?
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  userId        String  
+  productId     String   
+  quantity      Int      @default(1)
+  totalPrice    Float    
+  status        String   @default("Pending") 
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  user          User     @relation("UserOrders", fields: [userId], references: [id])
+  product       Upload   @relation("ProductOrders", fields: [productId], references: [id]) 
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  message     String
+  read        Boolean  @default(false)
+  user        User     @relation("notification", fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+

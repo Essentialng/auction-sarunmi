@@ -19,7 +19,7 @@ export default function Footer(){
     
     
     return(
-        <div className="flex flex-col gap-20 ">
+        <div className="flex flex-col gap-20 py-24 ">
            <FooterCard/>
             <div className="flex flex-col gap-4 justify-center items-center 2xl:px-[4rem] xl:px-[4rem] px-[2rem]">
                 <p className="text-[24px] font-[600] text-[#EF6509]">Our Other Services</p>
@@ -38,7 +38,7 @@ export default function Footer(){
                 </div>
                 <OtherServiceMobile/>
             </div>
-            <FooterContact/>
+            {/* <FooterContact/> */}
         </div>
     )
 }
@@ -73,7 +73,7 @@ function OtherServiceMobile(){
         
       };
     return(
-        <div className="w-full 2xl:hidden xl:hidden block justify-between">
+        <div className="w-full  xl:hidden block justify-between">
         <Slider {...settings}>
         {otherService.map((service, index)=>(
             <div 

@@ -6,21 +6,35 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Background from '@/components/backgroundImg';
 import PopUp from '@/components/signup-pop';
+import { IoIosArrowBack } from "react-icons/io";
+import { axiosInstance } from '@/utils/axios';
+import { Rings } from 'react-loading-icons';
+import useStore from '../store';
+
 
 export default function SignUp() {
+  const {initializeUser} = useStore();
   const [vendor, setVendor] = useState(true);
   const [status, setStatus] = useState(false);
   const [password, setPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("")
+  const [resend, setResend] = useState(false)
+  const [loadingResend, setLoadingResend] = useState(false)
 
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      state: '',
-      nin: '',
+      firstName: null,
+      lastName: null,
+      email: null,
+      phoneNumber: null,
+      state: null,
+      nin: null,
+      type: "vendor",
+      password: null,
+      confirmPassword: null,
+      code: null,
     },
 
 
@@ -29,49 +43,74 @@ export default function SignUp() {
       lastName: Yup.string().required('Last Name is required'),
       email: Yup.string().email('Invalid email').required('Email is required'),
       phoneNumber: Yup.string().required('Phone Number is required'),
-      state: Yup.string().required('State is required'),
-      nin: Yup.string().required('NIN is required'),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
-      setPassword(true)
-    },
+      state: Yup.string().nullable().notRequired(),
+      nin: Yup.string().nullable().notRequired(),
+      password: Yup.string()
+          .required("Password is required")
+          .min(8, "Password is too short - should be 8 characters long")
+          .matches(/(?=.*[0-9])/, "Password must contain a number")
+          .matches(/(?=.*[A-Z])/, "Password must contain an uppercase letter"),
+      confirmPassword: Yup.string()
+          .required("Please confirm your password")
+          .oneOf([Yup.ref("password"), null], "Passwords must match"),
+      code: Yup.string()
+      .required("Verify code is required")
+      .min(6, "Verify code must be six characters")
+        }),
+
+    onSubmit: async (values) => {
+      setLoading(true);
+      try{
+        const response = await axiosInstance.post('/auth/register', values)
+        const data = response.data
+        if(response.status == 201){
+          setStatus(true)
+        }
+      }catch(error){
+        const errorMessage = error.response.data
+        if(error.status == 404){
+          setMessage(errorMessage.message)
+        }else{
+          setMessage("Connect to a strong network")
+        }
+      }finally{
+        setLoading(false);
+      }},
   });
 
-  const passwordFormik = useFormik({
-    initialValues:{
-      code: '',
-      password: "",
-      confirmPassword: '',
-    },
 
-    validationSchema: Yup.object({
-        password: Yup.string()
-            .required("Password is required")
-            .min(8, "Password is too short - should be 8 characters long")
-            .matches(/(?=.*[0-9])/, "Password must contain a number")
-            .matches(/(?=.*[A-Z])/, "Password must contain an uppercase letter"),
-        confirmPassword: Yup.string()
-            .required("Please confirm your password")
-            .oneOf([Yup.ref("password"), null], "Passwords must match"),
-        code: Yup.string().required('Code is required'),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
-      setStatus(true)
-    },
-  })
+  const sendEmail =async ()=>{
+    setLoading(true)
+    try{
+      
+    const response = await axiosInstance.post("sendEmail", {
+      name: formik.values.firstName,
+      email : formik.values.email
+    });
+
+    setPassword(true)
+    
+    }catch(error){
+     
+    }finally{
+      setLoading(false)
+    }
+  }
+
+
 
   const inputStyle= "border px-2 py-4 rounded-md bg-[#F4FDFF]"
-// console.log(passwordFormik.values.password)
+
   return (
     <>
-    <div  className="px-24 py-12 grid grid-cols-5 mt-28">
-      <div  className=" col-span-3 text-center items-center relative ">
+    <div  className="lg:px-24 px-4 py-12 lg:grid grid-cols-5 mt-28">
+      <form  
+      onSubmit={formik.handleSubmit}
+      className=" col-span-3 text-center items-center relative ">
 
       {!password ?
-      <form 
-      onSubmit={formik.handleSubmit}
+      <div 
+      
        className='shadow-md border rounded-2xl relative px-8 pb-12'>
         <div className='h-2 w-1/3 bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>
           <header className='font-semibold text-[20px] py-8'>SIGN UP</header>
@@ -82,16 +121,16 @@ export default function SignUp() {
             </p>
           </div>
 
-          <div className="flex mx-60 justify-between bg-[#6B5EC1] rounded-md p-4 text-[14px] text-white font-normal">
+          <div className="flex lg:mx-60 justify-between bg-[#6B5EC1] rounded-md p-4 text-[14px] text-white font-normal">
             <div className="flex gap-3 items-center">
-              <input type="radio" checked={vendor}  name="role" value="vendor" className='w-6 h-6' onClick={()=>{setVendor(true)}} />
+              <input type="radio" checked={vendor}  name="type" value="vendor" className='w-6 h-6' onChange={formik.handleChange} onClick={()=>{setVendor(true)}} />
               <div className="flex flex-col gap-1 ">
                 <h6>VENDOR</h6>
                 <small>SELLER</small>
               </div>
             </div>
             <div className="flex gap-3 items-center ">
-              <input type="radio" name="role" checked={!vendor}  value="bidder" className='w-6 h-6' onClick={()=>{setVendor(false)}}  />
+              <input type="radio" name="type" checked={!vendor}  value="bidder" className='w-6 h-6' onChange={formik.handleChange} onClick={()=>{setVendor(false)}}  />
               <div className="flex flex-col gap-1">
                 <h6>BIDDER</h6>
                 <small>BUYER</small>
@@ -99,7 +138,7 @@ export default function SignUp() {
             </div>
           </div>
 
-          <div className="mt-12 mb-4 grid grid-cols-2 gap-4 text-start text-[14px] font-normal">
+          <div className="mt-12 mb-4 lg:grid lg:grid-cols-2 flex flex-col gap-4 text-start text-[14px] font-normal">
             <div className="flex flex-col">
               <label htmlFor="firstName">First Name</label>
               <input
@@ -197,7 +236,7 @@ export default function SignUp() {
             <div >
               <input type="checkbox" />
             </div>
-              <span className='text-[12px] font-medium'>
+              <span className='lg:text-[12px] text-[9px] font-medium'>
               I agree that i am at least 18 years of age and that i have read and agreed to the <span className='text-[#35318E]'>Terms and Condition</span>, and <span className='text-[#35318E]'> Privacy policy</span>
               </span>
           </div>
@@ -205,16 +244,62 @@ export default function SignUp() {
 
           <button 
           type="submit" 
-          className="mt-8 w-3/4 bg-[#EF6509] text-white py-2 rounded-md"
+          className={`
+            ${ formik.values.type == "vendor" ?
+            (( formik.values.firstName &&
+            formik.values.lastName &&
+            formik.values.email &&
+             formik.values.phoneNumber &&
+             formik.values.state &&
+             formik.values.nin) ? "bg-[#EF6509]" : "bg-gray-500"
+            ) :
+
+            (
+           (   
+             formik.values.firstName &&
+             formik.values.lastName &&
+             formik.values.email &&
+             formik.values.phoneNumber) ? "bg-[#EF6509]" : "bg-gray-500"
+            
+            )}
+            mt-8 w-3/4 text-white flex justify-center items-center rounded-md ${!loading && "py-3"}
+            `}
+          
+          onClick={  ()=>{
+            formik.values.type === "vendor" ?
+            ((formik.values.firstName &&
+            formik.values.lastName &&
+            formik.values.email &&
+            formik.values.phoneNumber &&
+            formik.values.state &&
+            formik.values.nin) && sendEmail()
+            ) :
+
+            (
+
+            (formik.values.firstName &&
+            formik.values.lastName &&
+            formik.values.email &&
+            formik.values.phoneNumber )&& sendEmail()
+            
+            )
+           }}
+          
           >
-            Submit
+            {loading ? <Rings/> : "Submit"}
           </button>
-        </form>
+        </div>
         
           :
 
-        <form onSubmit={passwordFormik.handleSubmit}>
+        <div>
           <div  className="px-8 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl">
+            <div 
+            className='mt-8 w-fit border shadow-md cursor-pointer'
+            onClick={()=>setPassword(false)}
+            >
+              <IoIosArrowBack size={30}/>
+            </div>
           <div className='h-2 w-1/3 bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>
             <header className='font-semibold text-[20px] py-8'>PASSWORD</header>
             <div className="flex gap-2  w-full text-start">
@@ -226,16 +311,30 @@ export default function SignUp() {
                   <label htmlFor="email">Code</label>
                   <input
                   name="code"
-                  type="number"
                   placeholder="Input the one time password"
-                    onChange={passwordFormik.handleChange}
-                    value={passwordFormik.values.code}
+                    onChange={formik.handleChange}
+                    value={formik.values.code}
                   className={inputStyle}
                   />
-                  {passwordFormik.touched.code && passwordFormik.errors.code ? (
-                  <div className="text-red-500 text-sm">{passwordFormik.errors.code}</div>
+                  {formik.touched.code && formik.errors.code ? (
+                  <div className="text-red-500 text-sm">{formik.errors.code}</div>
                   ) : null}
-                  <p className="w-full text-end py-4">Resend code</p>
+                  <p 
+                  className={`w-full text-end py-4 ${resend ? "text-green-900" :"text-blue-500"} cursor-pointer`}
+                  onClick={() => { 
+                    sendEmail(); 
+                    setLoadingResend(true)
+                    setTimeout(()=>{
+                      setLoadingResend(false)
+                      setResend(true);
+                      setTimeout(()=>{
+                        setResend(false);
+                      },5000)
+                   
+                  },3000) }}
+                  >
+                    {resend ? "Verify code resed successfully" : loadingResend ? "Resending verify code...." : "Resend code"}
+                  </p>
               </div>
               <div className="flex flex-col gap-6">
                   <div className="flex flex-col">
@@ -245,12 +344,12 @@ export default function SignUp() {
                       id="Password"
                       name="password"
                       type="Password"
-                        onChange={passwordFormik.handleChange}
-                        value={passwordFormik.values.password}
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
                       className={inputStyle}
                       />
-                      {passwordFormik.touched.password && passwordFormik.errors.password ? (
-                      <div className="text-red-500 text-sm">{passwordFormik.errors.password}</div>
+                      {formik.touched.password && formik.errors.password ? (
+                      <div className="text-red-500 text-sm">{formik.errors.password}</div>
                       ) : null}
                   </div>
 
@@ -261,28 +360,31 @@ export default function SignUp() {
                       id="confirmPassword"
                       name="confirmPassword"
                       type="password"
-                        onChange={passwordFormik.handleChange}
-                        value={passwordFormik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                        value={formik.values.confirmPassword}
                       className={inputStyle}
                       />
-                      {passwordFormik.touched.confirmPassword && passwordFormik.errors.confirmPassword ? (
-                      <div className="text-red-500 text-sm">{passwordFormik.errors.confirmPassword}</div>
+                      {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                      <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
                       ) : null}
                   </div>
               </div>
             </div>
             <button 
             type="submit" 
-            className="mt-8 w-3/4 bg-[#EF6509] text-white py-2 rounded-md"
+            className={`${!loading && "py-3"} mt-8 w-3/4 bg-[#EF6509] text-white  rounded-md flex items-center justify-center`}
             >
-              Submit
+              {loading ? <Rings/> : "Submit"}
           </button>
+          <div  className='w-full text-start text-red-500 font-bold'>
+            <small>{message}</small>
+          </div>
           </div>
           
-        </form>
+        </div>
         }
 
-      </div>
+      </form>
       
       
       <Background/>

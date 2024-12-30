@@ -10,6 +10,7 @@ import { FiPhone } from "react-icons/fi";
 // import { useSearchParams } from 'next/navigation'
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleDown } from "react-icons/fa6";
+import SideBard from '@/components/mobileHubSide';
 
 
 const Hub = () => {
@@ -21,13 +22,17 @@ const Hub = () => {
   const [toggle, setToggle] = useState("action")
   const [product, setProduct] = useState("Car")
 
+  
   const navBtn = "block text-lg text-start font-semibold"
 
   return (
-    <div className="min-h-screen flex flex-col px-24 mt-40">
-      <div className="grid grid-cols-5 gap-12">
-        <aside className="col-span-1  flex flex-col gap-6">
-          <div className="space-y-4 text-white bg-[#35318E] rounded-2xl p-4 mb-4">
+    <div className="min-h-screen flex flex-col lg:px-24 mt-40">
+      <div className="lg:grid grid-cols-5 gap-12">
+
+        <SideBard setToggle={setToggle} toggle={toggle}/>
+        
+        <aside className="relative hidden bg-white col-span-1  lg:flex flex-col gap-6">
+          <div className="lg:block hidden space-y-4 text-white bg-[#35318E] rounded-2xl p-4 mb-4">
             <div className='flex flex-col gap-4 text-[16px]'>
                 <div className='flex gap-2 items-center'>
                     <FaUser/>
@@ -44,6 +49,7 @@ const Hub = () => {
             </div>
           </div>
 
+         
           <nav className="flex flex-col gap-6 space-y-2 p-6 rounded-xl shadow-lg border text-[16px] font-medium">
 
             <button 
@@ -112,8 +118,8 @@ const Hub = () => {
             </button>
 
           </nav>
-
-          <button className="bg-orange-500 text-white px-4 py-3 w-full rounded-xl">LOG OUT</button>
+          
+          <button className=" bg-orange-500 text-white px-4 py-3 w-full rounded-xl">LOG OUT</button>
         </aside>
         {toggle === "notification" &&
         <div className='col-span-4'>

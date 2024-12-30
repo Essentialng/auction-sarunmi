@@ -27,18 +27,18 @@ export default function SignUp() {
   const inputStyle= "border px-2 py-4 rounded-md bg-[#F4FDFF]"
 
   return (
-    <div  className="px-24 py-12 grid grid-cols-5 mt-28 ">   
+    <div  className="lg:px-24 px-4 py-12 lg:grid grid-cols-5 mt-28 ">   
         <form 
         onSubmit={formik.handleSubmit} 
         className="px-8 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl"
         >
         <div className='h-2 w-1/3 bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>   
-        <div className='flex items-center justify-center pt-12 pl-12 '>
+        <div className='flex items-center justify-center pt-12 pl-16 '>
             <Image src="/logo.png" width={100} height={100}/>
         </div>
         <header className='font-semibold text-[20px] py-8'>LOGIN</header>
         {/* Input Fields */}
-        <div className="mt-12 mb-4 px-32 flex flex-col gap-4 text-start text-[14px] font-normal">
+        <div className="lg:mt-12 lg:mb-4 lg:px-32 flex flex-col gap-4 text-start text-[14px] font-normal">
           
           <div className="flex flex-col">
             <label htmlFor="email">Email/Phone number</label>

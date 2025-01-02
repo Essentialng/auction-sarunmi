@@ -12,9 +12,9 @@ import { FaAngleDown } from "react-icons/fa6";
 import { RiMenuSearchLine } from "react-icons/ri";
 
 
-export default function SideBard({setToggle, toggle}){
+export default function SideBard({setToggle, toggle, type, product, setProduct }){
 
-      const [product, setProduct] = useState("Car")
+    //   const [product, setProduct] = useState("Car")
       const [menu, setMenu] = useState(false);
     
       const toggleHandling = (value)=>{
@@ -44,12 +44,14 @@ export default function SideBard({setToggle, toggle}){
                 Profile
             </button>
 
+            {type !== "bidder" &&
             <button 
             className={`${navBtn} ${toggle == "revenue" && "text-orange-500"}`}
             onClick={()=>toggleHandling("revenue")}
             >
                 My Revenue
             </button>
+            }
 
             <button 
             className={`${navBtn} ${toggle == "notification" && "text-orange-500"}`}
@@ -57,6 +59,7 @@ export default function SideBard({setToggle, toggle}){
             >Notification
             </button>
 
+            {type !== "bidder" &&
             <div className='flex flex-col gap-4'>
                 <button 
                 className={`flex items-center justify-between ${navBtn} ${toggle == "upload" && "text-orange-500"}`}
@@ -94,6 +97,7 @@ export default function SideBard({setToggle, toggle}){
                 </div>
                     }
             </div>
+            }
             </nav>
         }
     </div>

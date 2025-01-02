@@ -22,6 +22,17 @@ export default function SignUp() {
   const [resend, setResend] = useState(false)
   const [loadingResend, setLoadingResend] = useState(false)
 
+  const details = {
+    headers: "Account Created Successfully",
+    texts: `Welcome to Essential E-Auction, your account has been created successfully, 
+    and you are now ready to explore a world of exciting auctions.
+    `,
+    texts2: `Subscribe Now to enjoy premium benefits like early access to auctions, personalized alerts, and more.`,
+    btn: "CONTINUE FOR FREE",
+    btn2: "SUBSCRIBE NOW",
+    link: "/dashboard",
+    link2: "/subscribe"
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -390,7 +401,7 @@ export default function SignUp() {
       <Background/>
     </div>
     { status &&
-    <PopUp/>
+    <PopUp details={details}/>
     }
   </>
   );

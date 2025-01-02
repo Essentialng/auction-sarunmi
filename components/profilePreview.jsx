@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProfileOverview = () => {
+const ProfileOverview = ({user}) => {
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Profile Overview</h2>
@@ -14,9 +14,9 @@ const ProfileOverview = () => {
               <i className="fas fa-user-circle"></i>
             </div>
             <div>
-              <p>James Olayinka</p>
-              <p className="text-gray-500">+2348199977444</p>
-              <p className="text-gray-500">Lagos State</p>
+              <p>{user?.firstName} {user?.lastName}</p>
+              <p className="text-gray-500">{user?.phoneNumber}</p>
+              <p className="text-gray-500">{user?.state}</p>
             </div>
           </div>
           <button className="bg-orange-600 text-white px-4 py-2 rounded">
@@ -33,7 +33,7 @@ const ProfileOverview = () => {
               <i className="fas fa-envelope"></i>
             </div>
             <div>
-              <p>jamesyinka@gmail.com</p>
+              <p>{user?.email}</p>
               <p className="text-green-500">Verified</p>
             </div>
           </div>

@@ -15,7 +15,7 @@ export async function POST(request) {
         ],
       },
     });
-
+    
     if (!user) {
       return NextResponse.json({ message: 'Invalid credentials' }, { status: 404 });
     }
@@ -25,7 +25,7 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
     }
 
-    const token = generateToken(user);
+    const token = await generateToken(user);
 
     return NextResponse.json({ message: 'Login successful', token }, { status: 200 });
   } catch (error) {

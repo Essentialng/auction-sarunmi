@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
   id              String    @default(uuid()) @id
   firstName       String
@@ -22,42 +20,45 @@ model User {
   type            String
   cashBalance     Float     @default(0.00)
   orders          Order[]    @relation("UserOrders") 
-  uploads         Upload[]   @relation("UserUploads")
+  uploadProducts  UploadProduct[] @relation("ProductUpload")
   notifications   Notification[] @relation("notification") 
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  watchlist       Watchlist[] @relation("UserWatchlist")
+  bids            Bid[] @relation("UserBids")
 }
 
-model Upload {
-  id                String   @default(uuid()) @id
-  userId            String
-  type              String
-  image             String
-  description       String
-  vin               String?
-  color             String?
-  fuel              String?
-  lotNumber         Int?
-  location          String
-  yearsUsed         String?
-  primaryDamage     String?
-  oldMeter          String?
-  certificateOfOrigin Int?
-  sizeAndLayout     String?
-  proofOfOwnership  String?
-  bid               String
-  specification     String?
-  user              User     @relation("UserUploads", fields: [userId], references: [id]) 
-  orders            Order[]  @relation("ProductOrders")  
-  status            Boolean
-  createdAt         DateTime @default(now())
-  expireDate        DateTime?
+model UploadProduct {
+  id                    String   @default(uuid()) @id
+  userId                String
+  productName           String
+  image                 String
+  description           String
+  productType           String  // 'Car' or 'Property'
+  vin                   String? // Only for 'Car'
+  color                 String? // Only for 'Car'
+  fuel                  String? // Only for 'Car'
+  lotNumber             String? // Only for 'Car'
+  location              String?
+  yearsUsed             String? // Only for 'Car'
+  primaryDamage         String? // Only for 'Car'
+  oldMeter              String? // Only for 'Car'
+  sizeAndLayout         String? // Only for 'Property'
+  proofOfOwnership      String? // Only for 'Property'
+  cOfONumber            String? // Only for 'Property'
+  user                  User     @relation("ProductUpload", fields: [userId], references: [id]) 
+  orders                Order[]  @relation("ProductOrders")  
+  status                String
+  createdAt             DateTime @default(now())
+  expireDate            DateTime?
+  watchlist            Watchlist[] @relation("ProductWatchlist")
+  bids                 Bid[] @relation("ProductBids")
 }
 
 model Order {
   id            Int      @id @default(autoincrement())
   userId        String  
-  productId     String   
+  productId     String
   quantity      Int      @default(1)
   totalPrice    Float    
   status        String   @default("Pending") 
@@ -65,7 +66,27 @@ model Order {
   updatedAt     DateTime @updatedAt
   
   user          User     @relation("UserOrders", fields: [userId], references: [id])
-  product       Upload   @relation("ProductOrders", fields: [productId], references: [id]) 
+  product       UploadProduct   @relation("ProductOrders", fields: [productId], references: [id]) 
+}
+
+model Watchlist {
+  id            String   @default(uuid()) @id
+  userId        String
+  productId     String
+  user          User     @relation("UserWatchlist", fields: [userId], references: [id])
+  product       UploadProduct @relation("ProductWatchlist", fields: [productId], references: [id])
+  createdAt     DateTime @default(now())
+}
+
+model Bid {
+  id            String   @default(uuid()) @id
+  userId        String
+  productId     String
+  amount        Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation("UserBids", fields: [userId], references: [id])
+  product       UploadProduct @relation("ProductBids", fields: [productId], references: [id])
 }
 
 model Notification {
@@ -76,5 +97,3 @@ model Notification {
   user        User     @relation("notification", fields: [userId], references: [id])
   createdAt   DateTime @default(now())
 }
-
-

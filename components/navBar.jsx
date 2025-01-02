@@ -2,7 +2,7 @@
 import Image from "next/image";
 import MobileNav from "./mobileNav";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserLarge } from "react-icons/fa6";
 import { MdKeyboardArrowDown } from "react-icons/md";
@@ -16,7 +16,7 @@ import { FaAngleRight } from "react-icons/fa6";
 
 
 export default function NavBar(){
-const {auth} = useStore()
+const {user, getUser} = useStore()
 
     const [active, setActive] = useState("Home");
     const [menuToggle, setMenuToggle] = useState(false)
@@ -44,6 +44,11 @@ const {auth} = useStore()
         {name:"Others", link:"", class:"others"},
     ]
    
+    useEffect(()=>{
+        if(!user){
+        getUser()
+    }
+    },[user])
 
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
@@ -73,22 +78,22 @@ const {auth} = useStore()
                 {pathname === '/login' && 
                         <small className="font-bold text-[14px]">Don’t  have an account?</small>
                     }
-                {!auth && 
+                {!user && 
                     <Link href="/register" className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</Link>
                 }
                     <div className="flex items-center gap-4">
                     {pathname === '/register' && 
                         <small className="font-bold text-[14px]">Already have an account?</small>
                     }
-                    {!auth &&
+                    {!user &&
                         <Link href="/login" className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</Link>
                     }
-                    { auth && 
+                    { user && 
                     <div className="flex gap-3 items-center text-[#EF6509] cursor-pointer">
                         <div className="border border-[#EF6509] p-2 rounded-full">
                             <FaUser color="white"/>
                         </div>
-                        <p>JAMES OLAYINKA</p>
+                        <p>{user.firstName} {user.lastName}</p>
                         <IoIosArrowDown color="#EF6509"/>
                     </div>
                     }
@@ -160,13 +165,17 @@ const {auth} = useStore()
                 }
                 {pathname !== '/register' && pathname !== '/login' &&
                 <> 
-                {!auth ?
+                {!user ?
                 <div className="flex gap-12">
                     <Link href="/our-valuers" className={nav_btn}>Our Valuers</Link>
                     <Link href="/vendors" className={nav_btn}>Our Vendors</Link>
                 </div>
                 :
-                <Link href="/hub?user=user&action=upload" className="bg-[#EF6509] px-4 py-2 rounded-2xl text-center">Upload Product to Auction</Link>
+                <Link 
+                href={`/hub/${user?.id}/${user?.type}/profile`} 
+                className="bg-[#EF6509] px-4 py-2 rounded-2xl text-center">
+                    Upload Product to Auction
+                </Link>
                 }
                 </>
                 }

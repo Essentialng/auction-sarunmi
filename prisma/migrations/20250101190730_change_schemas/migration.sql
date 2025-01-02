@@ -1,0 +1,76 @@
+/*
+  Warnings:
+
+  - You are about to drop the column `title` on the `Notification` table. All the data in the column will be lost.
+  - You are about to drop the `Upload` table. If the table is not empty, all the data it contains will be lost.
+  - Added the required column `propertyId` to the `Order` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- DropForeignKey
+ALTER TABLE "Order" DROP CONSTRAINT "Order_productId_fkey";
+
+-- DropForeignKey
+ALTER TABLE "Upload" DROP CONSTRAINT "Upload_userId_fkey";
+
+-- AlterTable
+ALTER TABLE "Notification" DROP COLUMN "title";
+
+-- AlterTable
+ALTER TABLE "Order" ADD COLUMN     "propertyId" TEXT NOT NULL;
+
+-- DropTable
+DROP TABLE "Upload";
+
+-- CreateTable
+CREATE TABLE "Car" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "vin" TEXT NOT NULL,
+    "color" TEXT NOT NULL,
+    "fuel" TEXT NOT NULL,
+    "lotNumber" TEXT NOT NULL,
+    "location" TEXT NOT NULL,
+    "yearsUsed" TEXT NOT NULL,
+    "primaryDamage" TEXT NOT NULL,
+    "oldMeter" TEXT NOT NULL,
+    "status" BOOLEAN NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expireDate" TIMESTAMP(3),
+
+    CONSTRAINT "Car_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Property" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "productName" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "certificateOfOrigin" TEXT NOT NULL,
+    "sizeAndLayout" TEXT NOT NULL,
+    "proofOfOwnership" TEXT NOT NULL,
+    "bid" TEXT NOT NULL,
+    "specification" TEXT NOT NULL,
+    "location" TEXT NOT NULL,
+    "status" BOOLEAN NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expireDate" TIMESTAMP(3),
+
+    CONSTRAINT "Property_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Car" ADD CONSTRAINT "Car_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Property" ADD CONSTRAINT "Property_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Car"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_propertyId_fkey" FOREIGN KEY ("propertyId") REFERENCES "Property"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

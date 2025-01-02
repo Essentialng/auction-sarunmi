@@ -1,6 +1,6 @@
 import {create} from "zustand";
-import {setCookies} from "@/utils/cookies";
-// import { jwtToken } from "@/utils/webtoken";
+import {setCookies, getCookies, removeCookies} from "@/utils/cookies";
+import { verifyToken } from "@/utils/jwt";
 
 const useStore = create((set) => ({
   user: null,
@@ -8,12 +8,19 @@ const useStore = create((set) => ({
 
   initializeUser: async (access_token) => {
     setCookies(access_token);
-    const data = jwtToken(access_token);
-
+    const data = await verifyToken(access_token);
     set({ user: data });
   },
 
-  clearAuth: () => set({ auth: null }),
+  getUser: async ()=>{
+    const access_token = getCookies()
+    const data = await verifyToken(access_token);
+    set({ user: data });
+  },
+
+  clearUser: () =>{
+      removeCookies()
+      set({ user: null })},
 }));
 
 export default useStore;

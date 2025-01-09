@@ -1,8 +1,10 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000/api/",
+    baseURL: "https://essential-auction.vercel.app/",
     headers: {
         "Content-Type": "application/json",
     }
 });
+// https://essential-auction.vercel.app/
+// http://localhost:3000/api/

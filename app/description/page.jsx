@@ -1,6 +1,10 @@
+import ProductVerify from "@/components/productVerify"
+
+
 export default function Page(){
     return(
 <div className="p-8 bg-gray-100 mt-32 px-24">
+  <ProductVerify/>
   <div className="text-sm gap-4 flex item-center mb-4 text-gray-600">
     <small className="hover:underline">Home</small> 
     <small className="hover:underline">Auctions</small> 

@@ -36,8 +36,8 @@ export default function Page(){
         },
     ]
     return(
-        <div className="flex flex-col gap-24  2xl:pt-[8rem]">
-            <div className="grid grid-cols-2 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px] h-[60vh]">
+        <div className="flex flex-col gap-24 pt-[8rem]">
+            <div className="xl:grid xl:grid-cols-2 flex flex-col gap-12 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px] xl:h-[60vh]">
                 <div className="company-hero bg-[#B7A5F9] relative col-span-1 text-white 2xl:px-[4rem] xl:px-[4rem] px-[1rem]">
                     <div className="flex items-center 2xl:gap-4 xl:gap-4 gap-2 py-4 z-50">
                         <span>Home</span>
@@ -45,9 +45,9 @@ export default function Page(){
                         <span className="text-[#EF6509]">About</span>
                     </div>
                 </div>
-                <div className="flex items-center col-span-1 text-[22px] font-[500]">
-                    <div className="px-52">
-                        <h1 className="text-[36px] text-[#EF6509] font-[600]">ABOUT US</h1>
+                <div className="flex items-center col-span-1 xl:text-[22px] text-[16px] font-[500]">
+                    <div className="xl:px-52 px-4">
+                        <h1 className="xl:text-[36px] text-[24px] text-[#EF6509] font-[600]">ABOUT US</h1>
                         <small>
                         Welcome to Essential E--Auction, your premier destination for online auctions, where buyers and sellers 
                         come together to discover unique items and incredible deals. Founded in [Year], we are dedicated to 
@@ -56,7 +56,7 @@ export default function Page(){
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-3 gap-8 items-center text-[22px] font-[500] 2xl:px-[4rem] xl:px-[4rem] px-[1rem]">
+            <div className="xl:grid xl:grid-cols-3 flex flex-col gap-8 items-center xl:text-[22px] text-[16px] font-[500] 2xl:px-[4rem] xl:px-[4rem] px-[1rem]">
                 <div className="col-span- 1">
                     <p className="text-[24px] text-[#EF6509] font-[700]">OUR MISSION</p>
                     <small>
@@ -64,9 +64,9 @@ export default function Page(){
                     We strive to provide a platform that fosters fair competition, integrity, and accessibility for all users. 
                     </small>
                 </div>
-                <div className="flex flex-col gap-8 col-span-2 pl-32 py-8 shadow-xl border rounded-2xl">
+                <div className="flex flex-col gap-8 col-span-2 xl:pl-32 xl:px-0 px-4 py-8 shadow-xl border rounded-2xl">
                     <p className="text-[24px] text-[#EF6509] font-[700]">WHAT WE OFFER</p>
-                    <ul className="flex flex-col gap-8 text-[22px] font-[500]">
+                    <ul className="flex flex-col gap-8 xl:text-[22px] text-[14px] font-[500]">
                         {contents.map((content, index)=>(
                         <li className="flex gap-2 text-[#EF6509]">
                             <span>{content.header} <small className="text-black">{content.body}</small></span>
@@ -77,11 +77,11 @@ export default function Page(){
             </div>
             <div className="flex flex-col gap-8 px-[4rem]">
                 <p className="text-[24px] text-[#EF6509] font-[700]">WHY CHOOSE US?</p>
-                <div className="grid grid-cols-3 gap-6">
+                <div className="xl:grid xl:grid-cols-3 flex flex-col gap-6">
                     {cards.map((card, index)=>(
                     <div key={index} className="flex flex-col items-center gap-12 py-12 px-4 border border-[#35318E] rounded-2xl text-[22px] font-[500] text-[#EF6509] shadow-xl">
                         <p>{card.hearder}</p>
-                        <small className="text-[18px] text-black">{card.details}</small>
+                        <small className="xl:text-[18px] text-[16px] text-black">{card.details}</small>
                     </div>
                     ))}
                 </div>
@@ -89,11 +89,11 @@ export default function Page(){
             <div className=" w-full">
                 <FooterCard/>            
             </div>
-            <div className="w-full grid grid-cols-3 items-center 2xl:px-[4rem] xl:px-[4rem] px-[1rem] py-24 bg-gradient-to-r to-[#FBFDFB] from-[#6C6193]">
-                <div className="px-[10rem]">
+            <div className="w-full xl:grid xl:grid-cols-3 flex flex-col gap-8 items-center 2xl:px-[4rem] px-4 xl:py-24 py-8 bg-gradient-to-r to-[#FBFDFB] from-[#6C6193]">
+                <div className="xl:px-[10rem] px-4">
                     <button className="px-24 bg-[#EF6509] py-3 rounded-2xl text-white">FAQs</button>
                 </div>
-                <div className="col-span-2 text-[22px] font-[500] text-center px-48">
+                <div className="col-span-2 xl:text-[22px] text-[16px] font-[500] text-center xl:px-48">
                     <p className="text-[#EF6509] font-[700]">CONTACT US</p>
                     <small>Have questions or need assistance? Feel free to reach out to our support team at [Contact Information]. We’re here to help! You can also check our FAQs for quick answers to common questions.</small>
                 </div>

@@ -8,7 +8,7 @@ import useStore from '../store';
 import { axiosInstance } from '@/utils/axios';
 import { useRouter } from 'next/navigation';
 import { Rings } from 'react-loading-icons';
-
+import { Toast } from '@/utils/alert';
 
 export default function SignUp() {
   const {initializeUser} = useStore();
@@ -33,7 +33,14 @@ export default function SignUp() {
         
         if(response.status == 200){
           initializeUser(data?.token)
-          router.push("/dashboard")
+          Toast.fire({
+            icon: "success",
+            title: "Login successful!",
+  
+            didClose: () => {
+              router.push("/dashboard")            },
+          });
+          
         }
       }catch(error){
         const errorMessage = error.response.data
@@ -57,7 +64,7 @@ export default function SignUp() {
     <div  className="lg:px-24 px-4 py-12 lg:grid grid-cols-5 mt-28 ">   
         <form 
         onSubmit={formik.handleSubmit} 
-        className="flex flex-col justify-center px-8 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl"
+        className="flex flex-col justify-center px-12 pb-12 col-span-3 text-center items-center relative shadow-md border rounded-2xl"
         >
         <div className='h-2 w-1/3  bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>   
         <div className='flex items-center justify-center pt-12 pl-16 '>

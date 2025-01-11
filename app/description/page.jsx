@@ -1,10 +1,35 @@
+"use client";
 import ProductVerify from "@/components/productVerify"
+import { FaArrowRight } from "react-icons/fa6";
+import { useState } from "react";
 
 
 export default function Page(){
-    return(
-<div className="p-8 bg-gray-100 mt-32 px-24">
-  {/* <ProductVerify/> */}
+
+  const [productVerification, setProductVerification] = useState(false);
+  const [mainImage, setMainImage] = useState("/car-one.png");
+  const [products, setProducts] = useState([
+    "/car-four.png",
+    "/car-three.png",
+    "/car-two.png"
+  ])
+
+  const handleImageClick = (newImage, index) => {
+    
+    products[index] = mainImage
+    setMainImage(newImage);
+  };
+
+  return(
+<div className="xl:p-8 bg-gray-100 mt-32 xl:px-24 px-4 xl:py-0 py-8 relative">
+
+  {productVerification &&
+  <ProductVerify 
+  setProductVerification={setProductVerification} 
+  productVerification={productVerification}
+  />
+  }
+  
   <div className="text-sm gap-4 flex item-center mb-4 text-gray-600">
     <small className="hover:underline">Home</small> 
     <small className="hover:underline">Auctions</small> 
@@ -12,29 +37,50 @@ export default function Page(){
   </div>
 
   <div className="">
-    <div className="grid grid-cols-5 items-center">
-        <div className=" col-span-3 grid grid-cols-4 gap-16">
-            <div className="flex flex-col gap-4 space-y-4 w-full col-span-1">
-                <div className="flex border border-[#FF9354] rounded-2xl h-32 w-28 items-center">
-                    <img src="/car-four.png" className="rounded-md object-cover w-full h-auto" alt="BMW front view"/>
-                </div>
-                <div className=" flex items-center border border-[#FF9354] rounded-2xl h-32 w-28">
-                    <img src="/car-three.png" className="rounded-md object-cover w-full h-auto" alt="BMW front view"/>
-                </div>
-                <div className=" flex items-center border border-[#FF9354] rounded-2xl h-32 w-28">
-                    <img src="/car-two.png" className="rounded-md object-cover w-full h-auto" alt="BMW front view"/>
-                </div>
+    <div className="xl:grid xl:grid-cols-5 flex flex-col gap-12 xl:items-center">
+        <div className=" col-span-3 xl:grid xl:grid-cols-4 gap-16">
+        <div className="flex xl:flex-col items-center gap-4 space-y-4 w-full col-span-1">
+              <div
+                className="flex border border-[#FF9354] rounded-2xl h-32 w-28 items-center cursor-pointer"
+                onClick={() => handleImageClick("/car-four.png", 0)}
+              >
+                <img src={products[0]} className="rounded-md object-cover w-full h-auto" alt="BMW front view" />
+              </div>
+              <div
+                className="flex items-center border border-[#FF9354] rounded-2xl h-32 w-28 cursor-pointer"
+                onClick={() => handleImageClick("/car-three.png", 1)}
+              >
+                <img src={products[1]} className="rounded-md object-cover w-full h-auto" alt="BMW side view" />
+              </div>
+              <div
+                className="flex items-center border border-[#FF9354] rounded-2xl h-32 w-28 cursor-pointer"
+                onClick={() => handleImageClick("/car-two.png", 2)}
+              >
+                <img src={products[2]} className="rounded-md object-cover w-full h-auto" alt="BMW rear view" />
+              </div>
             </div>
-            <div className="w-full h-full col-span-3 p-6">
-                <img src="/car-one.png" height={50} width={50} className="rounded-md w-full object-cover h-auto" alt="BMW main image"/>
+
+            <div className="w-full h-full col-span-3 p-6 flex justify-center items-center">
+                <img src={mainImage} height={50} width={50} className="rounded-md w-full object-cover h-auto" alt="BMW main image"/>
             </div>
         </div>
-        <div className="flex flex-col gap-8 col-span-2">
+        <div className="flex flex-col gap-8 xl:col-span-2">
 
         <div className="flex flex-wrap lg:flex-nowrap gap-8">
-          <div className="w-full ">
-            <div className="bg-gray-50 py-4 px-12 rounded-2xl border border-[#EF6509]">
-              <h2 className="text-lg font-semibold mb-4 text-center py-2">Vehicle Details</h2>
+          <div className="w-full flex flex-col gap-4">
+            <div className="flex items-end justify-end">
+              <button 
+              className="flex gap-2 items-center text-white p-2 bg-[#017B23] rounded-xl "
+              onClick={
+                ()=>setProductVerification(true)
+              }
+              >
+                View verification page
+                <FaArrowRight color="white"/>
+              </button>
+            </div>
+            <div className="bg-gray-50 py-4 xl:px-12 px-4 rounded-2xl border border-[#EF6509]">
+              <h2 className="text-lg font-semibold mb-4 text-center py-2">Specification</h2>
               <ul className="space-y-2 p-2 shadow-xl border-black border rounded-xl overflow-hidden">
                 <li className="w-full border-b py-1 border-b-black flex justify-between"><span className="font-bold">Colors:</span> White</li>
                 <li className="w-full border-b py-1 border-b-black flex justify-between"><span className="font-bold">Lot Number:</span> 123456</li>
@@ -55,15 +101,17 @@ export default function Page(){
       </div>
     </div>
     <div className="w-full mt-24">
-        <div className="bg-gray-50 p-4 rounded-t-2xl shadow-md">
-            <h2 className="text-lg font-semibold mb-4">Vehicle Description</h2>
+        <div className="bg-gray-50 p-4 rounded-t-2xl shadow-xl xl:pb-24 pb-12">
+            <h2 className="text-lg font-semibold mb-4 border-b border-[#EF6509]">Vehicle Description</h2>
             <p>
-            I'm offering my well-maintained 2016 BMW 3 Series for auction. This car delivers the perfect blend of luxury and performance with its powerful engine, smooth handling, and premium interior loaded with advanced features. I’ve thoroughly enjoyed every drive, appreciating its reliability and exhilarating performance. If you’re looking for a high-quality driving experience, this BMW is the perfect choice.
+            I'm offering my well-maintained 2016 BMW 3 Series for auction. This car delivers the perfect blend of luxury and performance with its powerful 
+            engine, smooth handling, and premium interior loaded with advanced features. I’ve thoroughly enjoyed every drive, appreciating its reliability 
+            and exhilarating performance. If you’re looking for a high-quality driving experience, this BMW is the perfect choice.
             </p>
         </div>
     </div>
-    <div className="bg-[#4B3F94] text-white p-6 rounded-b-2xl">
-        <div className="flex justify-between">
+    <div className="bg-[#554AA2] text-white p-6 mb-12 rounded-b-2xl">
+        <div className="flex xl:flex-row flex-col xl:gap-0 gap-8 justify-between">
             <div className="space-y-4">
                 <div>
                 <span className="font-semibold">Time Left:</span>
@@ -83,14 +131,14 @@ export default function Page(){
                 </div>
             </div>
 
-            <div className="space-y-4 w-1/3">
+            <div className="space-y-4 xl:w-1/3">
                 <div className="flex flex-col gap-2">
                     <label htmlFor="lastName">Enter amount</label>
-                    <input type="number" placeholder="Type amount" className="w-full px-4 py-2 rounded-md text-black text-center" />
+                    <input type="number" placeholder="Type amount" className="w-full px-4 py-4 rounded-md text-black text-center" />
                 </div>
                 <div className="flex justify-between w-full gap-8">
-                <button className="bg-gray-600 hover:bg-gray-500  py-2 rounded-md w-full">Add to Watchlist</button>
-                <button className="bg-[#EF6509] hover:bg-[#e25d08] py-2 rounded-md w-full">Bid</button>
+                <button className="border border-white  py-3 rounded-md w-full">Add to Watchlist</button>
+                <button className="bg-[#EF6509] hover:bg-[#e25d08] py-3 rounded-md w-full">Bid</button>
                 </div>
             </div>
         </div>

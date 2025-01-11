@@ -141,7 +141,7 @@ const {user, getUser} = useStore()
                             <MdKeyboardArrowDown size={14}/>
                             </div>
                             <div 
-                            className=" hidden absolute w-[250px] border-[#35318E] top-14 bg-[#35318E] group-hover:block group-focus-within:block hover:block">
+                            className=" hidden absolute w-[250px] border-[#35318E] top-10 bg-[#35318E] group-hover:block group-focus-within:block py-8 hover:block z-50">
                                 {categories.map((item, index)=>(
                                 <div className="relative group">
                                     <div className={`${item?.class} flex justify-between items-center p-4`}>

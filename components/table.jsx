@@ -6,20 +6,20 @@ export default function Table({headers}){
 
     const tdStyle = "py-4 px-5 border-y capitalize text-center"
     return(
-        <div className="2xl:px-[4rem] xl:px-[4rem] px-[1rem]">
-            <table className="w-full text-[18px] font-[500] border-separate border-spacing-y-2">
-                <thead className="text-[18px] w-full text-white font-[500] bg-[#35318E] ">
+        <div className="2xl:px-[4rem] xl:px-[4rem] px-[1rem] overflow-x-scroll">
+            <table className="w-full xl:text-[18px] text-[12px] font-[500] border-separate border-spacing-y-2">
+                <thead className=" w-full text-white font-[500] bg-[#35318E] ">
                 {headers.map((header, index) => (
                     <th
                     key={header}
                     className={classnames({
-                        "py-8" : true,
+                        "xl:py-8 py-4" : true,
                         "rounded-tl-2xl rounded-bl-2xl" : index === 0,
                          "rounded-tr-2xl rounded-br-2xl" : index === 4
                     })}
                     >
                     <p className={classnames({
-                        "w-full border-r-2 border-r-white text-center" : true,
+                        "w-full xl:border-r-2 border-r-white text-center" : true,
                         "border-r-[#35318E] " : index === 4 
                         })}
                         >

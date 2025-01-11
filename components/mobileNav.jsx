@@ -68,17 +68,17 @@ export default function MobileNav({setMenuToggle}){
                    
                     <hr className="border-2"/>
                     <Link 
-                    href={{}} 
+                    href="/about" 
                     className={nav_btn}
                     onClick={()=>setMenuToggle(false)}
                     >About</Link>
                     <Link 
-                    href={{}} 
+                    href="/our-valuers" 
                     className={nav_btn}
                     onClick={()=>setMenuToggle(false)}
                     >Our Valuers</Link>
                     <Link 
-                    href={{}} 
+                    href="/vendors"
                     className={nav_btn}
                     onClick={()=>setMenuToggle(false)}
                     >Our Vendors</Link>

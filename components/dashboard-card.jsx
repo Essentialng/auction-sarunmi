@@ -1,39 +1,40 @@
 "use client";
 import { useState } from "react";
 
-export default function DashboardCrad(){
+export default function DashboardCrad({products}){
+    
     const data = ["1","2"]
     return(
         <div className="grid grid-cols-2 gap-12">
-        {data.map((item)=>(
+        {products?.products?.map((item)=>(
         <>
-            <div className="w-full">
-                <div className="fle flex-col gap-44">
-                    <div className="w-full h-1/2 px-24">
-                        <img src="/car-four.png" className="w-full h-full"/>
+            <div className="w-full col-span-1 shadow-md rounded-xl py-12">
+                <div className="fle flex-col gap-8 flex items-center justify-center">
+                    <div className="w-[300px] h-[300px] rounded-xl overflow-hidden">
+                        <img src={item?.image} className="w-full h-full"/>
                     </div>
                     <div className="grid grid-cols-5 gap-8 px-6">
                         <div className="col-span-2 border shadow-xl flex flex-col gap-3 p-6 text-center rounded-xl font-semibold text-[14px]">
-                            <h2 className="text-[24px]">Vehicle details</h2>
+                            <h2 className="text-[24px]">{item?.productType} details</h2>
                             <div className="flex justify-between items-center">
                                 <small className="font-normal">Name:</small>
-                                <small >BMW</small>
+                                <small >{item?.productName}</small>
                             </div>
                             <div className="flex justify-between items-center">
                                 <small className="font-normal">Colors:</small>
-                                <small >White</small>
+                                <small >{item?.color}</small>
                             </div>
                             <div className="flex justify-between items-center">
                                 <small className="font-normal">Location:</small>
-                                <small >Ikeja, Lagos</small>
+                                <small >{item?.location}</small>
                             </div>
                             <div className="flex justify-between items-center">
                                 <small className="font-normal">Fuel:</small>
-                                <small >Petrol</small>
+                                <small >{item?.fuel}</small>
                             </div>
                             <div className="flex justify-between items-center">
                                 <small className="font-normal">Year Used:</small>
-                                <small >2 years</small>
+                                <small >{item?.yearsUsed}</small>
                             </div>
                             <span href="" className="pt-8 text-[16px] text-[#FF9354]">See All</span>
                         </div>
@@ -64,6 +65,11 @@ export default function DashboardCrad(){
                     </div>
                 </div>
             </div>
+            {(products?.products?.length || 0) < 2 && (
+            <div className=" border flex flex-col items-center justify-center bg-gray-200 rounded-xl">
+                Empty
+            </div>
+            )}
             </>
             ))}
         </div>

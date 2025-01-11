@@ -10,7 +10,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { axiosInstance } from '@/utils/axios';
 import { Rings } from 'react-loading-icons';
 import useStore from '../store';
-
+import { Toast } from '@/utils/alert';
 
 export default function SignUp() {
   const {initializeUser} = useStore();
@@ -75,7 +75,15 @@ export default function SignUp() {
         const response = await axiosInstance.post('/auth/register', values)
         const data = response.data
         if(response.status == 201){
-          setStatus(true)
+          Toast.fire({
+            icon: "success",
+            title: "Registration successful!",
+  
+            didClose: () => {
+              setStatus(true)
+            },
+          });
+          
         }
       }catch(error){
         const errorMessage = error.response.data

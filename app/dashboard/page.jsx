@@ -1,6 +1,9 @@
-import Image from "next/image"
+"use client";
 import DashboardCrad from "@/components/dashboard-card";
 import { AuctionItems } from "@/components/auction_items";
+import useStore from "../store";
+import { useState, useEffect } from "react";
+import { axiosInstance } from "@/utils/axios";
 
 export const data = 
             [
@@ -79,11 +82,41 @@ export const data =
             },
     ]
 export default function Dashboard(){
+
+    const {user} = useStore()
+    const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState([]);
+  
+
+    const fetchUserProductHandler = async ()=>{
+        setLoading(true);
+        try{
+            const response = await axiosInstance.post("getUserProducts",
+                { id: user?.id }
+            )
+            const data = await response.data;
+            if(response.status == 200){
+                setProducts(data)
+            }
+        }catch(error){
+            console.log(error);
+        }finally{
+            setLoading(false);
+        }
+    }
+
+
+    useEffect(()=>{
+        if(user){
+            fetchUserProductHandler()
+        }
+    },[user]);
+
     return(
-        <div className="px-24 py-44 flex flex-col gap-44">
+        <div className="xl:px-24 px-4 py-44 flex flex-col gap-44">
             <div className="flex flex-col gap-12">
                 <h1 className="text-[#EF6509] text-[24px] font-semibold">Auctions You’re Participating In</h1>
-                <DashboardCrad/>
+                <DashboardCrad products={products}/>
             </div>
             <div className="flex flex-col gap-12">
             <h1 className="text-[#EF6509] text-[24px] font-semibold">My Watchlist</h1>

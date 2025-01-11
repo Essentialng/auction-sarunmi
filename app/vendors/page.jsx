@@ -3,7 +3,7 @@ import Table from "@/components/table"
 import FooterCard from "@/components/footerCard"
 export default function Page(){
     const headers = [
-        "Serial Numbers",
+        "S/N",
         "Name",
         "Location",
         "Expertise",

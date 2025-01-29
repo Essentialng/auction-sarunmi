@@ -1,4 +1,4 @@
-import Background from "@/components/backgroundImg"
+import Background from "@/components/users/backgroundImg"
 import Link from "next/link"
 export default function page(){
      const inputStyle= "border px-2 py-4 rounded-md bg-[#F4FDFF]"

@@ -4,6 +4,7 @@ import Image from "next/image";
 import classnames from "classnames"
 import  Sliders  from "./sliders";
 import { FaArrowRight } from "react-icons/fa6";
+import Link from "next/link";
 
 export default function Hero(){
     const hero_section = [ 
@@ -15,6 +16,7 @@ export default function Hero(){
             "image2": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290583/full-light.png",
             "image3": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290557/generator.png",
             "button": "REGISTER & START BIDDING",
+            "link" : "/register",
             "cards":[
                 {
                 "title": "SIGN UP",
@@ -37,7 +39,8 @@ export default function Hero(){
             "details": "Discover unbeatable deals on top-quality home appliances at our appliance auctions, perfect for upgrading your home with style and savings. Bid now and transform your living space into the haven of your dreams!",
             "image": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290608/machines.png",
             "image3": "",
-            "button": "CATEGORIES"
+            "button": "CATEGORIES",
+            "link" : "/categories",
         },
         {
             "title": "Gadget Galore:",
@@ -46,7 +49,8 @@ export default function Hero(){
             "bf_orange_text": "Treasures",
             "details": "Dive into a world of tech wonders at our gadget auctions, where you can uncover coveted gadgets and secure fantastic savings. Don't miss out on the opportunity to elevate your tech game while keeping your budget intact!",
             "image": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290624/iphones.png",
-            "button": "CATEGORIES"
+            "button": "CATEGORIES",
+            "link" : "/categories",
         }
     ]
     
@@ -107,12 +111,14 @@ export default function Hero(){
                         </div>
                     </div>
                     
-                    <div className=" text-left bg-[#EF6509] rounded-[10px] px-[2rem] py-[10px] items-center
+                    <Link
+                    href={hero.link} 
+                    className=" text-left bg-[#EF6509] rounded-[10px] px-[2rem] py-[10px] items-center
                      text-white 2xl:w-2/5 xl:w-2/5 w-3/5 cursor-pointer text-[16px] font-[500] flex justify-between
                       hover:bg-[#35318E] hover:shadow-white shadow-md" >
                         <span>{hero.button}</span>
                         <FaArrowRight size={20}/>
-                    </div>
+                    </Link>
 
                 </div>
 

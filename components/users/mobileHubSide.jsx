@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import Notification from '@/components/notification';
-import History from '@/components/history';
-import ProfileOverview from '@/components/profilePreview';
-import Page from "@/components/upload"
+import Notification from '@/components/users/notification';
+import History from '@/components/users/history';
+import ProfileOverview from '@/components/users/profilePreview';
+import Page from "@/components/users/upload"
 import { FaUser } from "react-icons/fa6";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";

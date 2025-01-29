@@ -1,5 +1,5 @@
 "use client";
-import Sliders from "@/components/sliders";
+import Sliders from "@/components/users/sliders";
 import classnames from "classnames"
 import Image from "next/image";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";

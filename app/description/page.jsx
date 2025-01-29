@@ -1,5 +1,5 @@
 "use client";
-import ProductVerify from "@/components/productVerify"
+import ProductVerify from "@/components/users/productVerify"
 import { FaArrowRight } from "react-icons/fa6";
 import { useState } from "react";
 

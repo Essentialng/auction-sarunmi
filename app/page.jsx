@@ -1,8 +1,8 @@
-import Hero from "@/components/heroSection";
-import Auctions from "@/components/auctions";
-import Cards from "@/components/cards";
-import Footer from "@/components/footer";
-import HeroSectionMobile from "@/components/heroSectionMobile";
+import Hero from "@/components/users/heroSection";
+import Auctions from "@/components/users/auctions";
+import Cards from "@/components/users/cards";
+import Footer from "@/components/users/footer";
+import HeroSectionMobile from "@/components/users/heroSectionMobile";
 export default function DashBorad(){
 
 

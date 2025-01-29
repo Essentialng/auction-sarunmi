@@ -1,7 +1,8 @@
 import "./globals.css";
 import {manrope} from "@/utils/fonts"
-import NavBar from "@/components/navBar";
-import FooterContact from "@/components/footerContact";
+import NavBar from "@/tabs/users/navBar";
+import FooterContact from "@/components/users/footerContact";
+import SideBar from "@/tabs/admin/sideBar";
 
 
  const metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${manrope}`}>
         <NavBar/>
+        <SideBar/>
         {children}
         <FooterContact/>
       </body>

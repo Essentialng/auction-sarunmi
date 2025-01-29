@@ -1,6 +1,6 @@
-import Products from "@/components/products"
-import Table from "@/components/table"
-import FooterCard from "@/components/footerCard"
+import Products from "@/components/users/products"
+import Table from "@/components/users/table"
+import FooterCard from "@/components/users/footerCard"
 export default function Page(){
     const headers = [
         "S/N",

@@ -97,3 +97,10 @@ model Notification {
   user        User     @relation("notification", fields: [userId], references: [id])
   createdAt   DateTime @default(now())
 }
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String
+  createdAt   DateTime @default(now())
+
+}

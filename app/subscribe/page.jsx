@@ -1,4 +1,4 @@
-import Background from "@/components/backgroundImg";
+import Background from "@/components/users/backgroundImg";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { RiArrowRightSLine } from "react-icons/ri";
 import Link from "next/link";

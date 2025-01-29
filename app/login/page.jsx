@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import Background from '@/components/backgroundImg';
+import Background from '@/components/users/backgroundImg';
 import Image from 'next/image';
 import useStore from '../store';
 import { axiosInstance } from '@/utils/axios';
@@ -45,12 +45,20 @@ export default function SignUp() {
       }catch(error){
         const errorMessage = error.response.data
         if(error.status == 404){
-          console.log(errorMessage)
-          setMessage(errorMessage.message)
+          Toast.fire({
+            icon: "error",
+            title: errorMessage.message,
+          });
         }else if(error.status == 401){
-          setMessage(errorMessage.message)
+          Toast.fire({
+            icon: "error",
+            title: errorMessage.message,
+          });
         }else{
-          setMessage("Connect to a strong network")
+          Toast.fire({
+            icon: "error",
+            title: "Connect to a strong network"
+          });
         }
       }finally{
         setLoading(false)
@@ -108,7 +116,10 @@ export default function SignUp() {
         <div className='text-left w-3/4'>
           <small className='text-red-600'>{message}</small>
         </div>
-        <button type="submit" className=" w-3/4 bg-[#EF6509] text-white py-2 rounded-md flex justify-center items-center">
+        <button 
+        type="submit"
+        disabled={loading} 
+        className=" w-3/4 bg-[#EF6509] text-white py-2 rounded-md flex justify-center items-center">
          {loading ? <Rings width={30} height={30}/> : "Login"}
         </button>
         </div>

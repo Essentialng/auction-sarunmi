@@ -1,5 +1,5 @@
 import { FaAngleRight } from "react-icons/fa6";
-import FooterCard from "@/components/footerCard";
+import FooterCard from "@/components/users/footerCard";
 
 export default function Page(){
     const contents = [

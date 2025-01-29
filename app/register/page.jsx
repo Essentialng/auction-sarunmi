@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import Background from '@/components/backgroundImg';
-import PopUp from '@/components/signup-pop';
+import Background from '@/components/users/backgroundImg';
+import PopUp from '@/components/users/signup-pop';
 import { IoIosArrowBack } from "react-icons/io";
 import { axiosInstance } from '@/utils/axios';
 import { Rings } from 'react-loading-icons';
@@ -21,7 +21,7 @@ export default function SignUp() {
   const [message, setMessage] = useState("")
   const [resend, setResend] = useState(false)
   const [loadingResend, setLoadingResend] = useState(false)
-
+  const [age, setAge] = useState(false)
   const details = {
     headers: "Account Created Successfully",
     texts: `Welcome to Essential E-Auction, your account has been created successfully, 
@@ -88,9 +88,17 @@ export default function SignUp() {
       }catch(error){
         const errorMessage = error.response.data
         if(error.status == 404){
-          setMessage(errorMessage.message)
+          Toast.fire({
+            icon: "error",
+            title: errorMessage.message,
+  
+          });
         }else{
-          setMessage("Connect to a strong network")
+          Toast.fire({
+            icon: "error",
+            title: "Connect to a strong network",
+  
+          });
         }
       }finally{
         setLoading(false);
@@ -107,18 +115,48 @@ export default function SignUp() {
       email : formik.values.email
     });
 
-    setPassword(true)
+    if(response.ok){
+      
+      Toast.fire({
+        icon: "success",
+        title: "Verification code sent!",
+
+        didClose: () => {
+          setPassword(true)
+        },
+      });
+    }
     
     }catch(error){
-     
+      Toast.fire({
+        icon: "error",
+        title: "Connect to a strong network",
+
+      });
     }finally{
       setLoading(false)
     }
   }
 
 
-
+  
   const inputStyle= "border px-2 py-4 rounded-md bg-[#F4FDFF]"
+  const vendorDisable = (
+  formik.values.firstName &&
+  formik.values.lastName &&
+  formik.values.email &&
+   formik.values.phoneNumber &&
+   formik.values.state &&
+   formik.values.nin && age
+  )
+
+  const bidderDisable = (
+    formik.values.firstName &&
+    formik.values.lastName &&
+    formik.values.email &&
+    formik.values.phoneNumber && age
+  )
+
 
   return (
     <>
@@ -253,7 +291,13 @@ export default function SignUp() {
           </div>
           <div className='flex gap-4 items-center pb-6'>
             <div >
-              <input type="checkbox" />
+              <input 
+              type="checkbox" 
+              onChange={()=>{
+                setAge(!age)
+              }} 
+              checked = {age}
+              required  />
             </div>
               <span className='lg:text-[12px] text-[9px] font-medium'>
               I agree that i am at least 18 years of age and that i have read and agreed to the <span className='text-[#35318E]'>Terms and Condition</span>, and <span className='text-[#35318E]'> Privacy policy</span>
@@ -265,20 +309,11 @@ export default function SignUp() {
           type="submit" 
           className={`
             ${ formik.values.type == "vendor" ?
-            (( formik.values.firstName &&
-            formik.values.lastName &&
-            formik.values.email &&
-             formik.values.phoneNumber &&
-             formik.values.state &&
-             formik.values.nin) ? "bg-[#EF6509]" : "bg-gray-500"
+            ((vendorDisable) ? "bg-[#EF6509]" : "bg-gray-500"
             ) :
 
             (
-           (   
-             formik.values.firstName &&
-             formik.values.lastName &&
-             formik.values.email &&
-             formik.values.phoneNumber) ? "bg-[#EF6509]" : "bg-gray-500"
+           (bidderDisable) ? "bg-[#EF6509]" : "bg-gray-500"
             
             )}
             mt-8 w-3/4 text-white flex justify-center items-center rounded-md ${!loading && "py-3"}
@@ -286,24 +321,17 @@ export default function SignUp() {
           
           onClick={  ()=>{
             formik.values.type === "vendor" ?
-            ((formik.values.firstName &&
-            formik.values.lastName &&
-            formik.values.email &&
-            formik.values.phoneNumber &&
-            formik.values.state &&
-            formik.values.nin) && sendEmail()
+            ((vendorDisable && !loading) && sendEmail()
             ) :
 
             (
 
-            (formik.values.firstName &&
-            formik.values.lastName &&
-            formik.values.email &&
-            formik.values.phoneNumber )&& sendEmail()
+            (bidderDisable && !loading) && sendEmail()
             
             )
            }}
           
+           disabled={loading}
           >
             {loading ? <Rings/> : "Submit"}
           </button>
@@ -390,6 +418,7 @@ export default function SignUp() {
               </div>
             </div>
             <button 
+            disabled={loading}
             type="submit" 
             className={`${!loading && "py-3"} mt-8 w-3/4 bg-[#EF6509] text-white  rounded-md flex items-center justify-center`}
             >

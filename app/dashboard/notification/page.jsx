@@ -1,7 +1,7 @@
 "use client";
-import SideBar from "@/components/sideBar";
-import NotificationBar from "@/components/notificationBar";
-import Profile from "@/components/profileBar";
+import SideBar from "@/tabs/users/sideBar";
+import NotificationBar from "@/components/users/notificationBar";
+import Profile from "@/components/users/profileBar";
 import { useState } from "react";
 
 export default function Page(){

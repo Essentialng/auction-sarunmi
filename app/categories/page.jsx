@@ -1,11 +1,11 @@
 "use client";
 import { FaAngleRight } from "react-icons/fa6";
 import { BiSolidRightArrow } from "react-icons/bi";
-import Sliders from "@/components/sliders";
-import Products from "@/components/products";
-import FooterCard from "@/components/footerCard";
+import Sliders from "@/components/users/sliders";
+import Products from "@/components/users/products";
+import FooterCard from "@/components/users/footerCard";
 import { useState } from "react";
-import SliderProduct from "@/components/slideProducts";
+import SliderProduct from "@/components/users/slideProducts";
 
 const data = 
             [

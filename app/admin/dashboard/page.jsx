@@ -5,7 +5,7 @@ import { VscBell } from "react-icons/vsc";
 import { LiaEnvelopeOpenTextSolid } from "react-icons/lia";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
-
+import Table from "@/components/admin/table";
 
 export default function DashBoard(){
 
@@ -35,6 +35,60 @@ export default function DashBoard(){
           subscription: "VIP",
         },
       ];
+
+    const header = ["Date Joined", "Name", "Email", "Status"]
+
+    const contents = [
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Active",
+        },
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Inactive",
+        },
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Active",
+        },
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Active",
+        },
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Inactive",
+        },
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Inactive",
+        },
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Active",
+        },
+        {
+            dateJoined: "2022-01-01",
+            name: "Olufemi Chris",
+            email: "olufemichris23@gmail.com",
+            status: "Inactive",
+        },
+    ]
+
 
     return(
         <div className="w-full border mt-32 pl-24 py-6">
@@ -103,7 +157,7 @@ export default function DashBoard(){
                                 <input type="text" className="py-4 w-full outline-none" />
                             </div>
                         </div>
-                        table
+                        <Table header={header} contents={contents}/>
                     </div>
                 </div>
             </div>

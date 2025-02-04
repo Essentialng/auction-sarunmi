@@ -76,7 +76,7 @@ export default function SignUp() {
         >
         <div className='h-2 w-1/3  bg-[#EF6509] rounded-tl-2xl absolute top-0 left-0'/>   
         <div className='flex items-center justify-center pt-12 pl-16 '>
-            <Image src="/logo.png" width={100} height={100}/>
+            <Image src="/logo.png" width={100} height={100} alt=''/>
         </div>
         <header className='font-semibold text-[20px] py-8'>LOGIN</header>
         {/* Input Fields */}

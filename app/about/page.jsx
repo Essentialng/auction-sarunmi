@@ -68,7 +68,7 @@ export default function Page(){
                     <p className="text-[24px] text-[#EF6509] font-[700]">WHAT WE OFFER</p>
                     <ul className="flex flex-col gap-8 xl:text-[22px] text-[14px] font-[500]">
                         {contents.map((content, index)=>(
-                        <li className="flex gap-2 text-[#EF6509]">
+                        <li key={index} className="flex gap-2 text-[#EF6509]">
                             <span>{content.header} <small className="text-black">{content.body}</small></span>
                         </li>
                         ))}

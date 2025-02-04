@@ -177,9 +177,9 @@ const CarUpload = ({id, product}) => {
 
             <div className=" flex space-x-4">
               {images.map((image, index) => (
-              <div className="relative">
+              <div  key={index} className="relative">
                 <img
-                  key={index}
+                 
                   src={image}
                   alt={`Uploaded preview ${index}`}
                   className="w-28 h-28 object-cover rounded-lg"

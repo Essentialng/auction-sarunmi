@@ -6,12 +6,12 @@ export default function DashboardCrad({products}){
     const data = ["1","2"]
     return(
         <div className="grid grid-cols-2 gap-12">
-        {products?.products?.map((item)=>(
-        <>
+        {products?.products?.map((item, index)=>(
+        <div key={index}>
             <div className="w-full col-span-1 shadow-md rounded-xl py-12">
                 <div className="fle flex-col gap-8 flex items-center justify-center">
                     <div className="w-[300px] h-[300px] rounded-xl overflow-hidden">
-                        <img src={item?.image} className="w-full h-full"/>
+                        <img src={item?.image} className="w-full h-full" alt=""/>
                     </div>
                     <div className="grid grid-cols-5 gap-8 px-6">
                         <div className="col-span-2 border shadow-xl flex flex-col gap-3 p-6 text-center rounded-xl font-semibold text-[14px]">
@@ -70,7 +70,7 @@ export default function DashboardCrad({products}){
                 Empty
             </div>
             )}
-            </>
+            </div>
             ))}
         </div>
         

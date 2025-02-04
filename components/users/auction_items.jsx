@@ -15,9 +15,8 @@ export function AuctionItems({auctions, page}){
              "2xl:grid-cols-3 xl:grid-cols-3" : page === "categories"
             })}>
             {auctions?.map((item, index)=>(
-            <Link href="/description">
+            <Link key={index}  href="/description">
             <div
-            key={index} 
             className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">
                 <div className={classnames({
                     "w-1/3 text-center py-4 rounded-[10px] border border-[#7BC27A] font-[700] shadow-md ": true,
@@ -30,7 +29,7 @@ export function AuctionItems({auctions, page}){
                     "border-[#FF9354]": item.status === "Upcoming Auction",
                     })}>
                     <div className="relative">
-                        <Image src={item.image} width={260} height={170}/>
+                        <Image src={item.image} width={260} height={170} alt=""/>
                     </div>
                     <div className="flex flex-col gap-4"> 
                         <div className={classnames(

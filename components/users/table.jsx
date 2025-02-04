@@ -11,7 +11,7 @@ export default function Table({headers}){
                 <thead className=" w-full text-white font-[500] bg-[#35318E] ">
                 {headers.map((header, index) => (
                     <th
-                    key={header}
+                    key={index}
                     className={classnames({
                         "xl:py-8 py-4" : true,
                         "rounded-tl-2xl rounded-bl-2xl" : index === 0,
@@ -30,7 +30,7 @@ export default function Table({headers}){
                 </thead>
                 <tbody className="bg-white">
                     {data?.map((item, index) => (
-                    <tr className="shadow-md rounded-2xl">
+                    <tr key={index} className="shadow-md rounded-2xl">
                         <td className={`${tdStyle} border-l-2 rounded-l-2xl`}>
                             {index + 1}
                         </td>

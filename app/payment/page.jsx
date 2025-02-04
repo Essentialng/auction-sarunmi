@@ -33,7 +33,7 @@ export default function Page() {
                 setTogglePayment("card")
               }}
               >
-                <Image src="/card.png" width={80} height={20}/>
+                <Image alt="" src="/card.png" width={80} height={20}/>
               </button>
 
               <button 
@@ -43,7 +43,7 @@ export default function Page() {
               onClick={()=>{
                 setTogglePayment("payPal")
               }}>
-                <Image src="/paypal.png" width={80} height={20}/>
+                <Image alt="" src="/paypal.png" width={80} height={20}/>
               </button>
 
               <button 
@@ -55,7 +55,7 @@ export default function Page() {
                 setTogglePayment("transfer")
               }}
               >
-                <Image src="/transfer.png" width={80} height={20}/>
+                <Image alt="" src="/transfer.png" width={80} height={20}/>
               </button>
             </div>
             

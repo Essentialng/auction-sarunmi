@@ -29,14 +29,14 @@ export default function MobileNav({setMenuToggle}){
                     className="2xl:hidden"
                     onClick={()=>setMenuToggle(false)}
                     />
-                    <Image src="/logo.png" width={80} height={59}
+                    <Image src="/logo.png" width={80} height={59} alt=""
                     className="py-4 px-6 w-1/2 rounded-2xl bg-[#35318E]"
                     />
                 </div>
                 <div className="flex flex-col gap-8 lg:text-[20px] text-[14px] px-2">
                     {
                     menuContents.map((menu, index)=>(
-                    <>
+                    <div key={index}>
                         {menu.value !== "Others Categories" ?
                     
                     <Link href={
@@ -63,7 +63,7 @@ export default function MobileNav({setMenuToggle}){
                         </div>
                     </Link>
                         }
-                    </>
+                    </div>
                     ))}
                    
                     <hr className="border-2"/>

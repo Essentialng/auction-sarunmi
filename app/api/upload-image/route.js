@@ -8,33 +8,28 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-export const config = {
-  api: {
-    bodyParser: false, 
-  },
-};
-
-const uploadCoverImage = async (req, res) => {
+export async function POST(req) {
   const form = new formidable.IncomingForm();
-  form.uploadDir = './'; 
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error parsing form data' });
-    }
+  form.uploadDir = './';
 
-   
-    const filePath = files.file[0].path;
-
-    cloudinary.uploader.upload(filePath, { folder: 'cover_images' }, (cloudinaryError, result) => {
-      fs.unlinkSync(filePath);
-
-      if (cloudinaryError) {
-        return res.status(500).json({ message: 'Error uploading image to Cloudinary', error: cloudinaryError });
+  // Disable bodyParser manually in the form handler
+  return new Promise((resolve, reject) => {
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        reject(new Response(JSON.stringify({ message: 'Error parsing form data' }), { status: 500 }));
       }
 
-      return res.status(200).json({ imageUrl: result.secure_url });
+      const filePath = files.file[0].path;
+
+      cloudinary.uploader.upload(filePath, { folder: 'cover_images' }, (cloudinaryError, result) => {
+        fs.unlinkSync(filePath);
+
+        if (cloudinaryError) {
+          reject(new Response(JSON.stringify({ message: 'Error uploading image to Cloudinary', error: cloudinaryError }), { status: 500 }));
+        }
+
+        resolve(new Response(JSON.stringify({ imageUrl: result.secure_url }), { status: 200 }));
+      });
     });
   });
-};
-
-export default uploadCoverImage;
+}

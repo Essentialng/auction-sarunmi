@@ -57,7 +57,7 @@ export default function SleiderProduct({data, header}){
                     "border-[#FF9354]": item.status === "Upcoming Auction",
                     })}>
                     <div className="relative">
-                        <Image src={item.image} width={260} height={170}/>
+                        <Image src={item.image} width={260} height={170} alt=""/>
                     </div>
                     <div className="flex flex-col gap-4"> 
                         <div className={classnames(

@@ -32,7 +32,7 @@ export default function Cards(){
                     justify-center text-center text-[24px] font-[700] text-white items-center transition-all duration-500 ease-in-out
                     hover:bg-white hover:border border-[#554AA2] hover:h-[367px] hover:text-[#EF6509]">
                         <div className="flex flex-col gap-16 justify-center text-center items-center">
-                            <Image src={item.icon} width={80} height={80}/>
+                            <Image src={item.icon} width={80} height={80} alt=""/>
                             <p>{item.details}</p>
                         </div>
                         <small className="hidden_detail hidden text-[14px] font-[400] text-black">{item.hidden_detail}</small>

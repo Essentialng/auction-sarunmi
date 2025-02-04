@@ -8,7 +8,7 @@ export default function DashBorad(){
 
 
     return(
-    <main className="overflow-x-hidden manrope pt-32">
+    <main className="overflow-x-hidden manrope pt-28">
         <Hero/>
         <HeroSectionMobile/>
         <Auctions/>

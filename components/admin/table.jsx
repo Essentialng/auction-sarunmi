@@ -20,14 +20,20 @@ export default function Table({header, contents}){
             </thead>
             <tbody>
                 {contents.map((content, index)=>(
-                    <tr className="text-center h-12">
-                        <td>{content.dateJoined}</td>
+                    <tr key={index} className="text-center h-12">
+                        <td>{content?.dateJoined}</td>
                         <td>{content.name}</td>
                         <td>{content.email}</td>
                         <td className={classNames(
                             {"bg-[#A3D6A0]" : content.status == "Active" || content.status == "Successful"},
                             {"bg-[#FFA687]" : content.status == "Inactive" || content.status == "Pending"}
                         )}>{content.status}</td>
+                        {contents.length > 3 && (
+                        <>
+                            <td>{content?.subscription}</td>
+                            <td>{content?.lastLogin}</td>
+                        </>
+                        )}
                     </tr>
                 ))}
             </tbody>

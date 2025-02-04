@@ -126,13 +126,13 @@ export default function Hero(){
                     {
                     index === 0 
                     ? <div className="w-[470px]">
-                        <Image 
+                        <Image alt=""
                         className="absolute 2xl:left-[-4rem] xl:left-[1rem] left-[-10rem] 2xl:top-[4rem] xl:top-[15rem] z-30" 
                         src={ hero.image1} width={270} height={270}/>
-                        <Image 
+                        <Image alt=""
                         className="absolute 2xl:right-[4rem] xl:right-[2rem] right-[12rem] 2xl:top-[9rem] xl:top-[18rem] z-50" 
                         src={ hero.image2} width={270} height={270}/>
-                        <Image 
+                        <Image alt=""
                         className="absolute 2xl:left-[0rem] xl:left-[7rem] left-[-4rem] 2xl:bottom-[4rem] xl:bottom-[23rem] bottom-[30rem] z-10" 
                         src={ hero.image3} width={270} height={270}/>
                       </div>
@@ -141,9 +141,9 @@ export default function Hero(){
                     <div className="absolute w-[800px] right-2 top-[-4rem]">
                         {
                         index === 1 ?
-                        <Image className="relative 2xl:right-[-4rem] xl:right-[-10rem] 2xl:top-[4rem] xl:top-[20rem]" 
+                        <Image alt=""className="relative 2xl:right-[-4rem] xl:right-[-10rem] 2xl:top-[4rem] xl:top-[20rem]" 
                         src={ hero.image} width={670} height={270}/> :
-                        <Image className="relative right-[-22rem] 2xl:top-[4rem] xl:top-[15rem]" 
+                        <Image alt=""className="relative right-[-22rem] 2xl:top-[4rem] xl:top-[15rem]" 
                         src={ hero.image} width={520} height={270}/>
                         }
                     </div>

@@ -35,7 +35,7 @@ export default function FooterContact(){
             border-b-2 border-white py-10"
             >
                 <div className="2xl:w-full xl:w-full w-2/3 flex flex-col gap-6 text-[16px] ">
-                    <Image src="/logo.png" width={150} height={59}/>
+                    <Image src="/logo.png" width={150} height={59} alt=""/>
                     <p>We pride ourselves on being pioneers in the online marketplace, driven by a commitment
                         to excellence and customer satisfaction.
                     </p>

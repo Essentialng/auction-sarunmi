@@ -1,166 +1,185 @@
-import Image from "next/image"
-import { FaRegEnvelope } from "react-icons/fa";
-import { FiPhone } from "react-icons/fi";
-import { VscBell } from "react-icons/vsc";
-import { LiaEnvelopeOpenTextSolid } from "react-icons/lia";
-import { HiOutlineCog6Tooth } from "react-icons/hi2";
-import { IoSearchOutline } from "react-icons/io5";
-import Table from "@/components/admin/table";
+"use client";
+import Header from "@/components/admin/dashboardHeader"
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { FaArrowTrendDown } from "react-icons/fa6";
+import { IoIosArrowDropdown } from "react-icons/io";
+import Static from "@/components/admin/staticTable";
+import AuctionStat from "@/components/admin/auctionStat";
+import DonutChart from "@/components/admin/Charts";
+import TrafficOverviewChart from "@/components/admin/lineChart";
+import { MdOutlineEditCalendar } from "react-icons/md";
+import { TbSpeakerphone } from "react-icons/tb";
 
-export default function DashBoard(){
 
-    const userData = [
-        {
-          name: "Olufemi Chris",
-          email: "olufemichris23@gmail.com",
-          phone: "+2348199977444",
-          subscription: "Premium",
-        },
-        {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          phone: "+1234567890",
-          subscription: "Standard",
-        },
-        {
-          name: "Jane Smith",
-          email: "janesmith@example.com",
-          phone: "+9876543210",
-          subscription: "Premium",
-        },
-        {
-          name: "James Bond",
-          email: "jamesbond@mi6.com",
-          phone: "+1122334455",
-          subscription: "VIP",
-        },
-      ];
+export default function UserManagement(){
 
-    const header = ["Date Joined", "Name", "Email", "Status"]
+    const cards = [
+        {
+            name: "Vendors",
+            count: "7,265",
+            percent: "11.02%",
+            color: "#FFA687"
+        },
+        {
+            name: "Vendors",
+            count: "7,265",
+            percent: "11.02%",
+            color: "#B7A5F9"
+        },
+        {
+            name: "Vendors",
+            count: "7,265",
+            percent: "11.02%",
+            color: "#FFA687"
+        },
+        {
+            name: "Vendors",
+            count: "7,265",
+            percent: "11.02%",
+            color: "#B7A5F9"
+        },
+    ]
 
-    const contents = [
+    const recentActivity = [
         {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
+            auction : "Vintage Car",
+            description : "New Auction",
             status: "Active",
+            date: "12th Jun"
         },
         {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
-            status: "Inactive",
-        },
-        {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
+            auction : "House",
+            description : "Auction Completed",
             status: "Active",
+            date: "12th Jun"
         },
         {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
+            auction : "Sarah Ben",
+            description : "Renew  Subscription",
             status: "Active",
+            date: "12th Jun"
         },
         {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
-            status: "Inactive",
-        },
-        {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
-            status: "Inactive",
-        },
-        {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
+            auction : "Chris Evan",
+            description : "Violation of auction rules",
             status: "Active",
-        },
-        {
-            dateJoined: "2022-01-01",
-            name: "Olufemi Chris",
-            email: "olufemichris23@gmail.com",
-            status: "Inactive",
+            date: "Suspended"
         },
     ]
 
 
+
     return(
-        <div className="w-full border mt-32 pl-24 py-6">
-            <div className="w-11/12 ml-auto border rounded-lg shadow-2xl py-8 px-12 flex flex-col gap-4">
-                <div className="flex justify-between items-center">
-                    <div className="flex flex-col gap-2">
-                        <p>Users Management</p>
-                        <div className="flex items-center gap-4">
-                            <small>Users Management </small>
-                            {">"}
-                            <small>Verify Users</small>
+    <div className="w-full border mt-28 py-6 h-fit">
+         <div className="w-10/12 ml-auto border rounded-lg shadow-2xl py-6 px-12 flex flex-col gap-4">
+            <Header/>
+
+            <div className="grid grid-cols-4 items-center gap-8">
+                {cards.map((card, index)=>(
+                    <div key={index} className={`flex flex-col gap-4 rounded-2xl p-8 bg-[${card.color}]`}>
+                        <div className={`h-fit rounded-xl text-[12px]`}>
+                            {card.name}
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <h4 className="text-2xl font-bold text-end">{card.count}</h4>
+                            <div className="flex items-center gap-1">
+                                <small className="text-[12px]">
+                                    +{card.percent} 
+                                <small className="text-black">
+                                    {card.date}
+                                </small>
+                                </small>
+                                <FaArrowTrendUp size={12}/>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center justify-end gap-4">
-                            <VscBell size={24}/>
-                            <LiaEnvelopeOpenTextSolid size={24}/>
-                            <HiOutlineCog6Tooth size={24}/>
+                ))}
+            </div>
+            <div className="grid grid-cols-12 gap-8">
+                <div className="col-span-6  p-8 bg-[#F7F9FB] rounded-xl">
+                    <div className="mb-4">
+                        <p>Users</p>
+                        <div className="flex items-center gap-1">
+                            <small>User Stats</small>
+                            <IoIosArrowDropdown size={12}/>
                         </div>
-                        <div>
-                            <small>11 June, 2024 </small>
-                            <small>12:42 PM</small>
+                    </div>
+                    <Static/>
+                </div>
+                <div className="col-span-3 p-8 bg-[#F7F9FB] rounded-xl">
+                    <div className="mb-4">
+                        <p>Auctions</p>
+                        <small>Auction Stats</small>
+                    </div>
+                    <AuctionStat/>
+                </div>
+                <div className="col-span-3 py-8 px-4 bg-[#F7F9FB] rounded-xl">
+                    <div className="mb-4">
+                        <p>Revenue Generated</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="flex flex-col gap-8">
+                            <div className="flex flex-col items-center">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-4 w-4 bg-[#534D99]"/>
+                                    <small>35%</small>
+                                </div>
+                                <small>Auctions</small>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-4 w-4 bg-[#36D197]"/>
+                                    <small>45%</small>
+                                </div>
+                                <small>Subscription</small>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-4 w-4 bg-[#FF7762]"/>
+                                    <small>20%</small>
+                                </div>
+                                <small>Auctions</small>
+                            </div>
+                        </div>
+                        <DonutChart/>
+                    </div>  
+                </div>
+            </div>
+            <div className="grid grid-cols-6 gap-8">
+                <div className="col-span-4 flex flex-col gap-4">
+                    <TrafficOverviewChart/>
+                    <div className="p-4 bg-[#F7F9FB] rounded-xl">
+                        <p>Post Update</p>
+                        <div className="flex items-center justify-between">
+                            <small>Share Important Announcement </small>
+                            <TbSpeakerphone size={25}/>
                         </div>
                     </div>
                 </div>
-
-                <div className="grid grid-cols-6 gap-8">
-                    <div className="col-span-2 flex flex-col gap-4">
-                        {userData.map((data, index)=>(
-                        <div key={index} className="flex flex-col gap-2 bg-gray-100 rounded-xl py-8">
-                            <div className="flex justify-center gap-8 ">
-                                <div className="rounded-full border h-fit overflow-hidden">
-                                    <Image width={50} height={50}/>
-                                </div>
-                                <div className="flex flex-col text-sm">
-                                    <p className="text-lg font-medium">{data?.name}</p>
-                                    <div className="flex items-center gap-4">
-                                        <FaRegEnvelope size={12}/>
-                                        <small>{data?.email}</small>
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <FiPhone size={12}/>
-                                        <small>+{data?.phone}</small>
-                                    </div>
-                                    <div>
-                                        <small>Subscription: <strong>{data?.subscription}</strong></small>
-                                    </div>
-                                </div>
+                <div className="col-span-2 p-8 text-center bg-[#F7F9FB] rounded-xl">
+                    <div className="mb-4">
+                        <h2>Recent Activity</h2>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                        {recentActivity.map((activity, index)=>(
+                        <div key={index} className="flex items-center justify-between text-start bg-[#F5F5F5] rounded-lg p-4">
+                            <div className="flex flex-col">
+                                <p>{activity.auction}</p>
+                                <small>{activity.description}</small>
                             </div>
-                            <div className="flex itmes-center justify-center gap-4 text-[16px] font-normal px-6 mt-4">
-                                <button className="w-1/2 border-black text-[#464D77] border rounded-xl py-2">CONFIRM PAYMENT</button>
-                                <button className="w-1/3 bg-[#EF6509] text-white rounded-xl py-2">VERIFY</button>
+                            <div className="flex flex-col">
+                                <div className="flex items-center gap-2">
+                                    <MdOutlineEditCalendar/>
+                                    <p>{activity.date}</p>
+                                </div>
+                                <small>Status: {activity.status}</small>
                             </div>
                         </div>
                         ))}
                     </div>
-                    <div className="col-span-4 flex flex-col gap-4  h-fit">
-                        <div className="flex items-center justify-between">
-                            <div className="w-full flex flex-col gap-2">
-                                <p>Free Users </p>
-                                <small>200 members stats</small>
-                            </div>
-                            <div className="w-full flex gap-2 items-center border rounded-xl px-4">
-                                <IoSearchOutline/>
-                                <small>Search</small>
-                                <input type="text" className="py-4 w-full outline-none" />
-                            </div>
-                        </div>
-                        <Table header={header} contents={contents}/>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
     )
 }

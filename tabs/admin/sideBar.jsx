@@ -16,6 +16,10 @@ export default function SideBar() {
     "/admin/dashboard",
     "/admin/user_management/all_users",
     "/admin/user_management/verify_users",
+    "/admin/admin_management",
+    "/admin/notification",
+    "/admin/payment_history",
+
   ];
 
   const activateBtn = (param, index) =>{
@@ -111,7 +115,12 @@ export default function SideBar() {
                 <MdOutlineArrowDropDown />
               </div>
             </li>
-            <li className={liStyle}>Help & Support</li>
+            <div className={triggerBtn}>
+              <li className={liStyle}>Help & Support</li>
+            </div>
+            <div className={triggerBtn}>
+              <li className={`${liStyle} bg-[#EF6509] w-full text-white text-center rounded-2xl p-2`}>LOG OUT</li>
+            </div>
           </ul>
         </div>
       )}

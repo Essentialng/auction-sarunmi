@@ -14,6 +14,7 @@ export default function SideBar() {
 
   const path = [
     "/admin/dashboard",
+    "/admin/approve_auction",
     "/admin/user_management/all_users",
     "/admin/user_management/verify_users",
     "/admin/admin_management",
@@ -49,7 +50,7 @@ export default function SideBar() {
               <small>+2348199977444 </small>
             </div>
           </div>
-          <ul className="flex flex-col justify-center gap-4 text-[16px] py-6 px-3 bg-[#E1E3E1]">
+          <ul className="flex flex-col justify-center gap-4 text-[16px] py-6 px-3 bg-[#ced3ce]">
             
             <li 
             className={classNames(
@@ -119,7 +120,7 @@ export default function SideBar() {
               <li className={liStyle}>Help & Support</li>
             </div>
             <div className={triggerBtn}>
-              <li className={`${liStyle} bg-[#EF6509] w-full text-white text-center rounded-2xl p-2`}>LOG OUT</li>
+              <li className={`${liStyle} bg-[#EF6509] w-full text-white text-center rounded-2xl p-4`}>LOG OUT</li>
             </div>
           </ul>
         </div>

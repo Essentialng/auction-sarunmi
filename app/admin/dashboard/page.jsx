@@ -9,7 +9,7 @@ import DonutChart from "@/components/admin/Charts";
 import TrafficOverviewChart from "@/components/admin/lineChart";
 import { MdOutlineEditCalendar } from "react-icons/md";
 import { TbSpeakerphone } from "react-icons/tb";
-
+import Activity from "@/components/admin/activity";
 
 export default function UserManagement(){
 
@@ -160,23 +160,7 @@ export default function UserManagement(){
                     <div className="mb-4">
                         <h2>Recent Activity</h2>
                     </div>
-                    <div className="flex flex-col gap-4">
-                        {recentActivity.map((activity, index)=>(
-                        <div key={index} className="flex items-center justify-between text-start bg-[#F5F5F5] rounded-lg p-4">
-                            <div className="flex flex-col">
-                                <p>{activity.auction}</p>
-                                <small>{activity.description}</small>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="flex items-center gap-2">
-                                    <MdOutlineEditCalendar/>
-                                    <p>{activity.date}</p>
-                                </div>
-                                <small>Status: {activity.status}</small>
-                            </div>
-                        </div>
-                        ))}
-                    </div>
+                    <Activity recentActivity={recentActivity}/>
                 </div>
             </div>
         </div>

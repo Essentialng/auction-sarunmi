@@ -8,85 +8,95 @@ datasource db {
 }
 
 model User {
-  id              String    @default(uuid()) @id
-  firstName       String
-  lastName        String
-  email           String    @unique 
-  password        String
-  phoneNumber     String    @unique 
-  state           String?
-  nin             String?
-  profilePicture  String?
-  type            String
-  cashBalance     Float     @default(0.00)
-  orders          Order[]    @relation("UserOrders") 
-  uploadProducts  UploadProduct[] @relation("ProductUpload")
-  notifications   Notification[] @relation("notification") 
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  watchlist       Watchlist[] @relation("UserWatchlist")
-  bids            Bid[] @relation("UserBids")
+  id                  String    @default(uuid()) @id
+  firstName           String
+  lastName            String
+  email               String    @unique 
+  password            String
+  phoneNumber         String    @unique 
+  state               String?
+  nin                 String?
+  profilePicture      String?
+  type                String
+  cashBalance         Float     @default(0.00)
+  orders            Order[]    @relation("UserOrders") 
+  car               Car[] @relation("Cars")
+  property          Property[] @relation("Properties")
+  notifications     Notification[] @relation("notification") 
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  watchlist         Watchlist[] @relation("UserWatchlist")
+  bids              Bid[] @relation("UserBids")
 }
 
-model UploadProduct {
+model Car {
   id                    String   @default(uuid()) @id
   userId                String
   productName           String
   image                 String
   description           String
-  productType           String  // 'Car' or 'Property'
-  vin                   String? // Only for 'Car'
-  color                 String? // Only for 'Car'
-  fuel                  String? // Only for 'Car'
-  lotNumber             String? // Only for 'Car'
-  location              String?
-  yearsUsed             String? // Only for 'Car'
-  primaryDamage         String? // Only for 'Car'
-  oldMeter              String? // Only for 'Car'
-  sizeAndLayout         String? // Only for 'Property'
-  proofOfOwnership      String? // Only for 'Property'
-  cOfONumber            String? // Only for 'Property'
-  user                  User     @relation("ProductUpload", fields: [userId], references: [id]) 
-  orders                Order[]  @relation("ProductOrders")  
+  productType           String 
+  vin                   String
+  color                 String
+  fuel                  String
+  lotNumber             String
+  location              String
+  yearsUsed             String
+  primaryDamage         String
+  oldMeter              String
+  user                 User     @relation("Cars", fields: [userId], references: [id]) 
   status                String
   createdAt             DateTime @default(now())
   expireDate            DateTime?
-  watchlist            Watchlist[] @relation("ProductWatchlist")
-  bids                 Bid[] @relation("ProductBids")
+}
+
+model Property {
+  id                    String   @default(uuid()) @id
+  userId                String
+  productName           String
+  image                 String
+  description           String
+  productType           String  
+  location              String
+  user                 User     @relation("Properties", fields: [userId], references: [id]) 
+  status                String
+  createdAt             DateTime @default(now())
+  expireDate            DateTime?
+}
+
+model Other {
+  id                  String @default(uuid()) @id
+  userId              String
+  features            Json
 }
 
 model Order {
   id            Int      @id @default(autoincrement())
   userId        String  
-  productId     String
+  itemId        String
   quantity      Int      @default(1)
   totalPrice    Float    
   status        String   @default("Pending") 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  
   user          User     @relation("UserOrders", fields: [userId], references: [id])
-  product       UploadProduct   @relation("ProductOrders", fields: [productId], references: [id]) 
 }
 
 model Watchlist {
   id            String   @default(uuid()) @id
   userId        String
-  productId     String
+  itemId        String
   user          User     @relation("UserWatchlist", fields: [userId], references: [id])
-  product       UploadProduct @relation("ProductWatchlist", fields: [productId], references: [id])
   createdAt     DateTime @default(now())
 }
 
 model Bid {
   id            String   @default(uuid()) @id
   userId        String
-  productId     String
   amount        Float
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   user          User     @relation("UserBids", fields: [userId], references: [id])
-  product       UploadProduct @relation("ProductBids", fields: [productId], references: [id])
 }
 
 model Notification {
@@ -96,11 +106,4 @@ model Notification {
   read        Boolean  @default(false)
   user        User     @relation("notification", fields: [userId], references: [id])
   createdAt   DateTime @default(now())
-}
-
-model Category {
-  id          Int      @id @default(autoincrement())
-  name        String
-  createdAt   DateTime @default(now())
-
 }

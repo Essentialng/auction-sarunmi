@@ -3,17 +3,16 @@ import { useState } from "react";
 
 export default function DashboardCrad({products}){
     
-    const data = ["1","2"]
     return(
-        <div className="grid grid-cols-2 gap-12">
-        {products?.products?.map((item, index)=>(
+    <div className="flex itmes-center justify-center overflow-x-scroll gap-12">
+        {products?.map((item, index)=>(
         <div key={index}>
-            <div className="w-full col-span-1 shadow-md rounded-xl py-12">
-                <div className="fle flex-col gap-8 flex items-center justify-center">
+            <div className="w-full shadow-md rounded-xl xl:py-12 py-2">
+                <div className="flex-col gap-8 flex items-center justify-center">
                     <div className="w-[300px] h-[300px] rounded-xl overflow-hidden">
-                        <img src={item?.image} className="w-full h-full" alt=""/>
+                        <img src={item?.image[0]} className="w-full h-full" alt=""/>
                     </div>
-                    <div className="grid grid-cols-5 gap-8 px-6">
+                    <div className="w-full xl:grid grid-cols-5 flex flex-col gap-8 xl:px-6 px-2">
                         <div className="col-span-2 border shadow-xl flex flex-col gap-3 p-6 text-center rounded-xl font-semibold text-[14px]">
                             <h2 className="text-[24px]">{item?.productType} details</h2>
                             <div className="flex justify-between items-center">
@@ -65,11 +64,6 @@ export default function DashboardCrad({products}){
                     </div>
                 </div>
             </div>
-            {(products?.products?.length || 0) < 2 && (
-            <div className=" border flex flex-col items-center justify-center bg-gray-200 rounded-xl">
-                Empty
-            </div>
-            )}
             </div>
             ))}
         </div>

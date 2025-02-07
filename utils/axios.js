@@ -8,3 +8,4 @@ export const axiosInstance = axios.create({
 });
 // https://essential-auction.vercel.app/
 // http://localhost:3000/
+// http://auction.etechology.ng

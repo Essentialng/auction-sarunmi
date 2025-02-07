@@ -17,7 +17,7 @@ import { FaAngleRight } from "react-icons/fa6";
 
 export default function NavBar(){
 const {user, getUser} = useStore()
-
+    console.log(user)
     const [active, setActive] = useState("Home");
     const [menuToggle, setMenuToggle] = useState(false)
     const pathname = usePathname()

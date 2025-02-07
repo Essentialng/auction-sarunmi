@@ -22,6 +22,9 @@ export default function SignUp() {
   const [resend, setResend] = useState(false)
   const [loadingResend, setLoadingResend] = useState(false)
   const [age, setAge] = useState(false)
+  const [verification, setVerification] = useState(null)
+
+
   const details = {
     headers: "Account Created Successfully",
     texts: `Welcome to Essential E-Auction, your account has been created successfully, 
@@ -30,7 +33,7 @@ export default function SignUp() {
     texts2: `Subscribe Now to enjoy premium benefits like early access to auctions, personalized alerts, and more.`,
     btn: "CONTINUE FOR FREE",
     btn2: "SUBSCRIBE NOW",
-    link: "/dashboard",
+    link: "/login",
     link2: "/subscribe"
   }
 
@@ -67,6 +70,10 @@ export default function SignUp() {
       code: Yup.string()
       .required("Verify code is required")
       .min(6, "Verify code must be six characters")
+      .test("is-correct-code", "The verification code is incorrect", (value) => {
+        // Assuming `verification` is the correct value for comparison
+        return value === verification.code;  // validation will pass when `code === verification`
+      }),
         }),
 
     onSubmit: async (values) => {
@@ -115,7 +122,9 @@ export default function SignUp() {
       email : formik.values.email
     });
 
-    if(response.ok){
+    const data = await response.data
+
+    if(response.status == 201){
       
       Toast.fire({
         icon: "success",
@@ -125,6 +134,7 @@ export default function SignUp() {
           setPassword(true)
         },
       });
+      setVerification(data.verifyCode)
     }
     
     }catch(error){

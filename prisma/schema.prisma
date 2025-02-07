@@ -22,6 +22,7 @@ model User {
   orders            Order[]    @relation("UserOrders") 
   car               Car[] @relation("Cars")
   property          Property[] @relation("Properties")
+  other             Other[] @relation("Other")
   notifications     Notification[] @relation("notification") 
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
@@ -32,10 +33,8 @@ model User {
 model Car {
   id                    String   @default(uuid()) @id
   userId                String
-  productName           String
-  image                 String
+  image                 String[]
   description           String
-  productType           String 
   vin                   String
   color                 String
   fuel                  String
@@ -44,6 +43,7 @@ model Car {
   yearsUsed             String
   primaryDamage         String
   oldMeter              String
+  proofOfOwnership      String
   user                 User     @relation("Cars", fields: [userId], references: [id]) 
   status                String
   createdAt             DateTime @default(now())
@@ -54,7 +54,7 @@ model Property {
   id                    String   @default(uuid()) @id
   userId                String
   productName           String
-  image                 String
+  image                 String[]
   description           String
   productType           String  
   location              String
@@ -67,7 +67,13 @@ model Property {
 model Other {
   id                  String @default(uuid()) @id
   userId              String
+  productName         String
+  image               String[]
   features            Json
+  user               User     @relation("Other", fields: [userId], references: [id]) 
+  status               String
+  createdAt            DateTime @default(now())
+  expireDate           DateTime?
 }
 
 model Order {

@@ -25,8 +25,7 @@ const Hub = () => {
   const [toggle, setToggle] = useState(action)
   const [product, setProduct] = useState("Car")
   const [dropDown, setDropDown] = useState(false)
-
-
+  
 
   
   const navBtn = "block text-lg text-start font-semibold"
@@ -89,10 +88,10 @@ const Hub = () => {
             {type !== "bidder" &&
             <div className='flex flex-col gap-4'>
               <button 
-              className={`flex items-center justify-between ${navBtn} ${toggle == "upload" && "text-orange-500"}`}
+              className={`flex items-center justify-between ${navBtn} ${toggle == "uploadCar" && "text-orange-500"}`}
               onClick={()=>{
                 setDropDown(!dropDown)
-                setToggle("upload")
+                setToggle("uploadCar")
               }}
               >
                 <small className='text-lg w-full'>Upload Product</small>
@@ -109,19 +108,19 @@ const Hub = () => {
               <div className='flex flex-col gap-4 text-[#1E2420]'>
                 <button 
                 className={`text-start ${product == "Car" && "text-orange-500"}`}
-                onClick={()=>setProduct("Car")}
+                onClick={()=>setToggle("uploadCar")}
                 >
                   Car
                 </button>
                 <button 
                 className={`text-start ${product == "Properties" && "text-orange-500"}`}
-                onClick={()=>setProduct("Properties")}
+                onClick={()=>setToggle("uploadProperty")}
                 >
                   Properties
                   </button>
                 <button 
                 className={`text-start ${product == "Others" && "text-orange-500"}`}
-                onClick={()=>setProduct("Others")}
+                onClick={()=>setToggle("uploadOthers")}
                 >
                   Others
                 </button>
@@ -164,9 +163,12 @@ const Hub = () => {
             <ProfileOverview user={user}/>
         </div>
         }
-        {toggle === "upload" &&
+        {toggle === "uploadCar" &&
         <div className='col-span-4'>
-            <Page product = {product} id={id}/>
+            <Page 
+            product = {product} 
+            id={id}
+            />
         </div>
         }
       </div>

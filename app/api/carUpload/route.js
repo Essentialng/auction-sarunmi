@@ -1,15 +1,14 @@
 import prisma from "@/lib/global_client"
 import { NextResponse } from 'next/server';
 
+
 export async function POST(request) {
     try {
         const body = await request.json();
 
         const {
             id,
-            productType,
-            productName,
-            image,
+            images,
             description,
             vin,
             color,
@@ -19,9 +18,7 @@ export async function POST(request) {
             yearsUsed,
             primaryDamage,
             oldMeter,
-            sizeAndLayout,
             proofOfOwnership,
-            cOfONumber,
             status
 
         } = body;
@@ -37,12 +34,10 @@ export async function POST(request) {
         }
 
         const userId = id
-        const newUser = await prisma.uploadProduct.create({
+        const newUser = await prisma.Car.create({
             data: {
                 userId,
-                productType,
-                productName,
-                image,
+                image:images,
                 description,
                 lotNumber,
                 vin,
@@ -52,9 +47,7 @@ export async function POST(request) {
                 yearsUsed,
                 primaryDamage,
                 oldMeter,
-                sizeAndLayout,
                 proofOfOwnership,
-                cOfONumber,
                 status
 
             },
@@ -66,3 +59,7 @@ export async function POST(request) {
         return NextResponse.json({ message: `Internal server error: ${error}` }, { status: 500 });
     }
 }
+
+
+// api_key: 272183278276215
+// api_secret_key: ySP1DZS00qtgkalgLolvPe1HvN8

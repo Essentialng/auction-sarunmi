@@ -1,7 +1,6 @@
 import prisma from "@/lib/global_client"
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
 
 export async function POST(request) {
     try {

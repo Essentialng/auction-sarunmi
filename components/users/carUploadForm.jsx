@@ -3,14 +3,21 @@ import { axiosInstance } from "@/utils/axios";
 import useStore from "@/app/store";
 import PopUp from "./signup-pop";
 import { Rings } from 'react-loading-icons';
+import { handleCloudinary } from "@/utils/cloudinary";
 
-const CarUpload = ({id, product}) => {
+
+
+const CarUpload = ({id}) => {
+
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [images, setImages] = useState([]);
 
     const [formValues, setFormValues] = useState({
         id : id,
-        productType : product.toLowerCase(),
-        productName : "",
-        image : "",
+        productName:"",
+        images : [],
         description : "",
         vin :  "",
         color : "",
@@ -20,15 +27,10 @@ const CarUpload = ({id, product}) => {
         yearsUsed : "",
         primaryDamage : "",
         oldMeter : "",
-        sizeAndLayout : "",
-        proofOfOwnership : "",
-        cOfONumber : "",
+        proofOfOwnership: "",
         status: "live"
     });
-    const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [success, setSuccess] = useState(false);
-    const [images, setImages] = useState([]);
+   
 
     const details = {
       headers: "Upload Successful!",
@@ -50,14 +52,27 @@ const CarUpload = ({id, product}) => {
         }))
     }
 
-    const handleImageUpload = (event) => {
-      const files = Array.from(event.target.files);
-      const newImages = files.map((file) => URL.createObjectURL(file));
-      setImages((prevImages) => [...prevImages, ...newImages]);
-    };
+    const handleImageUpload = async (event) => {
+      const files = event.target.files[0];
+      const uploadedUrls = [];
+    
+      
+      const url = await handleCloudinary(files);
+      
+      if(url){
+      uploadedUrls.push(url);
 
+      setFormValues((prevValues) => ({
+        ...prevValues, 
+        images: [...prevValues.images, ...uploadedUrls] 
+      }));    
+    };
+}
     const handleRemoveImage = (index) => {
-      setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+      setFormValues((prevValues) => ({
+        ...prevValues, 
+        images: prevValues.images.filter((_, i) => i !== index), 
+      }));
     };
 
     const uploadHandler = ()=>{
@@ -91,58 +106,22 @@ const CarUpload = ({id, product}) => {
       }
     }
 
-    useEffect(() => {
-      if (product === "Car") {
-        setFormValues((prev) => ({
-          ...prev,
-          productType : product.toLowerCase(),
-          vin: "", 
-          color: "", 
-          fuel: "",
-          lotNumber: "",
-          yearsUsed: "",
-          primaryDamage: "",
-          oldMeter: "",
-          cOfONumber: null,
-          sizeAndLayout: null,
-          proofOfOwnership: null,
-        }));
-      } else {
-        setFormValues((prev) => ({
-          ...prev,
-          productType : product.toLowerCase(),
-          vin: null, 
-          color: null, 
-          fuel: null,
-          lotNumber: null,
-          yearsUsed: null,
-          primaryDamage: null,
-          oldMeter: null,
-          cOfONumber: "", 
-          sizeAndLayout: "", 
-          proofOfOwnership: "",
-          propertySize: "",
-        }));
-      }
-    }, [product]);
-
+   
 
     const contents = [
-      "VIN",
-      "C of O number",
-      "Colors",
-      "Fuel",
-      "Lot Number",
-      "Years Used",
-      "Primary Damage",
-      "Old Meter",
-      "Size and Layout",
-      "Proof of Ownership",
-    ]
+      { label: "vin", name: "vin" },
+      { label: "Colors", name: "color" },
+      { label: "Fuel", name: "fuel" },
+      { label: "Lot Number", name: "lotNumber" },
+      { label: "Years Used", name: "yearsUsed" },
+      {label: "Location", name: "location"},
+      { label: "Primary Damage", name: "primaryDamage" },
+      { label: "Old Meter", name: "oldMeter" },
+      {label: "Proof Of Ownership", name: "proofOfOwnership"}
+    ];
 
   const input_style = "mt-1 p-2 border border-gray-300 rounded w-full bg-[#F4FDFF]";
   const label_style = "block text-gray-700 text-[14px]";
-
 
   return (
     
@@ -162,21 +141,27 @@ const CarUpload = ({id, product}) => {
               required
             />
           </div>
-          <div className="flex gap-4 items-center">
-            <div className="w-28 h-28 bg-gray-100 border-2 border-gray-300 border-dashed rounded-lg flex justify-center items-center hover:bg-gray-200">
-              <label htmlFor="file-upload" className="cursor-pointer w-full h-full justify-center items-center flex">
-                <input
-                  id="file-upload"
-                  type="file"
-                  className="hidden h-full w-full"
-                  onChange={handleImageUpload}
-                />
-                <span className="text-gray-500 text-2xl">+</span>
-              </label>
+          <div className="relative flex gap-4 items-center just">
+            <div >
+              <p>Upload images</p>
+              
+              <div className="w-28 h-28 bg-gray-100 border-2 border-gray-300 border-dashed rounded-lg flex justify-center items-center hover:bg-gray-200">
+                
+                <label htmlFor="file-upload" className="cursor-pointer w-full h-full justify-center items-center flex">
+                
+                  <input
+                    id="file-upload"
+                    type="file"
+                    className="hidden h-full w-full"
+                    onChange={handleImageUpload}
+                  />
+                  <span className="text-gray-500 text-2xl">+</span>
+                </label>
+              </div>
             </div>
 
-            <div className=" flex space-x-4">
-              {images.map((image, index) => (
+            <div className="w-full flex items-center space-x-4 pt-6">
+              {formValues.images.map((image, index) => (
               <div  key={index} className="relative">
                 <img
                  
@@ -198,27 +183,29 @@ const CarUpload = ({id, product}) => {
         </div>
 
         <div>
-          <label className={label_style}>Description</label>
-          <textarea
-            placeholder="Describe your experience with the product"
-            className={`${input_style}  h-24 resize-none`}
-            name="description"
-            value={formValues.description}
-            onChange={changeHandler}
-            required
-          />
+          <>
+            <label className={label_style}>Description</label>
+            <textarea
+              placeholder="Describe your experience with the product"
+              className={`${input_style}  h-24 resize-none`}
+              name="description"
+              value={formValues.description}
+              onChange={changeHandler}
+              required
+            />
+          </>
         </div>
 
         <div className="grid grid-cols-3 gap-3 items-center">
-          {contents.map((content, index)=>(
+          {contents.map(({label, name}, index)=>(
           <div key={index}>
-            <label className={label_style}>{content}</label>
+            <label className={label_style}>{label}</label>
             <input
               type="text"
-              name="lotNumber"
+              name={name}
               placeholder="Type your lot number"
               className={input_style}
-              value={formValues.lotNumber}
+              value={formValues[name]}
               onChange={changeHandler}
               required
             />

@@ -2,6 +2,7 @@
 import ProductVerify from "@/components/users/productVerify"
 import { FaArrowRight } from "react-icons/fa6";
 import { useState } from "react";
+import Link from "next/link";
 
 
 export default function Page(){
@@ -21,7 +22,7 @@ export default function Page(){
   };
 
   return(
-<div className="xl:p-8 bg-gray-100 mt-32 xl:px-24 px-4 xl:py-0 py-8 relative">
+<div className="xl:p-10 bg-gray-100 mt-28 xl:px-24 px-4  py-8 relative">
 
   {productVerification &&
   <ProductVerify 
@@ -30,9 +31,9 @@ export default function Page(){
   />
   }
   
-  <div className="text-sm gap-4 flex item-center mb-4 text-gray-600">
-    <small className="hover:underline">Home</small> 
-    <small className="hover:underline">Auctions</small> 
+  <div className=" gap-4 flex item-center mb-4 text-gray-600">
+    <Link href="/" className="hover:underline text-sm">Home</Link> 
+    <Link href="/dashboard" className="hover:underline text-sm">Auctions</Link> 
     <small>BMW</small>
   </div>
 

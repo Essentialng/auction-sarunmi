@@ -11,19 +11,11 @@ export async function POST(request) {
             images,
             productName,
             description,
-            vin,
-            color,
-            fuel,
-            lotNumber,
+            features,
             location,
-            yearsUsed,
-            primaryDamage,
-            oldMeter,
-            proofOfOwnership,
             status
 
         } = body;
-
 
        
         const existingUser = await prisma.user.findUnique({
@@ -35,21 +27,14 @@ export async function POST(request) {
         }
 
         const userId = id
-        const newUser = await prisma.Car.create({
+        const newUser = await prisma.other.create({
             data: {
                 userId,
                 image:images,
                 productName,
                 description,
-                lotNumber,
-                vin,
-                color,
-                fuel,
+                features,
                 location,
-                yearsUsed,
-                primaryDamage,
-                oldMeter,
-                proofOfOwnership,
                 status
 
             },

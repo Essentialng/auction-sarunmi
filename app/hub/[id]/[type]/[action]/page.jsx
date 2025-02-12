@@ -88,10 +88,10 @@ const Hub = () => {
             {type !== "bidder" &&
             <div className='flex flex-col gap-4'>
               <button 
-              className={`flex items-center justify-between ${navBtn} ${toggle == "uploadCar" && "text-orange-500"}`}
+              className={`flex items-center justify-between ${navBtn} ${toggle == "upload" && "text-orange-500"}`}
               onClick={()=>{
                 setDropDown(!dropDown)
-                setToggle("uploadCar")
+                setToggle("upload")
               }}
               >
                 <small className='text-lg w-full'>Upload Product</small>
@@ -108,19 +108,19 @@ const Hub = () => {
               <div className='flex flex-col gap-4 text-[#1E2420]'>
                 <button 
                 className={`text-start ${product == "Car" && "text-orange-500"}`}
-                onClick={()=>setToggle("uploadCar")}
+                onClick={()=>setProduct("Car")}
                 >
                   Car
                 </button>
                 <button 
-                className={`text-start ${product == "Properties" && "text-orange-500"}`}
-                onClick={()=>setToggle("uploadProperty")}
+                className={`text-start ${product == "Property" && "text-orange-500"}`}
+                onClick={()=>setProduct("Property")}
                 >
                   Properties
                   </button>
                 <button 
                 className={`text-start ${product == "Others" && "text-orange-500"}`}
-                onClick={()=>setToggle("uploadOthers")}
+                onClick={()=>setProduct("Others")}
                 >
                   Others
                 </button>
@@ -163,7 +163,7 @@ const Hub = () => {
             <ProfileOverview user={user}/>
         </div>
         }
-        {toggle === "uploadCar" &&
+        {toggle === "upload" &&
         <div className='col-span-4'>
             <Page 
             product = {product} 

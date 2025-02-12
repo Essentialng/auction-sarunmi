@@ -1,83 +1,32 @@
+"use client";
 import Products from "@/components/users/products"
+import { useState, useEffect } from "react";
+import { axiosInstance } from "@/utils/axios";
 
-export const data = 
-            [
-                {
-                    "image": "/car-one.png",
-                    "status": "Live Auction",
-                    "type" : "Toyota Camry",
-                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
-                },
-                {
-                    "image": "/car-two.png",
-                    "status": "Live Auction",
-                    "type" : "Toyota Camry",
-                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
-                },
-                {
-                    "image": "/car-three.png",
-                    "status": "Live Auction",
-                    "type" : "Toyota Camry",
-                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
-                },
-                {
-                    "image": "/car-four.png",
-                    "status": "Upcoming Auction",
-                    "type" : "Toyota Camry",
-                    "detail" : "This 2018 Toyota Camry has been a joy to drive, offering exceptional reliability .."
-                },
 
-            {
-                "image": "/property-one.png",
-                "status": "Live Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-            {
-                "image": "/property-two.png",
-                "status": "Live Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-            {
-                "image": "/property-three.png",
-                "status": "Upcoming Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-            {
-                "image": "/property-four.png",
-                "status": "Live Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-            {
-                "image": "/electronic-one.png",
-                "status": "Live Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-            {
-                "image": "/electronic-two.png",
-                "status": "Live Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-            {
-                "image": "/eletronic-three.png",
-                "status": "Upcoming Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-            {
-                "image": "/eletronic-four.png",
-                "status": "Live Auction",
-                "type" : "Toyota Camry",
-                "detail" : "This home boasts a spacious living area, a modern kitchen, and a serene ..."
-            },
-    ]
+
 
 export default function Page(){
+
+    const [data, setData] = useState([]);
+    
+    const fetchCars = async()=>{
+        try{
+            const response = await axiosInstance.get("properties");
+            const data = await response.data;
+
+            if(response.status == 200){
+                setData(data?.data);
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        fetchCars();
+    })
+
     return(
         <>
             <Products 

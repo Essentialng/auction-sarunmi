@@ -19,10 +19,7 @@ model User {
   profilePicture      String?
   type                String
   cashBalance         Float     @default(0.00)
-  orders            Order[]    @relation("UserOrders") 
-  car               Car[] @relation("Cars")
-  property          Property[] @relation("Properties")
-  other             Other[] @relation("Other")
+  orders            Order[]    @relation("UserOrders")
   notifications     Notification[] @relation("notification") 
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
@@ -30,51 +27,41 @@ model User {
   bids              Bid[] @relation("UserBids")
 }
 
-model Car {
-  id                    String   @default(uuid()) @id
-  userId                String
-  image                 String[]
-  description           String
-  vin                   String
-  color                 String
-  fuel                  String
-  lotNumber             String
-  location              String
-  yearsUsed             String
-  primaryDamage         String
-  oldMeter              String
-  proofOfOwnership      String
-  user                 User     @relation("Cars", fields: [userId], references: [id]) 
-  status                String
-  createdAt             DateTime @default(now())
-  expireDate            DateTime?
+model Category {
+  id          Int         @id @default(autoincrement())
+  name        String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  items       Item[]
 }
 
-model Property {
-  id                    String   @default(uuid()) @id
-  userId                String
-  productName           String
-  image                 String[]
-  description           String
-  productType           String  
-  location              String
-  user                 User     @relation("Properties", fields: [userId], references: [id]) 
-  status                String
-  createdAt             DateTime @default(now())
-  expireDate            DateTime?
+model Item {
+  id          Int         @id @default(autoincrement())
+  userId      String
+  categoryId  Int
+  name        String
+  description String
+  location    String
+  price       Float
+  status      String      // For example: "listed", "sold", "auctioned"
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  attributes  Attribute[] @relation("Attribute")
+  category    Category    @relation(fields: [categoryId], references: [id])
 }
 
-model Other {
-  id                  String @default(uuid()) @id
-  userId              String
-  productName         String
-  image               String[]
-  features            Json
-  user               User     @relation("Other", fields: [userId], references: [id]) 
-  status               String
-  createdAt            DateTime @default(now())
-  expireDate           DateTime?
+model Attribute {
+  id          Int         @id @default(autoincrement())
+  itemId      Int
+  label       String
+  value       String
+  dataType    String      // For example: "text", "number", "file", etc.
+  required    Boolean     @default(false)
+  options     String?     // If dropdown options are needed (comma-separated values)
+  item        Item    @relation("Attribute", fields: [itemId], references: [id])
 }
+
+
 
 model Order {
   id            Int      @id @default(autoincrement())

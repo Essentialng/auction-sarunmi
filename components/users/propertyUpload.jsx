@@ -7,29 +7,30 @@ import { handleCloudinary } from "@/utils/cloudinary";
 
 
 
-const CarUpload = ({id}) => {
+const PropertyUpload = ({id}) => {
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
-  const [images, setImages] = useState([]);
 
     const [formValues, setFormValues] = useState({
         id : id,
         productName:"",
         images : [],
         description : "",
-        vin :  "",
-        color : "",
-        fuel : "",
-        lotNumber : "",
+        cOfONumber :  "",
+        sizeAndLayout : "",
         location : "",
-        yearsUsed : "",
-        primaryDamage : "",
-        oldMeter : "",
         proofOfOwnership: "",
         status: "live"
     });
+
+    const contents = [
+        { label: "C Of O number", name: "cOfONumber" },
+        { label: "Size & Layout", name: "sizeAndLayout" },
+        {label: "Location", name: "location"},
+        {label: "Upload Proof Of Ownership", name: "proofOfOwnership"}
+      ];
    
 
     const details = {
@@ -40,7 +41,7 @@ const CarUpload = ({id}) => {
       `,
       btn: "PAY  LATER",
       btn2: "PROCEED TO PAYMENT",
-      link: "/",
+      link: "/dashboard",
       link2: "/payment"
     }
 
@@ -75,20 +76,14 @@ const CarUpload = ({id}) => {
       }));
     };
 
-    const uploadHandler = ()=>{
-      try{
 
-      }catch(error){
-        
-      }
-    }
 
     const submitHandler = async (e) => {
       e.preventDefault();
       setLoading(true)
 
       try{
-        const response = await axiosInstance.post("/carUpload", formValues);
+        const response = await axiosInstance.post("/propertyUpload", formValues);
 
         if(response.status == 201){
           setSuccess(true);
@@ -108,17 +103,7 @@ const CarUpload = ({id}) => {
 
    
 
-    const contents = [
-      { label: "vin", name: "vin" },
-      { label: "Colors", name: "color" },
-      { label: "Fuel", name: "fuel" },
-      { label: "Lot Number", name: "lotNumber" },
-      { label: "Years Used", name: "yearsUsed" },
-      {label: "Location", name: "location"},
-      { label: "Primary Damage", name: "primaryDamage" },
-      { label: "Old Meter", name: "oldMeter" },
-      {label: "Proof Of Ownership", name: "proofOfOwnership"}
-    ];
+   
 
   const input_style = "mt-1 p-2 border border-gray-300 rounded w-full bg-[#F4FDFF]";
   const label_style = "block text-gray-700 text-[14px]";
@@ -235,4 +220,4 @@ const CarUpload = ({id}) => {
   );
 };
 
-export default CarUpload;
+export default PropertyUpload;

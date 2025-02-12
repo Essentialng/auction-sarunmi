@@ -11,15 +11,10 @@ export async function POST(request) {
             images,
             productName,
             description,
-            vin,
-            color,
-            fuel,
-            lotNumber,
-            location,
-            yearsUsed,
-            primaryDamage,
-            oldMeter,
+            cOfONumber,
+            sizeAndLayout,
             proofOfOwnership,
+            location,
             status
 
         } = body;
@@ -33,23 +28,18 @@ export async function POST(request) {
         if (!existingUser) {
             return NextResponse.json({ message: `user not exists` }, { status: 404 });
         }
-
+        
         const userId = id
-        const newUser = await prisma.Car.create({
+        const newUser = await prisma.Property.create({
             data: {
                 userId,
                 image:images,
                 productName,
                 description,
-                lotNumber,
-                vin,
-                color,
-                fuel,
-                location,
-                yearsUsed,
-                primaryDamage,
-                oldMeter,
+                cOfONumber,
+                sizeAndLayout,
                 proofOfOwnership,
+                location,
                 status
 
             },

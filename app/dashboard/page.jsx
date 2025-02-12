@@ -105,10 +105,33 @@ export default function Dashboard(){
         }
     }
 
+    const [allData, setAllData] = useState([]);
+
+    const fetchAllData = async () => {
+      try {
+        const [carsRes, propertiesRes, othersRes] = await Promise.all([
+          axiosInstance.get("cars"),
+          axiosInstance.get("properties"),
+          axiosInstance.get("others"),
+        ]);
+  
+        const cars = carsRes?.data?.data || [];
+        const properties = propertiesRes?.data?.data || [];
+        const others = othersRes?.data?.data || [];
+  
+        setAllData([...cars, ...properties, ...others]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+
 
     useEffect(()=>{
         if(user){
             fetchUserProductHandler()
+            fetchAllData();
+
         }
     },[user]);
 
@@ -122,7 +145,7 @@ export default function Dashboard(){
             }
             <div className="flex flex-col gap-12">
             <h1 className="text-[#EF6509] text-[24px] font-semibold">My Watchlist</h1>
-                <AuctionItems auctions={data}/>
+                <AuctionItems auctions={allData}/>
             </div>
         </div>
     )

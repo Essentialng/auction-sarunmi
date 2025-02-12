@@ -25,11 +25,11 @@ export function AuctionItems({auctions, page}){
                     <p>00:00:00:00</p>
                 </div>
                 <div className={classnames({
-                    "py-4 px-[20px] rounded-[10px] items-center flex flex-col gap-10 border border-[#7BC27A] font-[700] shadow-md": true,
+                    "py-4 px-[20px] rounded-[10px] items-center flex flex-col gap-10 border border-[#7BC27A] font-[700] shadow-md h-fit": true,
                     "border-[#FF9354]": item.status === "Upcoming Auction",
                     })}>
                     <div className="relative">
-                        <Image src={item.image} width={260} height={170} alt=""/>
+                        <Image src={item.image[0]} width={260} height={170} alt=""/>
                     </div>
                     <div className="flex flex-col gap-4"> 
                         <div className={classnames(
@@ -47,10 +47,10 @@ export function AuctionItems({auctions, page}){
                             </div>
                         </div>
                         <div>
-                            <h4 className="text-[16px] font-[700]">{item.type}</h4>
-                            <small className="text-[14px] font-[400]">
-                            {item.detail}
-                            </small>
+                        <h4 className="text-[16px] font-[700]">{item.type}</h4>
+                        <small className="text-[14px] font-[400]">
+                        {item.description?.length > 50 ? `${item.description.substring(0, 100)}...` : item.description}
+                        </small>
                         </div>
                         <div className="flex gap-4 text-[14px]">
                             <span className="font-[400]">Retail Value:</span>

@@ -17,8 +17,8 @@ import { FaAngleRight } from "react-icons/fa6";
 
 export default function NavBar(){
 const {user, getUser} = useStore()
-    console.log(user)
     const [active, setActive] = useState("Home");
+    
     const [menuToggle, setMenuToggle] = useState(false)
     const pathname = usePathname()
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
@@ -53,7 +53,7 @@ const {user, getUser} = useStore()
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
         <div className="fixed top-0 right-0 w-full bg-[#35318E] py-4 xl:px-[4rem] px-[1rem] 
-        flex flex-col gap-[1rem] text-[16px] font-[500] overflow-visible z-50 "
+        flex flex-col gap-4 text-[16px] font-[500] overflow-visible z-50 "
         >
             <div className="flex justify-between items-center text-white ">
                 <div className="flex gap-1 items-center">
@@ -138,9 +138,8 @@ const {user, getUser} = useStore()
                                 onClick={()=>setActive(menu)}
                                 >
                             <Link href="categories">Others Categories </Link>
-                            <MdKeyboardArrowDown size={14}/>
                             </div>
-                            <div 
+                            {/* <div 
                             className=" hidden absolute w-[250px] border-[#35318E] top-10 bg-[#35318E] group-hover:block group-focus-within:block py-8 hover:block z-50">
                                 {categories.map((item, index)=>(
                                 <div key={index} className="relative group">
@@ -155,7 +154,7 @@ const {user, getUser} = useStore()
                                     </div>   
                                 </div> 
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
                     }
                         </div>

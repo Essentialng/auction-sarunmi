@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Section from "./cardsSection"
 export default function Cards(){
 
     const items = [
@@ -19,7 +20,6 @@ export default function Cards(){
         },
     ]
     
-    const list_style = "flex flex-col gap-3 cursor-pointer transition-all duration-500 ease-in-out"
     
     return(
         <div className="2xl:px-[4rem] xl:px-[4rem] px-[2rem] 2xl:py-24 xl:py-24 py-12 flex flex-col gap-12">
@@ -39,78 +39,7 @@ export default function Cards(){
                     </div>
                 ))}
             </div>
-            <div className="bg-[#E8E9E8]  font-[700] text-[24px] h-[492px] rounded-2xl 2xl:flex xl:flex hidden gap-24">
-                <div className="w-[375px] px-[20px] rounded-2xl bg-white font-[700] text-[24px] py-6 shadow-2xl">
-                    <h1 className="text-[#EF6509]">What is Essential E-Auction?</h1>
-                    <div className="info text-[14px] flex flex-col gap-10 py-4">
-                        <small>
-                        Essential E-Auction is an innovative auction company at the forefront of digital bidding experiences. 
-                        </small>
-                        <small>
-                        Specializing in online auctions, Essential E-Auction offers a <span>diverse range </span> of products and services, catering to both individual <span>consumers</span> and <span>business clients</span>. 
-                        </small>
-                        <small>
-                        With a user-friendly platform and transparent processes, Essential E-Auction ensures <span>accessibility</span> and <span>fairness</span> for all participants. 
-                        </small>
-                        <small>
-                        Leveraging cutting-edge technology, the company provides <span>seamless bidding opportunities,</span> facilitating efficient transactions and delivering unparalleled customer satisfaction. 
-                        </small>
-                    </div>
-                </div>
-                <div className="flex gap-12 text-[16px] font-[400] py-20">
-                    <ul className={list_style}>
-                        <li>CAR</li>
-                        <li>SECURITY CAMERA</li>
-                        <li>SMART GLASSES</li>
-                        <li>BLENDER</li>
-                        <li>XIAOMI</li>
-                        <li>SCANNER</li>
-                        <li>PROJECTOR</li>
-                        <li>FAX MACHINE</li>
-                        <li>ELECTRIC KELLTE</li>
-                        <li>AIR FRYER</li>
-                    </ul>
-                    <ul className={list_style}>
-                        <li>PRORERTIES</li>
-                        <li>HOME FURNITURE </li>
-                        <li>OFFICE FURNITURE</li>
-                        <li>CABINET</li>
-                        <li>OUTDOOR</li>
-                        <li>DECORATIVE</li>
-                        <li>3D PRINTER</li>
-                        <li>DRONES</li>
-                        <li>SECURITY CAMERA</li>
-                        <li>TOASTER </li>
-                    </ul>
-                    <ul className={list_style}>
-                        <li>DRYER</li>
-                        <li>HEATER</li>
-                        <li>DISHWASHER</li>
-                        <li>DESKTOP COMPUTER</li>
-                        <li>PRINTER</li>
-                        <li>REFRIGERATOR</li>
-                        <li>WASHING MACHINE</li>
-                        <li>MICROWAVE OVEN</li>
-                        <li>VACUUM CLEANER</li>
-                        <li>AIR CONDITIONER</li>
-                    </ul>
-                    <ul className={list_style}>
-                        <li>SMARTPHONES</li>
-                        <li>TABLETS</li>
-                        <li>LAPTOPS</li>
-                        <li>DIGITAL CAMERA</li>
-                        <li>SMARTWATCHES</li>
-                        <li>SPEAKERS</li>
-                        <li>SOUND BARS</li>
-                        <li>GAME CONSOLE</li>
-                        <li>TELEVISION</li>
-                        <li>HOME THEATER </li>
-                    </ul>
-                </div>
-                <div>
-
-                </div>
-            </div>
+            <Section/>
         </div>
     )
 }

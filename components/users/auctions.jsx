@@ -53,15 +53,15 @@ export  default function Auctions(){
     // }
 
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        if(!fetchItems){
-        fetchCars();
-        fetchProperties();
-        fetchOthers();
-        }
+    //     if(!fetchItems){
+    //     fetchCars();
+    //     fetchProperties();
+    //     fetchOthers();
+    //     }
 
-    },[])
+    // },[])
 
     const itemsData = [
         {

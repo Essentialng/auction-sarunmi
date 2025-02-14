@@ -78,14 +78,14 @@ const {user, getUser} = useStore()
                 {pathname === '/login' && 
                         <small className="font-bold text-[14px]">Don’t  have an account?</small>
                     }
-                {!user && 
+                {!user && pathname !== '/register' &&
                     <Link href="/register" className=" rounded-lg border px-4 py-2 cursor-pointer">Sign Up</Link>
                 }
                     <div className="flex items-center gap-4">
                     {pathname === '/register' && 
                         <small className="font-bold text-[14px]">Already have an account?</small>
                     }
-                    {!user &&
+                    {!user && pathname !== '/login' && 
                         <Link href="/login" className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Login</Link>
                     }
                     { user && 
@@ -142,6 +142,7 @@ const {user, getUser} = useStore()
                             {/* <div 
                             className=" hidden absolute w-[250px] border-[#35318E] top-10 bg-[#35318E] group-hover:block group-focus-within:block py-8 hover:block z-50">
                                 {categories.map((item, index)=>(
+                                    
                                 <div key={index} className="relative group">
                                     <div className={`${item?.class} flex justify-between items-center p-4`}>
                                         <small className="text-[12p6]">{item?.name}</small>

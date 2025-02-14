@@ -13,24 +13,17 @@ const CarUpload = ({id}) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [images, setImages] = useState([]);
+  const [detailField, setDetailField] = useState({})
+  const [modelData, setModelData] = useState([]);
+  const [fetchedModel, setFetchedModel] = useState(false);
+  const [formFields, setFormFields] = useState([]);
 
     const [formValues, setFormValues] = useState({
         id : id,
-        productName:"",
         images : [],
-        description : "",
-        vin :  "",
-        color : "",
-        fuel : "",
-        lotNumber : "",
-        location : "",
-        yearsUsed : "",
-        primaryDamage : "",
-        oldMeter : "",
-        proofOfOwnership: "",
-        status: "live"
+        details: {}
+
     });
-   
 
     const details = {
       headers: "Upload Successful!",
@@ -50,7 +43,22 @@ const CarUpload = ({id}) => {
             ...prev,
             [name] : value
         }))
+        
     }
+
+    const detailHandler = (e) => {
+      const { name, value } = e.target;
+      
+      setFormValues(prevState => ({
+        ...prevState,
+        details: {
+          ...prevState.details,
+          [name]: value
+        }
+      }));
+    };
+    
+    
 
     const handleImageUpload = async (event) => {
       const files = event.target.files[0];
@@ -88,9 +96,9 @@ const CarUpload = ({id}) => {
       setLoading(true)
 
       try{
-        const response = await axiosInstance.post("/carUpload", formValues);
+        const response = await axiosInstance.post("/cars", formValues);
 
-        if(response.status == 201){
+        if(response.status == 200){
           setSuccess(true);
         }
       }catch(error){
@@ -107,18 +115,47 @@ const CarUpload = ({id}) => {
     }
 
    
+    const formHandler = async()=>{
+      setLoading(true)
+      try{
+        const response = await axiosInstance.get("formFields?categoryId=1");
+        const result = response.data;
+        if(response.status == 200){
+          setFormFields(result.fields);
+        }
+      }catch(error){
+        console.log(error)
+      }finally{
+        setLoading(false);
+      }
+    }
 
-    const contents = [
-      { label: "vin", name: "vin" },
-      { label: "Colors", name: "color" },
-      { label: "Fuel", name: "fuel" },
-      { label: "Lot Number", name: "lotNumber" },
-      { label: "Years Used", name: "yearsUsed" },
-      {label: "Location", name: "location"},
-      { label: "Primary Damage", name: "primaryDamage" },
-      { label: "Old Meter", name: "oldMeter" },
-      {label: "Proof Of Ownership", name: "proofOfOwnership"}
-    ];
+
+    const modelHandler= async()=>{
+      setLoading(true);
+      setFetchedModel(true);
+
+      try{
+        const response = await axiosInstance.get("/cars")
+        const data = await response.data
+        if(response.status == 200){
+          setModelData(data.model);
+        }
+      }catch(error){
+        console.log(error)
+        setFetchedModel(false);
+      }finally{
+        setLoading(false);
+      }
+    };
+
+
+    useEffect(()=>{
+      if(!fetchedModel){
+      modelHandler();
+      formHandler()
+    }
+    },[])
 
   const input_style = "mt-1 p-2 border border-gray-300 rounded w-full bg-[#F4FDFF]";
   const label_style = "block text-gray-700 text-[14px]";
@@ -130,13 +167,30 @@ const CarUpload = ({id}) => {
       className="space-y-6">
         <div className="flex flex-col gap-8">
           <div>
+          <select
+            className="w-1/2 p-2 border border-gray-300 bg-[#F4FDFF]"
+            name="modelId" 
+            value={formValues.modelId} 
+            onChange={changeHandler} 
+          >
+            <option value="" className={label_style}>
+              Select Model
+            </option>
+            {modelData?.map((item) => (
+              <option key={item.id} value={item.id} className={label_style}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+          </div>
+          <div>
             <label className={label_style}>Product Name</label>
             <input
               type="text"
               placeholder="Type your product name"
-              name="productName"
+              name="name"
               className={input_style}
-              value={formValues.productName}
+              value={formValues?.name}
               onChange={changeHandler}
               required
             />
@@ -195,26 +249,75 @@ const CarUpload = ({id}) => {
             />
           </>
         </div>
-
-        <div className="grid grid-cols-3 gap-3 items-center">
-          {contents.map(({label, name}, index)=>(
-          <div key={index}>
-            <label className={label_style}>{label}</label>
+        <div>
+            <label className={label_style}>Location</label>
             <input
               type="text"
-              name={name}
+              placeholder="Type your location"
+              name="location"
+              className={input_style}
+              value={formValues.location}
+              onChange={changeHandler}
+              required
+            />
+        </div>
+        <div className="flex items-center justify-between gap-8">
+          <div className="w-full">
+            <label className={label_style}>Start Time</label>
+            <input 
+            name="startTime"
+            aria-label="Date and time" 
+            type="datetime-local"
+            className={input_style}
+            value={formValues.startTime}
+            onChange={changeHandler}
+             />
+          </div>
+
+          <div className="w-full">
+            <label className={label_style}>End Time</label>
+            <input 
+            name="endTime"
+            aria-label="Date and time" 
+            type="datetime-local"
+            className={input_style}
+            value={formValues.endTime}
+            onChange={changeHandler}
+             />
+          </div>
+        </div>
+        <div className="w-1/2">
+            <label className={label_style}>Price</label>
+            <input
+              type="number"
+              placeholder="Type your Auction Price"
+              name="price"
+              className={input_style}
+              value={formValues.price}
+              onChange={changeHandler}
+              required
+            />
+          </div>
+
+
+        <div className="grid grid-cols-3 gap-3 items-center">
+          {formFields.map((data, index)=>(
+          <div key={index}>
+            <label className={label_style}>{data?.label}</label>
+            <input
+              type="text"
+              name={data?.value}
               placeholder="Type your lot number"
               className={input_style}
-              value={formValues[name]}
-              onChange={changeHandler}
+              value={formValues.details[data?.value] || ""}
+              onChange={detailHandler}
               required
             />
           </div>
           ))}
         </div>
-
-
   
+
         <div className=" text-red-600 flex flex-col gap-2 text-start">
           <button
             type="submit"

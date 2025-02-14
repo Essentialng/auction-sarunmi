@@ -25,40 +25,57 @@ model User {
   updatedAt           DateTime  @updatedAt
   watchlist         Watchlist[] @relation("UserWatchlist")
   bids              Bid[] @relation("UserBids")
+  admin             Admin[] @relation("AdminUser")
 }
+
 
 model Category {
   id          Int         @id @default(autoincrement())
   name        String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  model       Model[]
+  Field       Field[]
+}
+
+model Model {
+  id          Int         @id @default(autoincrement())
+  categoryId  Int
+  name        String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   items       Item[]
+  category    Category    @relation(fields: [categoryId],  references: [id])
 }
 
 model Item {
   id          Int         @id @default(autoincrement())
   userId      String
-  categoryId  Int
+  modelId     Int
   name        String
+  images      String[]
   description String
   location    String
   price       Float
+  details     Json
+  startTime   String
+  endTime     String
   status      String      // For example: "listed", "sold", "auctioned"
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  attributes  Attribute[] @relation("Attribute")
-  category    Category    @relation(fields: [categoryId], references: [id])
+  model       Model    @relation(fields: [modelId],  references: [id])
 }
 
-model Attribute {
+model Field {
   id          Int         @id @default(autoincrement())
-  itemId      Int
+  categoryId  Int
   label       String
   value       String
+  placeholder String     
   dataType    String      // For example: "text", "number", "file", etc.
   required    Boolean     @default(false)
   options     String?     // If dropdown options are needed (comma-separated values)
-  item        Item    @relation("Attribute", fields: [itemId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id])
 }
 
 
@@ -67,9 +84,8 @@ model Order {
   id            Int      @id @default(autoincrement())
   userId        String  
   itemId        String
-  quantity      Int      @default(1)
   totalPrice    Float    
-  status        String   @default("Pending") 
+  status        String   @default("pending") 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   user          User     @relation("UserOrders", fields: [userId], references: [id])
@@ -87,6 +103,7 @@ model Bid {
   id            String   @default(uuid()) @id
   userId        String
   amount        Float
+  status        String @default("pending")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   user          User     @relation("UserBids", fields: [userId], references: [id])
@@ -96,7 +113,17 @@ model Notification {
   id          Int      @id @default(autoincrement())
   userId      String
   message     String
+  type        String   // For example: "BidOutbid", "AuctionEnd"
   read        Boolean  @default(false)
-  user        User     @relation("notification", fields: [userId], references: [id])
   createdAt   DateTime @default(now())
+  user        User     @relation("notification", fields: [userId], references: [id])
+}
+
+model Admin {
+  id          String   @id @default(uuid())
+  userId      String
+  role        String   // For example: "admin", "moderator"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation("AdminUser", fields: [userId], references: [id])
 }

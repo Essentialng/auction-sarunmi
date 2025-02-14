@@ -4,7 +4,11 @@ import { verifyToken } from "@/utils/jwt";
 
 const useStore = create((set) => ({
   user: null,
+  loading : false,
 
+  setLoading: ()=>{
+    set({loading : !loading})
+  },
 
   initializeUser: async (access_token) => {
     setCookies(access_token);

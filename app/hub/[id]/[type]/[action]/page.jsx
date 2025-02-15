@@ -23,10 +23,12 @@ const Hub = () => {
   const router = useRouter()
   
   const [toggle, setToggle] = useState(action)
-  const [product, setProduct] = useState("Car")
+  const [product, setProduct] = useState({name : "Car", index : 1})
   const [dropDown, setDropDown] = useState(false)
   
-
+  const handleClick = (name, index)=>{
+    setProduct({name:name, index:index})
+  }
   
   const navBtn = "block text-lg text-start font-semibold"
 
@@ -38,7 +40,7 @@ const Hub = () => {
         setToggle={setToggle} 
         toggle={toggle} 
         type={type}
-        setProduct={setProduct}
+        handleClick={handleClick}
         product={product}
         />
         
@@ -107,20 +109,20 @@ const Hub = () => {
               {dropDown &&
               <div className='flex flex-col gap-4 text-[#1E2420]'>
                 <button 
-                className={`text-start ${product == "Car" && "text-orange-500"}`}
-                onClick={()=>setProduct("Car")}
+                className={`text-start ${product.name == "Car" && "text-orange-500"}`}
+                onClick={()=>handleClick("Car", 1)}
                 >
                   Car
                 </button>
                 <button 
-                className={`text-start ${product == "Property" && "text-orange-500"}`}
-                onClick={()=>setProduct("Property")}
+                className={`text-start ${product.name == "Property" && "text-orange-500"}`}
+                onClick={()=>handleClick("Property", 2)}
                 >
                   Properties
                   </button>
                 <button 
-                className={`text-start ${product == "Others" && "text-orange-500"}`}
-                onClick={()=>setProduct("Others")}
+                className={`text-start ${product.name == "Others" && "text-orange-500"}`}
+                onClick={()=>handleClick("Others", null)}
                 >
                   Others
                 </button>
@@ -168,6 +170,7 @@ const Hub = () => {
             <Page 
             product = {product} 
             id={id}
+            handleClick={handleClick}
             />
         </div>
         }

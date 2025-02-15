@@ -1,30 +1,21 @@
 "use client";
 import Products from "@/components/users/products"
 import { useState, useEffect } from "react";
-import { axiosInstance } from "@/utils/axios";
-
+import useStore from "../store";
 
 
 export default function Page(){
 
-        const [data, setData] = useState([]);
-    
-        const fetchCars = async()=>{
-            try{
-                const response = await axiosInstance.get("cars");
-                const data = await response.data;
-    
-                if(response.status == 200){
-                    setData(data?.data);
-                }
-            }catch(error){
-                console.log(error)
-            }
-        }
+    const {fetchAllProduct, cars, products} = useStore()
+   const categories = []
 
-        useEffect(()=>{
-            fetchCars();
-        })
+        
+    useEffect(() => {
+    if(products){
+    fetchAllProduct();
+    }
+    }, []);
+        
 
     return(
         <>
@@ -33,9 +24,9 @@ export default function Page(){
             headline="Find Your Dream Car!"
             detail="Discover a wide selection of vehicles to suit every 
             taste, budget and bid with confidence."
-            category="Cars"
+            category={categories}
             style="cars"
-            data={data}/>
+            data={cars}/>
         </>
     )
 }

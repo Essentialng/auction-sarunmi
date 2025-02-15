@@ -12,9 +12,9 @@ import { FaAngleDown } from "react-icons/fa6";
 import { RiMenuSearchLine } from "react-icons/ri";
 
 
-export default function SideBard({setToggle, toggle, type, product, setProduct }){
+export default function SideBard({setToggle, toggle, type, product, handleClick }){
 
-    //   const [product, setProduct] = useState("Car")
+    //   const [product, handleClick] = useState("Car")
       const [menu, setMenu] = useState(false);
     
       const toggleHandling = (value)=>{
@@ -77,20 +77,20 @@ export default function SideBard({setToggle, toggle, type, product, setProduct }
                 {toggle == "upload" &&
                 <div className='flex flex-col gap-4 text-[#1E2420]'>
                     <button 
-                    className={`text-start ${product == "Car" && "text-orange-500"}`}
-                    onClick={()=>setProduct("Car")}
+                    className={`text-start ${product.name == "Car" && "text-orange-500"}`}
+                    onClick={()=>handleClick("Car", 1)}
                     >
                     Car
                     </button>
                     <button 
-                    className={`text-start ${product == "Properties" && "text-orange-500"}`}
-                    onClick={()=>setProduct("Properties")}
+                    className={`text-start ${product.name == "Properties" && "text-orange-500"}`}
+                    onClick={()=>handleClick("Properties", 2)}
                     >
                     Properties
                     </button>
                     <button 
-                    className={`text-start ${product == "Others" && "text-orange-500"}`}
-                    onClick={()=>setProduct("Others")}
+                    className={`text-start ${product.name == "Others" && "text-orange-500"}`}
+                    onClick={()=>handleClick("Others", null)}
                     >
                     Others
                     </button>

@@ -2,47 +2,37 @@
 import Products from "@/components/users/products"
 import { useState, useEffect } from "react";
 import { axiosInstance } from "@/utils/axios";
-
+import useStore from "../store";
+import Loading from "@/tabs/admin/loading";
 
 
 export default function Page(){
 
+  const {
+    fetchAllProduct, 
+    products, 
+    categories, 
+    fetchCategory, 
+    auctions,
+    loading} = useStore();
 
-    const [allData, setAllData] = useState([]);
-
-    const fetchAllData = async () => {
-      try {
-        const [carsRes, propertiesRes, othersRes] = await Promise.all([
-          axiosInstance.get("cars"),
-          axiosInstance.get("properties"),
-          axiosInstance.get("others"),
-        ]);
-  
-        const cars = carsRes?.data?.data || [];
-        const properties = propertiesRes?.data?.data || [];
-        const others = othersRes?.data?.data || [];
-  
-        setAllData([...cars, ...properties, ...others]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
-    useEffect(() => {
-      fetchAllData();
+  useEffect(() => {
+    if(products){
+    fetchAllProduct();
+    fetchCategory();
+    }
     }, []);
-  
         
     return(
-        <>
+        <div>
             <Products 
             page="Auctions" 
             headline="Discover Exceptional Deals on Premium Items"
             detail="Bid now on exclusive products and unbeatable offers 
             in our live auctions."
-            category="All Auctions"
+            category={categories}
             style="auctions"
-            data={allData}/>
-        </>
+            data={auctions}/>            
+        </div>
     )
 }

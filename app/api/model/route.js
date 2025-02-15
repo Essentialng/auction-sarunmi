@@ -3,9 +3,16 @@ import { NextResponse } from 'next/server';
 
 
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const model = await prisma.model.findMany();
+    const { searchParams } = new URL(request.url);
+    const categoryId = searchParams.get('categoryId');
+
+    const model = await prisma.model.findMany({
+      where: {
+        categoryId: Number(categoryId)
+      }
+    });
 
     return NextResponse.json({data: model }, {status: 200});
   } catch (error) {

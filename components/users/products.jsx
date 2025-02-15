@@ -1,14 +1,24 @@
 import { FaAngleRight } from "react-icons/fa6";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { AuctionItems } from "./auction_items";
+import classNames from "classnames";
+import useStore from "@/app/store";
+import Loading from "@/tabs/admin/loading";
 
 export default function Products({page, headline, detail, category, style, data}){
 
     const filter_con = "flex 2xl:flex-row xl:flex-row md:flex-row flex-col gap-2 2xl:items-center xl:items-center md:items-center";
     const filter_text = "flex items-center gap-2 border broder-white 2xl:px-12 xl:px-12 md:px-12 px-2 2xl:py-4 xl:py-4 md:py-4 py-1 rounded-md";
 
+  
     return(
-        <div className={`flex flex-col gap-8 2xl:px-[4rem] xl:px-[4rem] px-[1rem] py-[10rem] ${(page === "categories" || page === "valuers") && "py-[0rem] pb-[5rem]"}`}>
+        <div className={classNames(
+            'flex flex-col gap-8 2xl:px-[4rem] xl:px-[4rem] px-[1rem]',
+            {
+                'py-[10rem]': page !== 'categories' && page !== 'valuers',
+                'py-[0rem] pb-[5rem]': page === 'categories' || page === 'valuers',
+            }
+            )}>            
             {page !== "categories" &&
             <div className="flex flex-col gap-4">
                 <div className="flex items-center 2xl:gap-4 xl:gap-4 gap-2 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]">
@@ -40,10 +50,12 @@ export default function Products({page, headline, detail, category, style, data}
                 <div className="flex justify-between items-center bg-[#35318E] rounded-2xl 2xl:px-12 
                 xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
                 >
-                    <div className="flex gap-2 items-center">
-                        <span>{category}</span>
-                        <RiArrowDownSFill size={18} color="gray"/>
-                    </div>
+                    
+                    <select className={"flex gap-2 items-center bg-[#35318E] text-lg border-none outline-none"}>
+                        {category?.map((value, index)=>(
+                            <option key={index} value="">{value?.name}</option>
+                        ))}
+                    </select>
                     <div className={filter_con}>
                         <p className="pr-4">Location:</p>
                         <div className={filter_text}>

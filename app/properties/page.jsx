@@ -2,30 +2,19 @@
 import Products from "@/components/users/products"
 import { useState, useEffect } from "react";
 import { axiosInstance } from "@/utils/axios";
-
+import useStore from "../store";
 
 
 
 export default function Page(){
-
-    const [data, setData] = useState([]);
+    const {fetchAllProduct, properties, products} = useStore()
+    const categories = []
     
-    const fetchCars = async()=>{
-        try{
-            const response = await axiosInstance.get("properties");
-            const data = await response.data;
-
-            if(response.status == 200){
-                setData(data?.data);
-            }
-        }catch(error){
-            console.log(error)
+    useEffect(() => {
+        if(products){
+        fetchAllProduct();
         }
-    }
-
-    useEffect(()=>{
-        fetchCars();
-    })
+    }, []);
 
     return(
         <>
@@ -34,9 +23,9 @@ export default function Page(){
             headline="Find Your Perfect Property"
             detail="Explore a diverse range of properties to suit every need and 
             budget. Secure and transparent bidding process for peace of mind."
-            category="Properties"
+            category={categories}
             style="properties"
-            data={data}/>
+            data={properties}/>
         </>
     )
 }

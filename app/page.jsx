@@ -4,8 +4,7 @@ import Auctions from "@/components/users/auctions";
 import Cards from "@/components/users/cards";
 import Footer from "@/components/users/footer";
 import HeroSectionMobile from "@/components/users/heroSectionMobile";
-// import Loading from "@/tabs/admin/loading";
-// import useStore from "./store";
+
 
 export default function DashBorad(){
     return(

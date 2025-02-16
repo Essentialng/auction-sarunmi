@@ -14,7 +14,7 @@ export async function GET(request) {
       }
     });
 
-    return NextResponse.json({data: model }, {status: 200});
+    return NextResponse.json(model, {status: 200});
   } catch (error) {
     return NextResponse.json({ success: false, message: 'Failed to fetch cars' }, { status: 500 });
   }

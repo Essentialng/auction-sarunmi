@@ -59,7 +59,6 @@ export default function Page(){
         }
         }, []);
 
-
     return(
         <div className="flex flex-col relative pt-[10rem] ">
             <div className="flex flex-col gap-4 2xl:px-[4rem] xl:px-[4rem] px-[1rem]">

@@ -7,6 +7,7 @@ import { handleCloudinary } from "@/utils/cloudinary";
 import Form from "./form";
 
 
+
 const ProductUpload = ({id, product, handleClick}) => {
 
   const [loading, setLoading] = useState(false);
@@ -205,6 +206,7 @@ const ProductUpload = ({id, product, handleClick}) => {
       detailHandler={detailHandler}
       handleImageProperty={handleImageProperty}
       categories={categories}
+      setFormValues={setFormValues}
       />
   );
 };

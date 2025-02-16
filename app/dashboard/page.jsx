@@ -83,69 +83,34 @@ export const data =
     ]
 export default function Dashboard(){
 
-    const {user} = useStore()
-    const [loading, setLoading] = useState(false);
-    const [products, setProducts] = useState([]);
+    const {user, fetchWatchList, watchList, products} = useStore()
   
 
-    const fetchUserProductHandler = async ()=>{
-        setLoading(true);
-        try{
-            const response = await axiosInstance.post("getUserProducts",
-                { id: user?.id }
-            )
-            const data = await response.data;
-            if(response.status == 200){
-                setProducts(data.allItems)
-            }
-        }catch(error){
-            console.log(error);
-        }finally{
-            setLoading(false);
-        }
-    }
-
+    console.log(watchList)
     const [allData, setAllData] = useState([]);
 
-    const fetchAllData = async () => {
-      try {
-        const [carsRes, propertiesRes, othersRes] = await Promise.all([
-          axiosInstance.get("cars"),
-          axiosInstance.get("properties"),
-          axiosInstance.get("others"),
-        ]);
-  
-        const cars = carsRes?.data?.data || [];
-        const properties = propertiesRes?.data?.data || [];
-        const others = othersRes?.data?.data || [];
-  
-        setAllData([...cars, ...properties, ...others]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+   
   
 
 
     useEffect(()=>{
         if(user){
-            fetchUserProductHandler()
-            fetchAllData();
-
-        }
+        fetchWatchList(user?.id)
+    } 
     },[user]);
+
 
     return(
         <div className="xl:px-24 px-4 py-44 flex flex-col gap-44">
             {products.length != 0 &&
             <div className="flex flex-col gap-12">
                 <h1 className="text-[#EF6509] xl:text-[24px] text-[16px] font-semibold">Auctions You’re Participating In</h1>
-                <DashboardCrad products={products}/>
+                <DashboardCrad products={[]}/>
             </div>
             }
             <div className="flex flex-col gap-12">
             <h1 className="text-[#EF6509] text-[24px] font-semibold">My Watchlist</h1>
-                <AuctionItems auctions={allData}/>
+                <AuctionItems auctions={watchList.items}/>
             </div>
         </div>
     )

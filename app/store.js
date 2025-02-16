@@ -14,6 +14,9 @@ const useStore = create((set) => ({
   others: [],
   categories: [],
   auctions: [],
+  watchList:[],
+  categoryName: [],
+  models: [],
   
 
 
@@ -53,13 +56,13 @@ const useStore = create((set) => ({
             othersData.push(item);
           }
         });
-        
         set({ 
           cars: carsData, 
           properties: propertiesData, 
           others: othersData, 
           products: false,
-          auctions: data.items
+          categoryName: data.category,
+          auctions: data.items,
          });
 
       }
@@ -82,6 +85,33 @@ const useStore = create((set) => ({
         console.log(error)
       }finally{
         set({loading:false});
+      }
+    },
+
+
+    fetchWatchList: async(id)=>{
+      try{
+        const response = await axiosInstance.get(`/watchlist?id=${id}`);
+        const data = await response.data;
+        if(response.status == 200){
+          set({watchList: data, products: false})
+        }
+      }catch(error){
+        console.log(error)
+      }finally{
+        set({loading:false});
+      }
+    },
+
+    fetModels:async(id)=>{
+      try{
+        const response = await axiosInstance.get(`model?categoryId=${id}`);
+        const data = await response.data;
+        if(response.status == 200){
+          set({models: data, products: false})
+        }
+      }catch(error){
+        console.log(error)
       }
     }
 

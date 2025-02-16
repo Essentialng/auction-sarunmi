@@ -1,9 +1,7 @@
 "use client";
 import Products from "@/components/users/products"
 import { useState, useEffect } from "react";
-import { axiosInstance } from "@/utils/axios";
 import useStore from "../store";
-import Loading from "@/tabs/admin/loading";
 
 
 export default function Page(){
@@ -14,6 +12,7 @@ export default function Page(){
     categories, 
     fetchCategory, 
     auctions,
+    categoryName,
     loading} = useStore();
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function Page(){
             headline="Discover Exceptional Deals on Premium Items"
             detail="Bid now on exclusive products and unbeatable offers 
             in our live auctions."
-            category={categories}
+            category={categoryName}
             style="auctions"
             data={auctions}/>            
         </div>

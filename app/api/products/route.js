@@ -11,7 +11,8 @@ export async function GET(request) {
 
     if(categoryId == "all"){
       const items = await prisma.item.findMany()
-      return NextResponse.json({items:items}, {status: 200})
+      const category = await prisma.category.findMany();
+      return NextResponse.json({items:items, category:category}, {status: 200})
     }
 
     const model = await prisma.model.findMany({ 

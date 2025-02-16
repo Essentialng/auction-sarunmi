@@ -6,14 +6,14 @@ import useStore from "../store";
 
 export default function Page(){
 
-    const {fetchAllProduct, cars, products} = useStore()
-   const categories = []
+    const {fetchAllProduct, cars, products, models, fetModels} = useStore()
 
         
     useEffect(() => {
     if(products){
     fetchAllProduct();
     }
+    fetModels(1)
     }, []);
         
 
@@ -24,7 +24,7 @@ export default function Page(){
             headline="Find Your Dream Car!"
             detail="Discover a wide selection of vehicles to suit every 
             taste, budget and bid with confidence."
-            category={categories}
+            category={models}
             style="cars"
             data={cars}/>
         </>

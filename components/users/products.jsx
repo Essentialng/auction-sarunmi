@@ -4,11 +4,12 @@ import { AuctionItems } from "./auction_items";
 import classNames from "classnames";
 import useStore from "@/app/store";
 import Loading from "@/tabs/admin/loading";
+import { statesData } from "@/utils/location";
 
 export default function Products({page, headline, detail, category, style, data}){
 
     const filter_con = "flex 2xl:flex-row xl:flex-row md:flex-row flex-col gap-2 2xl:items-center xl:items-center md:items-center";
-    const filter_text = "flex items-center gap-2 border broder-white 2xl:px-12 xl:px-12 md:px-12 px-2 2xl:py-4 xl:py-4 md:py-4 py-1 rounded-md";
+    const filter_text = "flex items-center gap-2 border broder-white bg-[#35318E] outline-none 2xl:px-12 xl:px-12 md:px-12 px-2 2xl:py-4 xl:py-4 md:py-4 py-1 rounded-md";
 
   
     return(
@@ -58,10 +59,12 @@ export default function Products({page, headline, detail, category, style, data}
                     </select>
                     <div className={filter_con}>
                         <p className="pr-4">Location:</p>
-                        <div className={filter_text}>
-                            <span>Lagos</span>
-                            <RiArrowDownSFill size={18} color="gray"/>
-                        </div>
+                        <select className={filter_text}>
+                            <option value="" disabled={true}>select location</option>
+                            {statesData.map((state, index)=>(
+                                <option>{Object.keys(state)}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className={filter_con}>
                         <p className="pr-4">Sort:</p>

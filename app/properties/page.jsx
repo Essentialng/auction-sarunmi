@@ -7,13 +7,14 @@ import useStore from "../store";
 
 
 export default function Page(){
-    const {fetchAllProduct, properties, products} = useStore()
+    const {fetchAllProduct, properties, products, models, fetModels} = useStore()
     const categories = []
     
     useEffect(() => {
         if(products){
         fetchAllProduct();
         }
+        fetModels(2)
     }, []);
 
     return(
@@ -23,7 +24,7 @@ export default function Page(){
             headline="Find Your Perfect Property"
             detail="Explore a diverse range of properties to suit every need and 
             budget. Secure and transparent bidding process for peace of mind."
-            category={categories}
+            category={models}
             style="properties"
             data={properties}/>
         </>

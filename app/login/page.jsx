@@ -38,7 +38,8 @@ export default function SignUp() {
             title: "Login successful!",
   
             didClose: () => {
-              router.push("/dashboard")            },
+              router.push("/dashboard")            
+            },
           });
           
         }

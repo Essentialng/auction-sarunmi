@@ -1,5 +1,7 @@
 import Image from "next/image"
 import Submitted from "@/components/admin/submitted"
+import { ApprovedUsers, CheckBox } from "@/components/admin/adminApproveSections"
+
 
 export default function Approve(){
 
@@ -111,23 +113,7 @@ export default function Approve(){
     
     return(
         <div className="w-10/12 ml-auto mt-24 p-9 grid grid-cols-12 gap-8 bg-white">
-            <div className="col-span-2 w-full border">
-                <ul className="w-full flex flex-col gap-4 justify-center text-center">
-                    <li className="p-4 bg-[#35318E] text-center text-white">Users</li>
-                    {users.map((user, index)=>(
-                        <li key={index} >
-                            <div className="grid grid-cols-5 items-center justify-center gap-4 p-2 ">
-                                <div className="col-span-2 flex items-right justify-end">
-                                    <Image src={user.img} width={20} height={20} alt=""/>
-                                </div>
-                                <div className="col-span-3 text-start">
-                                    <small>{user.name}</small>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <ApprovedUsers users={users}/>
             <div className="col-span-7 border shadow-lg rounded-2xl p-8">
                 <Submitted data={submittedDetails}/>
             </div>
@@ -135,48 +121,36 @@ export default function Approve(){
                 <p>Admin Verification</p>
                 <div>
                     <div className="col-span-1 grid grid-cols-4">
-                    <div className="col-span-2 flex flex-col gap-4">
-                        <strong>Checklist</strong>
-                        <div className="flex flex-col gap-4">
-                        <small>Car Details</small>
-                        {carDetails.map((item, index)=>(
-                            <small>{item}</small>
-                        ))}
+                        <div className="col-span-2 flex flex-col gap-4">
+                            <strong>Checklist</strong>
+                            <div className="flex flex-col gap-4">
+                            <small>Car Details</small>
+                            {carDetails.map((item, index)=>(
+                                <small>{item}</small>
+                            ))}
+                            </div>
+                            <div className="flex flex-col gap-4">
+                            <small>Condition Report</small>
+                            {report.map((item, index)=>(
+                                <small>{item}</small>
+                            ))}
+                            </div>
                         </div>
-                        <div className="flex flex-col gap-4">
-                        <small>Condition Report</small>
-                        {report.map((item, index)=>(
-                            <small>{item}</small>
-                        ))}
+                        <div className="col-span-1 flex flex-col gap-5 text-center">
+                            <p>Yes</p>
+                            <CheckBox 
+                            carDetails={carDetails}
+                            report={report}
+                            />
+                        </div>
+                        <div className="col-span-1 flex flex-col gap-5 text-center">
+                            <p>No</p>
+                            <CheckBox 
+                            carDetails={carDetails}
+                            report={report}
+                            />
                         </div>
                     </div>
-                    <div className="col-span-1 flex flex-col gap-5 text-center">
-                        <p>Yes</p>
-                        <div className="flex flex-col justify-between pt-10 h-full">
-                            {carDetails.map(()=>(
-                                <input type="checkbox" />
-                            ))}
-                        </div>
-                        <div className="flex flex-col justify-between pt-10 h-full">
-                            {report.map(()=>(
-                                <input type="checkbox" />
-                            ))}
-                        </div>
-                    </div>
-                    <div className="col-span-1 flex flex-col gap-5 text-center">
-                        <p>No</p>
-                        <div className="flex flex-col justify-between pt-10  h-full">
-                            {carDetails.map(()=>(
-                                <input type="checkbox" />
-                            ))}
-                        </div>
-                        <div className="flex flex-col justify-between pt-10 h-full">
-                            {report.map(()=>(
-                                <input type="checkbox" />
-                            ))}
-                        </div>
-                    </div>
-                </div>
                 </div>
             </div>
         </div>

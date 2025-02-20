@@ -5,6 +5,7 @@ import Activity from "@/components/admin/activity";
 import Fields from "@/components/admin/fields";
 import Permissions from "@/components/admin/permissions";
 import { useState } from "react";
+import { Role } from "@/components/admin/managementSections";
 
 
 export default function Page(){
@@ -206,16 +207,23 @@ export default function Page(){
       ]
 
     return(
-        <div>
-            {toggle ?
+        <div className="z-10">
+            {!toggle ?
             <AdminPage
             cards={cards}
             header={header}
             contents={contents}
             />
             :
-            <div className="w-10/12 ml-auto mt-24 p-9 grid grid-cols-6 gap-8 bg-white">
-                <div className="h-fit col-span-4 border rounded-xl shadow-xl p-8 flex flex-col gap-8">
+            <div 
+            className="w-10/12 ml-auto mt-24 p-9
+             grid grid-cols-6 gap-8 bg-white"
+             >
+
+                <div 
+                className="h-fit col-span-4 border rounded-xl
+                 shadow-xl p-8 flex flex-col gap-8"
+                 >
                     <div className="flex flex-col gap-8">
                         <Fields
                         fields={fields}
@@ -229,23 +237,12 @@ export default function Page(){
                         />
                     </div>
                 </div>
-                <div className="col-span-2 overflow-y-scroll flex flex-col gap-12">
-                    <div className="flex flex-col gap-4 bg-[#F7F9FB] p-8 rounded-xl items-center">
-                        <strong>Role Management</strong>
-                        {roles.map((item, index)=>(
-                            <div
-                            key={index} 
-                            className="grid grid-cols-5 gap-2">
-                                <p className="col-span-2">{item.role}</p>
-                                <small className="col-span-3">{item.description}</small>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="p-6 bg-[#F7F9FB] rounded-xl flex flex-col gap-8 text-center">
-                        <strong>Admin Activity Log</strong>
-                        <Activity recentActivity={recentActivity}/>
-                    </div>
-                </div>
+
+                <Role 
+                roles={roles} 
+                recentActivity={recentActivity}
+                />
+
             </div>
             }
         </div>

@@ -97,12 +97,12 @@ export function AuctionItems({ auctions, page }) {
                   </div>
                 </div>
                 {!timeToStart ? (
-                  <button className={btn_class}>JOIN AUCTION</button>
+                  <button className={btn_class} onClick={()=>handleViewAuction(item)}>JOIN AUCTION</button>
                 ) : (
                   <div className="flex gap-3">
                     <button className={btn_class}
-                    onClick={()=>handleViewAuction(item)}>VIEW AUCTION</button>
-                    <button className={btn_class}>PRE BID</button>
+                    >VIEW AUCTION</button>
+                    <button className={btn_class} onClick={()=>handleViewAuction(item)}>PRE BID</button>
                   </div>
                 )}
               </div>

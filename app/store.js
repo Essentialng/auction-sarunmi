@@ -113,7 +113,7 @@ const useStore = create((set) => ({
       }catch(error){
         console.log(error)
       }
-    }
+    },
 
 }));
 

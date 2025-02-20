@@ -83,15 +83,7 @@ export const data =
     ]
 export default function Dashboard(){
 
-    const {user, fetchWatchList, watchList, products} = useStore()
-  
-
-    console.log(watchList)
-    const [allData, setAllData] = useState([]);
-
-   
-  
-
+    const {user, fetchWatchList, watchList, products} = useStore();
 
     useEffect(()=>{
         if(user){
@@ -102,12 +94,12 @@ export default function Dashboard(){
 
     return(
         <div className="xl:px-24 px-4 py-44 flex flex-col gap-44">
-            {products.length != 0 &&
+           
             <div className="flex flex-col gap-12">
                 <h1 className="text-[#EF6509] xl:text-[24px] text-[16px] font-semibold">Auctions You’re Participating In</h1>
-                <DashboardCrad products={[]}/>
+                <DashboardCrad/>
             </div>
-            }
+          
             <div className="flex flex-col gap-12">
             <h1 className="text-[#EF6509] text-[24px] font-semibold">My Watchlist</h1>
                 <AuctionItems auctions={watchList.items}/>

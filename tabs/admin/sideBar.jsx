@@ -31,11 +31,12 @@ export default function SideBar() {
   const triggerBtn = "flex items-center gap-2 text-[16px] rounded-t-xl p-4 cursor-pointer";
   const liStyle = "px-2";
   const activeBtn = "bg-[#35318E] text-white"
+  const sideBg = "bg-[#E1E3E1]"
 
   return (
     <>
       {path.includes(pathname) && (
-        <div className="absolute w-1/5 h-[100vh] left-0 top-28  overflow-scroll">
+        <div className="absolute w-2/6 h-[100vh] left-0 top-28  overflow-scroll z-30">
           <div className="p-6 flex flex-col gap-2 bg-[#35318E] text-white ">
             <div className="flex items-center gap-4 font-semibold">
               <FaUser />
@@ -50,7 +51,7 @@ export default function SideBar() {
               <small>+2348199977444 </small>
             </div>
           </div>
-          <ul className="flex flex-col justify-center gap-4 text-[16px] py-6 px-3 bg-[#ced3ce]">
+          <ul className={`flex flex-col justify-center gap-4 text-[16px] py-6 px-3 ${sideBg}`}>
             
             <li 
             className={classNames(

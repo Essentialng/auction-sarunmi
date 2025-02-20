@@ -49,9 +49,16 @@ export const calculateTimeToStart = (startTime) => {
     return `${formattedTotalDays} Days [${formattedRemainingDays} day${formattedRemainingDays !== 1 ? 's' : ''} left]`;
   };
 
-
 export const highestAmount =(bids)=>{ 
   return  bids.reduce((max, bid) => {
     return bid.amount > max ? bid.amount : max;
   }, 0);
 }
+
+
+export const formatText = (text) => {
+  const formattedText = text.replace(/([a-z])([A-Z])/g, '$1 $2');
+  return formattedText.charAt(0).toUpperCase() + formattedText.slice(1).toLowerCase();
+};
+
+

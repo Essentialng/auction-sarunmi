@@ -3,11 +3,11 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-export default function Sliders({children, slideShow, margin, scroll, play, responsive}){
+export default function Sliders({children, slideShow, margin, scroll, play, responsive, infinite}){
 
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: infinite,
         speed: 500,
         slidesToShow: slideShow,
         slideMargin: margin,

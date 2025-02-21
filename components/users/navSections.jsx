@@ -81,6 +81,7 @@ export function MobileSearch(){
 
 
 export function NavLink({menuContents, active, nav_btn, setActive, categories}){
+    
     return(
         <div className="flex items-center justify-between w-1/2">
                     {menuContents.map((menu, index)=>(
@@ -102,16 +103,16 @@ export function NavLink({menuContents, active, nav_btn, setActive, categories}){
                                     })}
                                     onClick={()=>setActive(menu)}
                                     >
-                                <Link href="categories" className="flex items-center gap-2">Others Categories <IoIosArrowDown/></Link>
+                                <div className="flex items-center gap-2">Others Categories <IoIosArrowDown/></div>
                                 </div>
                                 <div 
                                 className=" drop w-full hidden absolute border-[#35318E] top-10 bg-[#35318E] group-hover:block group-focus-within:block py-8 hover:block z-50">
                                     {categories.map((item, index)=>(
                                     <div key={index} className="relative group">
-                                        <div className={`flex justify-between items-center p-4 cursor-pointer hover:bg-[#8474DA]`}>
+                                        <Link href={`/categories/${item.id}`} className={`flex justify-between items-center p-4 cursor-pointer hover:bg-[#8474DA]`}>
                                             <small className="text-[12p6]">{item?.name}</small>
                                             <IoIosArrowForward/>
-                                        </div>
+                                        </Link>
                                     </div> 
                                     ))}
                                 </div>

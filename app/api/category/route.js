@@ -3,15 +3,22 @@ import { NextResponse } from 'next/server';
 
 
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const category = await prisma.category.findMany();
+    const category = await prisma.category.findMany({
+      where: {
+        id: {
+          notIn: [1, 2] 
+        }
+      }
+    });
 
-    return NextResponse.json({category: category }, {status: 200});
+    return NextResponse.json({ category: category }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ success: false, message: `Failed to fetch category: ${error.message}` }, { status: 500 });
   }
 }
+
 
 
 
@@ -20,8 +27,6 @@ export async function POST(request) {
       const body = await request.json();
 
       const {id, name} = body;
-
-
      
       const existingUser = await prisma.user.findUnique({
            where: { id } 

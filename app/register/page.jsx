@@ -7,10 +7,10 @@ import * as Yup from 'yup';
 import Background from '@/components/users/backgroundImg';
 import PopUp from '@/components/users/signup-pop';
 import { IoIosArrowBack } from "react-icons/io";
-import { axiosInstance } from '@/utils/axios';
+import { axiosInstance } from '@/package/axios';
 import { Rings } from 'react-loading-icons';
 import useStore from '../store';
-import { Toast } from '@/utils/alert';
+import { Toast } from '@/package/alert';
 
 export default function SignUp() {
   const {initializeUser} = useStore();

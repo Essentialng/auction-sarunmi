@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance } from "@/package/axios";
 import useStore from "@/app/store";
 import PopUp from "./signup-pop";
 import { Rings } from 'react-loading-icons';

@@ -1,5 +1,5 @@
 import "./globals.css";
-import {manrope} from "@/utils/fonts"
+import {manrope} from "@/package/fonts"
 import NavBar from "@/tabs/users/navBar";
 import FooterContact from "@/components/users/footerContact";
 import SideBar from "@/tabs/admin/sideBar";

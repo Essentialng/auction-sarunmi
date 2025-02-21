@@ -3,9 +3,9 @@ import ProductVerify from "@/components/users/productVerify"
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { highestAmount } from "@/utils/methods";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance } from "@/package/axios";
 import useStore from "../store";
-import { Toast } from "@/utils/alert";
+import { Toast } from "@/package/alert";
 import { ProductImages, ProductDescription, ProductAuction } from "@/components/users/descriptionSections";
 
 export default function Page(){

@@ -1,13 +1,8 @@
-import { FaAngleRight } from "react-icons/fa6";
-import { RiArrowDownSFill } from "react-icons/ri";
-import { AuctionItems } from "./auction_items";
 import classNames from "classnames";
-import useStore from "@/app/store";
-import Loading from "@/tabs/admin/loading";
 import { statesData } from "@/utils/location";
 import { Header, ProductNav } from "./productSections";
 
-export default function Products({page, headline, detail, category, style, data}){
+export default function Products({page, headline, detail, category, style, data, fetchProducts}){
 
     return(
         <div className={classNames(
@@ -31,6 +26,7 @@ export default function Products({page, headline, detail, category, style, data}
             category={category}
             statesData={statesData}
             data={data}
+            fetchProducts={fetchProducts}
             />
         </div>
     )

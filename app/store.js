@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import {setCookies, getCookies, removeCookies} from "@/utils/cookies";
-import { verifyToken } from "@/utils/jwt";
-import { axiosInstance } from "@/utils/axios";
+import { verifyToken } from "@/package/jwt";
+import { axiosInstance } from "@/package/axios";
 
 
 

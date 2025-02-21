@@ -39,7 +39,7 @@ export function Header({page, headline, detail, style}){
 }
 
 
-export function ProductNav({page, category, statesData, data}){
+export function ProductNav({page, category, statesData, data, fetchProducts}){
     return(
         <>
         {(page !== "valuers" || page !== "vendors") &&
@@ -48,9 +48,12 @@ export function ProductNav({page, category, statesData, data}){
                 xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
                 >
                     
-                    <select className={"flex gap-2 items-center bg-[#35318E] text-lg border-none outline-none"}>
+                    <select 
+                    className={"flex gap-2 items-center bg-[#35318E] text-lg border-none outline-none"}
+                    onChange={(e) => fetchProducts(e.target.value)}
+                    >
                         {category?.map((value, index)=>(
-                            <option key={index} value="">{value?.name}</option>
+                            <option key={index} value={value.id}>{value?.name}</option>
                         ))}
                     </select>
                     <div className={filter_con}>

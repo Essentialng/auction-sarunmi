@@ -3,7 +3,7 @@ import DashboardCrad from "@/components/users/dashboard-card";
 import { AuctionItems } from "@/components/users/auction_items";
 import useStore from "../store";
 import { useState, useEffect } from "react";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance } from "@/package/axios";
 
 export const data = 
             [

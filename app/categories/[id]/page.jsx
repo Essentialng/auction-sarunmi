@@ -1,23 +1,34 @@
 "use client";
 import { FaAngleRight } from "react-icons/fa6";
-import { BiSolidRightArrow } from "react-icons/bi";
 import Products from "@/components/users/products";
 import FooterCard from "@/components/users/footerCard";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import SleiderProduct from "@/components/users/slideProducts";
 import useStore from "@/app/store";
+import { useParams } from "next/navigation";
+import useFetchProducts from "@/utils/category";
+import OtherCategories from "@/tabs/users/otherCategory";
 
 
 
 export default function Page(){
-    const {fetchAllProduct, others, cars, products, categories, fetchCategory} = useStore()
-    const [filter, setFilter] = useState("");
+    const {id} = useParams();
+    
+    const { cars, products, categories, fetchCategory} = useStore();
+    const { filter, loading, error, fetchProducts } = useFetchProducts();
+
+
+
+    const handleFetchProducts = (categoryId) => {
+          fetchProducts(categoryId);
+      };
+
 
     useEffect(() => {
         if(products){
-        fetchAllProduct();
         fetchCategory();
-        }
+        };
+        fetchProducts(id)
         }, []);
 
     return(
@@ -31,29 +42,26 @@ export default function Page(){
                 </div>
             </div>
 
-           <SleiderProduct 
-           data={cars} 
-           header="Top Auctions"
-           />
+            <SleiderProduct 
+            data={cars} 
+            header="Top Auctions"
+            />
+
             <div className=" xl:grid block grid-cols-4 pt-24  xl:px-[4rem] px-[1rem]">
-                <div className="col-span-1 2xl:flex xl:flex hidden flex-col gap-8">
-                    <p className="text-[#EF6509] text-600 text-[24px]">Other Categories</p>
-                    <ul className="flex flex-col gap-4">
-                        {categories.map((value, index)=>(
-                            <li key={index} className="flex items-center gap-12 cursor-pointer">
-                                {value.name}
-                                <BiSolidRightArrow size={10} color={value.name === filter && "#EF6509"}/>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <OtherCategories
+                handleFetchProducts={handleFetchProducts}
+                categories={categories}
+                filter={filter}
+                />
                 <div className="col-span-3 ">
                     <Products 
                     page="categories" 
                     headline="" 
                     detail="" 
                     category={categories} 
-                    style="" data={others}
+                    style="" 
+                    data={filter}
+                    fetchProducts={handleFetchProducts}
                     />
                 </div>
             </div>

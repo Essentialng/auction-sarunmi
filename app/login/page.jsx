@@ -5,10 +5,10 @@ import * as Yup from 'yup';
 import Background from '@/components/users/backgroundImg';
 import Image from 'next/image';
 import useStore from '../store';
-import { axiosInstance } from '@/utils/axios';
+import { axiosInstance } from '@/package/axios';
 import { useRouter } from 'next/navigation';
 import { Rings } from 'react-loading-icons';
-import { Toast } from '@/utils/alert';
+import { Toast } from '@/package/alert';
 
 export default function SignUp() {
   const {initializeUser} = useStore();

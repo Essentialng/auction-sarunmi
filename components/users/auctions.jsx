@@ -1,7 +1,7 @@
 "use client";
 import { AuctionItems } from "./auction_items";
 import { useState, useEffect } from "react";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance } from "@/package/axios";
 import Link from "next/link";
 import useStore from "@/app/store";
 
@@ -40,22 +40,26 @@ export default function Auctions() {
 
   return (
     <div className="2xl:px-[4rem]  px-[1rem] py-24 bg-gray-100">
-      <h1 className="2xl:text-[30px] xl:text-[30px] text-[22px] font-[700] py-12">
-        Top Auctions
-      </h1>
-      <div className="flex flex-col gap-20">
-        {itemsData.map((items, index) => (
-          <section className="flex flex-col gap-6" key={index}>
-            <div className="flex justify-between ">
-              <span className={header}>{items.name}</span>
-              <Link href={items.link} className={small}>
-                View all
-              </Link>
-            </div>
-            <AuctionItems auctions={items.data} />
-          </section>
-        ))}
-      </div>
+      {cars.length != 0 && properties.length != 0 && others.length != 0 &&
+        <>      
+          <h1 className="2xl:text-[30px] xl:text-[30px] text-[22px] font-[700] py-12">
+            Top Auctions
+          </h1>
+          <div className="flex flex-col gap-20">
+            {itemsData.map((items, index) => (
+              <section className="flex flex-col gap-6" key={index}>
+                <div className="flex justify-between ">
+                  <span className={header}>{items.name}</span>
+                  <Link href={items.link} className={small}>
+                    View all
+                  </Link>
+                </div>
+                <AuctionItems auctions={items.data} />
+              </section>
+            ))}
+          </div>
+        </>
+        }
     </div>
   );
 }

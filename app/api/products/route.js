@@ -18,7 +18,13 @@ export async function GET(request) {
     const model = await prisma.model.findMany({ 
       where: {
       categoryId: Number(categoryId)
-    } });
+    },
+    include: {
+      items: true 
+    } 
+  });
+
+  
 
     return NextResponse.json({model: model }, {status: 200});
   } catch (error) {

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import SleiderProduct from "./dashboardSlider";
 import useStore from "@/app/store";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance } from "@/package/axios";
 
 export default function DashboardCrad(){
     const {user} = useStore();

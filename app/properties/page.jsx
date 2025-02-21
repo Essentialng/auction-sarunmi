@@ -1,7 +1,7 @@
 "use client";
 import Products from "@/components/users/products"
 import { useState, useEffect } from "react";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance } from "@/package/axios";
 import useStore from "../store";
 
 

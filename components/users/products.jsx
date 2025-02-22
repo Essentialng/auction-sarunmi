@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { statesData } from "@/utils/location";
 import { Header, ProductNav } from "./productSections";
 
-export default function Products({page, headline, detail, category, style, data, fetchProducts}){
+export default function Products({page, headline, detail, category, style, data, productsFiter, locationHandler}){
 
     return(
         <div className={classNames(
@@ -26,7 +26,8 @@ export default function Products({page, headline, detail, category, style, data,
             category={category}
             statesData={statesData}
             data={data}
-            fetchProducts={fetchProducts}
+            productsFiter={productsFiter} 
+            locationHandler={locationHandler}           
             />
         </div>
     )

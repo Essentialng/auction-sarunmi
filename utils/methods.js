@@ -75,3 +75,17 @@ export const formatText = (text) => {
 };
 
 
+export const productFilter = (filterItem, id)=>{
+  const filterItems = filterItem.filter(product => product.modelId == id);
+  return filterItems;
+};
+
+export const locationFilter = (filterItem, location) => {
+  const filteredItems = filterItem.filter(product => {
+    const locationParts = product.location.split('/'); 
+    const firstLocationWord = locationParts[0]; 
+    return firstLocationWord.includes(location); 
+  });
+  
+  return filteredItems;
+};

@@ -34,6 +34,7 @@ export function AuctionItems({ auctions, page }) {
   };
 
   const [stateUpdated, setStateUpdated] = useState(false);
+
   return (
     
       <div

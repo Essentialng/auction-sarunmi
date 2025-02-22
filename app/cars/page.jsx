@@ -1,20 +1,46 @@
 "use client";
 import Products from "@/components/users/products"
-import { useState, useEffect } from "react";
-import useStore from "../store";
-
+import { useState, useEffect, useCallback } from "react";
+import { axiosInstance } from "@/package/axios";
+import { productFilter, locationFilter } from "@/utils/methods";
 
 export default function Page(){
 
-    const {fetchAllProduct, cars, products, models, fetModels} = useStore()
+    const [cars, setCars] = useState([]);
+    const [models, setModels] = useState([]);
+    const [filterItems, setFilterItems] = useState([]);
+       
+    const fetchCars = async()=>{
+        try{
+            const response = await axiosInstance.get(`/cars`)
+            const data = await response.data;
+            if(response.status == 200){
+            const items = data.data.map(car => car.items).flat();
+            setFilterItems(items)
+            setCars(items);
+            setModels(data.data); 
+            }
+        }catch(error){
+            console.log(error)
+        }
+    };
 
-        
+    
+    const carFilter = useCallback((id)=>{
+        const filteredCars = productFilter(filterItems, id);
+        setCars(filteredCars);
+    },[cars]);
+
+    const locationHandler = useCallback((location)=>{
+        const items = locationFilter(filterItems, location);
+        setCars(items);
+    },[cars])
+
+    
+     
     useEffect(() => {
-    if(products){
-    fetchAllProduct();
-    }
-    fetModels(1)
-    }, []);
+        fetchCars()
+        }, []);
         
 
     return(
@@ -26,7 +52,11 @@ export default function Page(){
             taste, budget and bid with confidence."
             category={models}
             style="cars"
-            data={cars}/>
+            data={cars}
+            productsFiter={carFilter}
+            locationHandler={locationHandler}
+            />
+            
         </>
     )
 }

@@ -1,21 +1,46 @@
 "use client";
 import Products from "@/components/users/products"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { axiosInstance } from "@/package/axios";
-import useStore from "../store";
 
 
 
 export default function Page(){
-    const {fetchAllProduct, properties, products, models, fetModels} = useStore()
-    const categories = []
+
+    const [property, setProperty] = useState([]);
+    const [models, setModels] = useState([]);
+    const [filterItems, setFilterItems] = useState([]); 
+    
+
+    const fetchProperties = async()=>{
+        try{
+            const response = await axiosInstance.get(`/properties`)
+            const data = await response.data;
+            if(response.status == 200){
+            const items = data.data.map(property => property.items).flat();
+            setFilterItems(items)
+            setProperty(items);
+            setModels(data.data); 
+            }
+        }catch(error){
+            console.log(error)
+        }
+    };
     
     useEffect(() => {
-        if(products){
-        fetchAllProduct();
-        }
-        fetModels(2)
+        fetchProperties()
     }, []);
+
+
+    const propertyFilter = useCallback((id)=>{
+            const filteredProperties = productFilter(filterItems, id);
+            setProperty(filteredProperties);
+        },[property]);
+    
+    const locationHandler = useCallback((location)=>{
+        const items = locationFilter(filterItems, location);
+        setProperty(items);
+    },[property])
 
     return(
         <>
@@ -26,7 +51,10 @@ export default function Page(){
             budget. Secure and transparent bidding process for peace of mind."
             category={models}
             style="properties"
-            data={properties}/>
+            data={property}
+            productsFiter={propertyFilter}
+            locationHandler={locationHandler}
+            />
         </>
     )
 }

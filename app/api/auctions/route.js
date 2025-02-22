@@ -2,33 +2,27 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/global_client';
 import { getTodayInLocalFormat } from '@/utils/methods';
 
-
 export async function GET() {
-  try {
-    
-    const currentTime = getTodayInLocalFormat();
-    
-    const items = await prisma.Item.findMany({
-      where: {
-        endTime: {
-          gte: currentTime, 
-        },
-      },
-    });
+    try {
+      const currentTime = getTodayInLocalFormat();
 
-    if (items.length === 0) {
-      return NextResponse.json(
-        { success: false, message: 'No ongoing auctions at the moment.' },
-        { status: 404 }
-      );
+        const itemsData = await prisma.item.findMany({
+            where: {
+              endTime: {
+                gte: currentTime, 
+              },
+            },
+            include: {
+                model: true 
+              } 
+        });
+        
+        const data = itemsData.map(item => ({
+            ...item,
+            models: itemsData.model
+          }));
+        return NextResponse.json({data:data}, {status: 200})
+    } catch (error) {
+      return NextResponse.json({ success: false, message: `Failed to fetch cars: ${error.message}` }, { status: 500 });
     }
-
-    return NextResponse.json({ data: items }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, message: 'Failed to fetch ongoing auctions' },
-      { status: 500 }
-    );
   }
-}
-

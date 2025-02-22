@@ -18,6 +18,18 @@ export default function Page(){
 
     const [auctions, setAuctions] = useState([])
 
+
+    const fetchAuction = async()=>{
+      try{
+        const response = await axiosInstance.get("/auctions")
+        const data = await response.data;
+        if(response.status == 200){
+          setAuctions(data.data)
+        }
+      }catch(error){
+        console.log(error)
+      }
+  }
   useEffect(() => {
     // if(products){
     // fetchCategory();
@@ -26,17 +38,7 @@ export default function Page(){
     }, []);
 
 
-    const fetchAuction = async()=>{
-        try{
-          const response = await axiosInstance.get("/auctions")
-          const data = await response.data;
-          if(response.status == 200){
-            setAuctions(data.data)
-          }
-        }catch(error){
-          console.log(error)
-        }
-    }
+   
         
     return(
         <div>
@@ -47,7 +49,7 @@ export default function Page(){
             in our live auctions."
             category={categoryName}
             style="auctions"
-            data={auctions}/>            
+            data={auctions}/>      
         </div>
     )
 }

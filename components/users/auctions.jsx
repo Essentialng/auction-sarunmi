@@ -45,6 +45,7 @@ export default function Auctions() {
           </h1>
           <div className="flex flex-col gap-20">
             {itemsData.map((items, index) => (
+              (items?.data?.length != 0 &&
               <section className="flex flex-col gap-6" key={index}>
                 <div className="flex justify-between ">
                   <span className={header}>{items.name}</span>
@@ -54,6 +55,7 @@ export default function Auctions() {
                 </div>
                 <AuctionItems auctions={items.data} />
               </section>
+              )
             ))}
           </div>
         

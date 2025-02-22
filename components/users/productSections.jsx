@@ -39,7 +39,9 @@ export function Header({page, headline, detail, style}){
 }
 
 
-export function ProductNav({page, category, statesData, data, fetchProducts}){
+export function ProductNav({page, category, statesData, data, productsFiter, locationHandler}){
+
+
     return(
         <>
         {(page !== "valuers" || page !== "vendors") &&
@@ -47,10 +49,9 @@ export function ProductNav({page, category, statesData, data, fetchProducts}){
                 <div className="flex justify-between items-center bg-[#35318E] rounded-2xl 2xl:px-12 
                 xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
                 >
-                    
                     <select 
                     className={"flex gap-2 items-center bg-[#35318E] text-lg border-none outline-none"}
-                    onChange={(e) => fetchProducts(e.target.value)}
+                    onChange={(e) => productsFiter(e.target.value)}
                     >
                         {category?.map((value, index)=>(
                             <option key={index} value={value.id}>{value?.name}</option>
@@ -58,10 +59,13 @@ export function ProductNav({page, category, statesData, data, fetchProducts}){
                     </select>
                     <div className={filter_con}>
                         <p className="pr-4">Location:</p>
-                        <select className={filter_text}>
+                        <select 
+                        className={filter_text}
+                        onChange={(e) => locationHandler(e.target.value)}
+                        >
                             <option value="" disabled={true}>select location</option>
                             {statesData.map((state, index)=>(
-                                <option>{Object.keys(state)}</option>
+                                <option key={index} value={Object.keys(state)}>{Object.keys(state)}</option>
                             ))}
                         </select>
                     </div>

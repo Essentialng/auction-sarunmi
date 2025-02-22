@@ -40,8 +40,6 @@ export default function Auctions() {
 
   return (
     <div className="2xl:px-[4rem]  px-[1rem] py-24 bg-gray-100">
-      {cars.length != 0 && properties.length != 0 && others.length != 0 &&
-        <>      
           <h1 className="2xl:text-[30px] xl:text-[30px] text-[22px] font-[700] py-12">
             Top Auctions
           </h1>
@@ -58,8 +56,7 @@ export default function Auctions() {
               </section>
             ))}
           </div>
-        </>
-        }
+        
     </div>
   );
 }

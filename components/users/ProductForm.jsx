@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { axiosInstance } from "@/package/axios";
-import useStore from "@/app/store";
-import PopUp from "./signup-pop";
-import { Rings } from 'react-loading-icons';
 import { handleCloudinary } from "@/utils/cloudinary";
-import Form from "./form";
-
+import FormField from "./form";
 
 
 const ProductUpload = ({id, product, handleClick}) => {
@@ -189,7 +185,7 @@ const ProductUpload = ({id, product, handleClick}) => {
 
   return (
     
-      <Form
+      <FormField
       product={product}
       categoryChange={categoryChange}
       submitHandler={submitHandler}

@@ -1,8 +1,7 @@
 import PopUp from "./signup-pop";
 import { Rings } from 'react-loading-icons';
 import SelectStateLGA from "./location";
-
-export default function Form({
+export default function FormField({
     submitHandler,
     formValues,
     changeHandler,
@@ -138,15 +137,6 @@ export default function Form({
             </div>
             <div>
                 <label className={label_style}>Location</label>
-                {/* <input
-                  type="text"
-                  placeholder="Type your location"
-                  name="location"
-                  className={input_style}
-                  value={formValues.location}
-                  onChange={changeHandler}
-                  required
-                /> */}
                 <SelectStateLGA input_style={input_style} formValues={formValues} setFormValues={setFormValues}/>
             </div>
             <div className="flex items-center justify-between gap-8">

@@ -34,10 +34,8 @@ export function AuctionItems({ auctions, page }) {
   };
 
   const [stateUpdated, setStateUpdated] = useState(false);
-
   return (
-    <>
-    {auctions.length != 0 &&
+    
       <div
         className={classnames({
           "grid md:grid-cols-2 grid-cols-1 gap-4 relative": true,
@@ -114,7 +112,6 @@ export function AuctionItems({ auctions, page }) {
         
         {loading && <Loading/>}
       </div>
-      }
-    </>
+      
   );
 }

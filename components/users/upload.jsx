@@ -1,7 +1,5 @@
 import React from "react";
 import ProductUpload from "./ProductForm";
-import PropertyUpload from "./propertyUpload";
-import OtherUpload from "./otherUpload";
 
 const Page = ({product, id, handleClick}) => {
 

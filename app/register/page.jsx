@@ -11,6 +11,8 @@ import { axiosInstance } from '@/package/axios';
 import { Rings } from 'react-loading-icons';
 import useStore from '../store';
 import { Toast } from '@/package/alert';
+import States from '@/utils/states';
+
 
 export default function SignUp() {
   const {initializeUser} = useStore();
@@ -112,7 +114,7 @@ export default function SignUp() {
       }},
   });
 
-
+  
   const sendEmail =async ()=>{
     setLoading(true)
     try{
@@ -167,7 +169,7 @@ export default function SignUp() {
     formik.values.phoneNumber && age
   )
 
-
+console.log(formik.values)
   return (
     <>
     <div  className="lg:px-24 px-4 py-12 lg:grid grid-cols-5 mt-28">
@@ -269,13 +271,9 @@ export default function SignUp() {
             <>
             <div className="flex flex-col">
               <label htmlFor="state">State</label>
-              <input
-                id="state"
-                name="state"
-                type="text"
-                onChange={formik.handleChange}
-                value={formik.values.state}
-                className={inputStyle}
+              <States
+              inputStyle={inputStyle}
+              formik={formik}
               />
               {formik.touched.state && formik.errors.state ? (
                 <div className="text-red-500 text-sm">{formik.errors.state}</div>

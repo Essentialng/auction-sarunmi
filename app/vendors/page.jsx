@@ -1,6 +1,9 @@
+"use client";
 import Products from "@/components/users/products"
 import Table from "@/components/users/table"
 import FooterCard from "@/components/users/footerCard"
+import Header from "@/components/admin/dashboardHeader";
+
 export default function Page(){
     const headers = [
         "S/N",

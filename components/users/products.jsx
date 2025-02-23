@@ -21,14 +21,17 @@ export default function Products({page, headline, detail, category, style, data,
             style={style}
             />
 
+            {(page !== "vendors" && page !== "valuers") && 
             <ProductNav
-            page={page}
-            category={category}
-            statesData={statesData}
-            data={data}
-            productsFiter={productsFiter} 
-            locationHandler={locationHandler}           
+                page={page}
+                category={category}
+                statesData={statesData}
+                data={data}
+                productsFiter={productsFiter} 
+                locationHandler={locationHandler}           
             />
+            }
+
         </div>
     )
 }

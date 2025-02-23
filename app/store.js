@@ -10,7 +10,7 @@ const useStore = create((set) => ({
   loading : true,
   products : true,
   cars: [],
-  properies: [],
+  properties: [],
   others: [],
   categories: [],
   auctions: [],

@@ -1,3 +1,4 @@
+"use client"
 import Products from "@/components/users/products"
 import Table from "@/components/users/table"
 import FooterCard from "@/components/users/footerCard"

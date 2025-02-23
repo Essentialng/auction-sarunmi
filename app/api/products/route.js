@@ -79,6 +79,3 @@ export async function POST(request) {
     return NextResponse.json({ success: false, message: `Failed to create car: ${error.message}` }, { status: 500 });
   }
 }
-
-
-

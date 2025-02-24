@@ -10,7 +10,22 @@ export async function GET(request) {
     const categoryId = searchParams.get('categoryId');
 
     if(categoryId == "all"){
-      const items = await prisma.item.findMany()
+      const itemsData = await prisma.item.findMany({
+        include: {
+          model: {
+            select: {
+              categoryId: true
+            }
+          },
+          watchlist: true
+        }
+      })
+
+      const items = itemsData.map(item => ({
+        ...item,
+        categoryId: item.model.categoryId
+      }));
+      
       const category = await prisma.category.findMany();
       return NextResponse.json({items:items, category:category}, {status: 200})
     }

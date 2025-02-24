@@ -23,7 +23,7 @@ export async function GET(request) {
     } catch (error) {
       return NextResponse.json({ success: false, message: 'Failed to fetch fields' }, { status: 500 });
     }
-  }
+  };
   
 
 
@@ -69,6 +69,29 @@ export async function POST(request) {
   } catch (error) {
       return NextResponse.json({ message: `Internal server error: ${error}` }, { status: 500 });
   }
+};
+
+
+
+
+export async function DELETE(request) {
+  try {
+    const { id, fieldId } = await request.json();
+
+    const existingUser = await prisma.user.findUnique({
+      where: { id } 
+     });
+ 
+    if (!existingUser) {
+        return NextResponse.json({ message: `user not exists` }, { status: 404 });
+    }
+    await prisma.Field.delete({
+      where: { id: fieldId }
+    });
+
+    return NextResponse.json({ message: 'Form field deleted successfully' }, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: `Internal server error: ${error.message}` }, { status: 500 });
+  }
 }
-
-

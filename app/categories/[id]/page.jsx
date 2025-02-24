@@ -2,34 +2,54 @@
 import { FaAngleRight } from "react-icons/fa6";
 import Products from "@/components/users/products";
 import FooterCard from "@/components/users/footerCard";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import SleiderProduct from "@/components/users/slideProducts";
 import useStore from "@/app/store";
 import { useParams } from "next/navigation";
 import useFetchProducts from "@/utils/category";
 import OtherCategories from "@/tabs/users/otherCategory";
-
+import { axiosInstance } from "@/package/axios";
+import { productFilter, locationFilter } from "@/utils/methods";
 
 
 export default function Page(){
     const {id} = useParams();
     
-    const { cars, products, categories, fetchCategory} = useStore();
+    const { cars, fetchAllProduct,user} = useStore();
     const { filter, loading, error, fetchProducts } = useFetchProducts();
+    const [others, setOthers] = useState([]);
+        const [models, setModels] = useState([]);
+        const [filterItems, setFilterItems] = useState([]);
+           
+        const fetchOthers = async()=>{
+            try{
+                const response = await axiosInstance.get(`/others`)
+                const data = await response.data;
+                if(response.status == 200){
+                const items = data.data.map(other => other.items).flat();
+                setFilterItems(items)
+                setOthers(items);
+                setModels(data.data); 
+                }
+            }catch(error){
+                console.log(error)
+            }
+        };
 
+    const othersFilter = useCallback((id)=>{
+        const filteredCars = productFilter(filterItems, id);
+        setOthers(filteredCars);
+    },[others]);
 
-
-    const handleFetchProducts = (categoryId) => {
-          fetchProducts(categoryId);
-      };
-
+    const locationHandler = useCallback((location)=>{
+        const items = locationFilter(filterItems, location);
+        setOthers(items);
+    },[others])
 
     useEffect(() => {
-        if(products){
-        fetchCategory();
-        };
-        fetchProducts(id)
-        }, []);
+        fetchOthers()
+        fetchAllProduct();
+        }, [user]);
 
     return(
         <div className="flex flex-col relative pt-[10rem] ">
@@ -49,8 +69,8 @@ export default function Page(){
 
             <div className=" xl:grid block grid-cols-4 pt-24  xl:px-[4rem] px-[1rem]">
                 <OtherCategories
-                handleFetchProducts={handleFetchProducts}
-                categories={categories}
+                handleFetchProducts={othersFilter}
+                categories={models}
                 filter={filter}
                 />
                 <div className="col-span-3 ">
@@ -58,10 +78,11 @@ export default function Page(){
                     page="categories" 
                     headline="" 
                     detail="" 
-                    category={categories} 
+                    category={models} 
                     style="" 
-                    data={filter}
-                    fetchProducts={handleFetchProducts}
+                    data={others}
+                    productsFiter={othersFilter}
+                    locationHandler={locationHandler}
                     />
                 </div>
             </div>

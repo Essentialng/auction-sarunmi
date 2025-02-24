@@ -9,22 +9,19 @@ export async function GET(request) {
       const { searchParams } = new URL(request.url);
       const userId = searchParams.get('id');
   
-      // Fetch all the watchlist entries for the user
       const watchlist = await prisma.watchlist.findMany({
         where: {
           userId
         },
-        select: {
-          itemId: true,  // Only retrieve itemId from watchlist
-        }
+        // select: {
+        //   itemId: true,  // Only retrieve itemId from watchlist
+        // }
       });
   
-      // If no watchlist entries found, return a message
       if (watchlist.length === 0) {
         return NextResponse.json({ success: false, message: 'No items found in the watchlist' }, { status: 404 });
       }
   
-      // Extract all itemIds from the watchlist entries
       const itemIds = watchlist.map(entry => entry.itemId);
   
       // Fetch all items that have the same itemIds

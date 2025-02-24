@@ -122,7 +122,7 @@ const Hub = () => {
                   </button>
                 <button 
                 className={`text-start ${product.name == "Others" && "text-orange-500"}`}
-                onClick={()=>handleClick("Others", null)}
+                onClick={()=>handleClick("Others", 3)}
                 >
                   Others
                 </button>

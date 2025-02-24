@@ -1,25 +1,31 @@
 import { FaArrowRight } from "react-icons/fa6";
 import { calculateTimeLeft, calculateDays } from "@/utils/methods";
+import useStore from "@/app/store";
+import { useEffect } from "react";
 
 
-export function ProductImages({products}){
+export function ProductImages({products, setActiveImage, activeImage}){
+
+
     return(
         <div className=" col-span-3 xl:grid xl:grid-cols-4 gap-16">
           <div className="flex xl:flex-col items-center gap-4 space-y-4 w-full col-span-1">
 
             {products?.images?.map((image, index)=>(
+                (activeImage != image) &&(
               <div
               key={index}
                 className="flex border border-[#FF9354] rounded-2xl h-32 w-28 items-center cursor-pointer"
-                onClick={() => handleImageClick("/car-four.png", 0)}
+                onClick={() => setActiveImage(image)}
               >
                 <img src={image} className="rounded-md object-cover w-full h-auto" alt="BMW front view" />
               </div>
+              )
             ))}
           </div>
 
           <div className="w-full h-full col-span-3 p-6 flex justify-center items-center">
-              <img src={products.images ? products?.images[0] : ""} height={50} width={50} className="rounded-md w-full object-cover h-auto" alt="BMW main image"/>
+              <img src={activeImage} height={50} width={50} className="rounded-md w-full object-cover h-auto" alt="BMW main image"/>
           </div>
         </div>
     )
@@ -58,6 +64,12 @@ export function ProductDescription({setProductVerification, descriptions}){
 
 
 export function ProductAuction({products, bids, amount, handleChange, disableBtn,watchListHandler, bidHandler }){
+
+    const {user} = useStore();
+
+  
+    const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false;    
+
     return(
     <>
         <div className="w-full mt-24">
@@ -99,17 +111,23 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         />
                     </div>
                     <div className="flex justify-between w-full gap-8">
-                        <button 
-                        className="border border-white  py-3 rounded-md w-full"
-                        onClick={()=>watchListHandler( products.id)}>Add to Watchlist</button>
-                        <button 
-                        className="bg-[#EF6509] hover:bg-[#e25d08] py-3 rounded-md w-full"
-                        onClick={()=>bidHandler(products.id)}
-                        disabled={disableBtn}>
-                        Bid
+                        <button
+                            className={`border border-white py-3 rounded-md w-full ${isInWatchlist && "bg-gray-200"}`}
+                            onClick={() => watchListHandler(products.id)}
+                            disabled={isInWatchlist}
+                        >
+                            Add to Watchlist
                         </button>
-                    
-                    </div>
+                        
+                        <button
+                            className="bg-[#EF6509] hover:bg-[#e25d08] py-3 rounded-md w-full"
+                            onClick={() => bidHandler(products.id)}
+                            disabled={disableBtn}
+                        >
+                            Bid
+                        </button>
+                        </div>
+
                 </div>
             </div>
         </div>

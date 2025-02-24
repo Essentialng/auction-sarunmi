@@ -21,7 +21,7 @@ const {user, getUser, categories, fetchCategory} = useStore()
         getUser()
     }
     fetchCategory()
-    },[user])
+    },[])
 
     const search = pathname !== '/register' && pathname !== '/login'
     const account = pathname === '/login'

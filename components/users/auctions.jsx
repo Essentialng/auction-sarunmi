@@ -7,14 +7,12 @@ import useStore from "@/app/store";
 
 export default function Auctions() {
 
-  const {fetchAllProduct, cars, properties, others, products} = useStore()
+  const {fetchAllProduct, cars, properties, others, user} = useStore()
 
 
   useEffect(() => {
-    if(products){
     fetchAllProduct();
-    }
-  }, []);
+  }, [user]);
 
 
   const itemsData = [

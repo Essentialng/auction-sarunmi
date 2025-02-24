@@ -11,19 +11,13 @@ import { ProductImages, ProductDescription, ProductAuction } from "@/components/
 export default function Page(){
   const {user} = useStore()
   const [productVerification, setProductVerification] = useState(false);
-  const [mainImage, setMainImage] = useState("/car-one.png");
   const [products, setProducts] = useState({})
   const [descriptions, setDescriptions] = useState({})
   const [amount, setAmount] = useState('');
   const [disableBtn, setDisableBtn] = useState(true);
   const [bids, setBids] = useState(null)
+  const [activeImage, setActiveImage] = useState("");
 
-
-  const handleImageClick = (newImage, index) => {
-    
-    products[index] = mainImage
-    setMainImage(newImage);
-  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -92,8 +86,10 @@ export default function Page(){
   useEffect(()=>{
     const data = localStorage.getItem("auctionData");
     const dictionaryData = JSON.parse(data);
-
+    const selectedImage = dictionaryData.images[0]
+    setActiveImage(selectedImage)
     setProducts(dictionaryData);
+    console.log(dictionaryData)
     setDescriptions(dictionaryData.details);
   },[])
 
@@ -124,8 +120,9 @@ export default function Page(){
   <div className="">
     <div className="xl:grid xl:grid-cols-5 flex flex-col gap-12 xl:items-center">
         <ProductImages 
-        handleImageClick={handleImageClick} 
         products={products}
+        setActiveImage={setActiveImage}
+        activeImage={activeImage}
         />
         <ProductDescription 
         setProductVerification={setProductVerification}

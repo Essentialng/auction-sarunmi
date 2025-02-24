@@ -48,9 +48,9 @@ const useStore = create((set) => ({
         const othersData = [];
 
         data.items.forEach((item) => {
-          if (item.modelId === 1) {
+          if (item.categoryId === 1) {
             carsData.push(item);
-          } else if (item.modelId === 2) {
+          } else if (item.categoryId === 2) {
             propertiesData.push(item);
           } else {
             othersData.push(item);

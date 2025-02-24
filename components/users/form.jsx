@@ -60,7 +60,7 @@ export default function FormField({
                   onChange={changeHandler} 
                 >
                   <option value="" className={label_style}>
-                    Select Model
+                    Select {product.name != "Property" ? "Model" : "Type"}
                   </option>
                   {modelData?.map((item) => (
                     <option key={item.id} value={item.id} className={label_style}>

@@ -5,7 +5,7 @@ import Sliders from "@/components/users/sliders"; // Slider component
 import { formatText, calculateTimeLeft, calculateDays } from '@/utils/methods';
 import { useRouter } from 'next/navigation';
 
-export default function SleiderProduct({ products }) {
+export default function SliderProduct({ products }) {
 
   const router = useRouter();
 

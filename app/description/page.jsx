@@ -7,9 +7,11 @@ import { axiosInstance } from "@/package/axios";
 import useStore from "../store";
 import { Toast } from "@/package/alert";
 import { ProductImages, ProductDescription, ProductAuction } from "@/components/users/descriptionSections";
+import { AuctionItems } from "@/components/users/auction_items";
+
 
 export default function Page(){
-  const {user} = useStore()
+  const {user, cars, properties, others} = useStore()
   const [productVerification, setProductVerification] = useState(false);
   const [products, setProducts] = useState({})
   const [descriptions, setDescriptions] = useState({})
@@ -17,7 +19,7 @@ export default function Page(){
   const [disableBtn, setDisableBtn] = useState(true);
   const [bids, setBids] = useState(null)
   const [activeImage, setActiveImage] = useState("");
-
+  const [similar, setSimilar] = useState([]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -83,13 +85,20 @@ export default function Page(){
     }
   }
 
+  const similarAuctions = ()=>{
+    try{
+
+    }catch(error){
+
+    }
+  }
+
   useEffect(()=>{
     const data = localStorage.getItem("auctionData");
     const dictionaryData = JSON.parse(data);
     const selectedImage = dictionaryData.images[0]
     setActiveImage(selectedImage)
     setProducts(dictionaryData);
-    console.log(dictionaryData)
     setDescriptions(dictionaryData.details);
   },[])
 
@@ -138,9 +147,25 @@ export default function Page(){
     bidHandler={bidHandler}
     watchListHandler={watchListHandler}
     />
-
-    <div>
+    <div className="flex flex-col gap-12 text-[24px] text-[#EF6509] font-semibold py-12">
       <p>Similar Auctions</p>
+      <AuctionItems
+      auctions={
+        products.categoryId == 1 ? cars
+        : products.categoryId == 2 ? properties
+        : others
+      }
+      />
+    </div>
+    <div className="flex flex-col gap-12 text-[24px] text-[#EF6509] font-semibold py-12 text-center">
+      <p>YOU MAY ALSO LIKE</p>
+      <AuctionItems
+      auctions={
+        products.categoryId == 1 ? cars
+        : products.categoryId == 2 ? properties
+        : others
+      }
+      />
     </div>
   </div>
 </div>

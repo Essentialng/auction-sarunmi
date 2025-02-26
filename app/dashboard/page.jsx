@@ -2,8 +2,9 @@
 import { AuctionItems } from "@/components/users/auction_items";
 import useStore from "../store";
 import { useState, useEffect } from "react";
-import SleiderProduct from "@/components/users/dashboardSlider";
+import SliderProduct from "@/components/users/dashboardSlider";
 import NoParticipation from "@/components/users/warning";
+import { axiosInstance } from "@/package/axios";
 
 
 export default function Dashboard(){
@@ -41,7 +42,7 @@ export default function Dashboard(){
                     Auctions You’re Participating In
                 </h1>
                 
-                <SleiderProduct
+                <SliderProduct
                 products={bidData}
                 />
             </div>

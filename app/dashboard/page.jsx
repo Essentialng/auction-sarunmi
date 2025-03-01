@@ -11,32 +11,61 @@ export default function Dashboard(){
 
     const {user, fetchWatchList, watchList, products} = useStore();
     const [bidData, setBidData]= useState([]);
+    const [userProducts, setUserProduct] = useState([]);
     
     const fetchBids = async()=>{
         try{
-            const response = await axiosInstance.get(`bid?userId=${user.id}`);
+            const response = await axiosInstance.get(`/bid?userId=${user.id}`);
             const data = await response.data;
             if(response.status == 200){
-            setBidData(data)
+            setBidData(data.userBids)
+            }
+        }catch(error){
+            console.log(error)
+        }
+    };
+
+    const fetchUserProducts = async()=>{
+        try{
+            const response = await axiosInstance.get(`/salesOrBid?userId=${user.id}`);
+            const data = await response.data;
+            if(response.status == 200){
+            setUserProduct(data)
+            
             }
         }catch(error){
             console.log(error)
         }
     }
 
+
+
    
     useEffect(()=>{
         if(user){
         fetchWatchList(user?.id)
         fetchBids()
+        fetchUserProducts()
     } 
     },[user]);
 
-
+    
     return(
         <div className="xl:px-24 px-4 py-44 flex flex-col gap-44">
            
-           {bidData?.length != 0 &&
+           {userProducts?.length != 0 &&
+            <div className="flex flex-col gap-12">
+                <h1 className="text-[#EF6509] xl:text-[24px] text-[16px] font-semibold">
+                Your Product on Bid/Sale
+                </h1>
+                
+                <SliderProduct
+                products={userProducts}
+                />
+            </div>
+            }
+
+            {(bidData?.length != 0 && bidData) &&
             <div className="flex flex-col gap-12">
                 <h1 className="text-[#EF6509] xl:text-[24px] text-[16px] font-semibold">
                     Auctions You’re Participating In

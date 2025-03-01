@@ -41,7 +41,7 @@ export function AuctionItems({ auctions, page }) {
         className={classnames({
           "grid md:grid-cols-2 grid-cols-1 gap-4 relative": true,
           "2xl:grid-cols-4 xl:grid-cols-4": page !== "categories",
-          "2xl:grid-cols-3 xl:grid-cols-3": page === "categories",
+          "2xl:grid-cols-3 xl:grid-cols-3": (page === "categories"),
         })}
       >
         {auctions?.map((item, index) => {
@@ -50,7 +50,7 @@ export function AuctionItems({ auctions, page }) {
           page !== "Auctions" && timeToStart
           return (
             <div key={index}>
-              <div className="flex flex-col gap-2 items-center hover:scale-95 transition-all duration-500 ease-in-out">
+              <div className="flex flex-col gap-2 items-center justify-center hover:scale-95 transition-all duration-500 ease-in-out">
                 <div
                   className={classnames({
                     "w-1/3 text-center py-4 rounded-[10px] border border-[#7BC27A] font-[700] shadow-md ": true,

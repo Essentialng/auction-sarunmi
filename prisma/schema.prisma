@@ -81,18 +81,6 @@ model Field {
 }
 
 
-
-// model Order {
-//   id            Int      @id @default(autoincrement())
-//   userId        String  
-//   itemId        String
-//   totalPrice    Float    
-//   status        String   @default("pending") 
-//   createdAt     DateTime @default(now())
-//   updatedAt     DateTime @updatedAt
-//   user          User     @relation("UserOrders", fields: [userId], references: [id])
-// }
-
 model Watchlist {
   id            Int   @id @default(autoincrement())
   userId        String

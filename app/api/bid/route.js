@@ -48,8 +48,6 @@ export async function GET(request) {
       return NextResponse.json({ success: true, bids }, { status: 200 });
     }
 
-    // If neither userId nor itemId is provided, return a bad request response
-    return NextResponse.json({ success: false, message: 'Either itemId or userId must be provided' }, { status: 400 });
 
   } catch (error) {
     return NextResponse.json(

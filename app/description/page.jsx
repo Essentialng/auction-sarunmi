@@ -11,7 +11,7 @@ import { AuctionItems } from "@/components/users/auction_items";
 
 
 export default function Page(){
-  const {user, cars, properties, others} = useStore()
+  const {user, cars, properties, others, auctions, fetchAllProduct} = useStore()
   const [productVerification, setProductVerification] = useState(false);
   const [products, setProducts] = useState({})
   const [descriptions, setDescriptions] = useState({})
@@ -85,13 +85,7 @@ export default function Page(){
     }
   }
 
-  const similarAuctions = ()=>{
-    try{
 
-    }catch(error){
-
-    }
-  }
 
   useEffect(()=>{
     const data = localStorage.getItem("auctionData");
@@ -100,6 +94,9 @@ export default function Page(){
     setActiveImage(selectedImage)
     setProducts(dictionaryData);
     setDescriptions(dictionaryData.details);
+    if(auctions.length == 0){
+      fetchAllProduct()
+    }
   },[])
 
   
@@ -108,7 +105,6 @@ export default function Page(){
     fetchBid()
     }
   },[products])
-
 
   return(
 <div className="xl:p-10 bg-gray-100 mt-28 xl:px-24 px-4  py-8 relative">
@@ -147,8 +143,8 @@ export default function Page(){
     bidHandler={bidHandler}
     watchListHandler={watchListHandler}
     />
-    <div className="flex flex-col gap-12 text-[24px] text-[#EF6509] font-semibold py-12">
-      <p>Similar Auctions</p>
+    <div className="flex flex-col gap-12  py-12">
+      <p className="text-[#EF6509] text-[24px]  font-semibold">Similar Auctions</p>
       <AuctionItems
       auctions={
         products.categoryId == 1 ? cars
@@ -157,13 +153,11 @@ export default function Page(){
       }
       />
     </div>
-    <div className="flex flex-col gap-12 text-[24px] text-[#EF6509] font-semibold py-12 text-center">
-      <p>YOU MAY ALSO LIKE</p>
+    <div className="flex flex-col gap-12  py-12 text-center">
+      <p className="text-[#EF6509] text-[24px] font-semibold">YOU MAY ALSO LIKE</p>
       <AuctionItems
       auctions={
-        products.categoryId == 1 ? cars
-        : products.categoryId == 2 ? properties
-        : others
+        auctions
       }
       />
     </div>

@@ -13,13 +13,13 @@ const NoParticipation = () => {
         Don't worry! There's still time to get involved and make your mark.
       </p>
       
-      <p className="text-sm text-gray-500 mb-6">
+      <div className="text-sm text-gray-500 mb-6">
         You can:
         <ul className="list-disc list-inside text-gray-600">
           <li>✨ Add products to your Watchlist</li>
           <li>💰 Place bids on items you love</li>
         </ul>
-      </p>
+      </div>
       
       <p className="text-md font-semibold text-gray-700 mb-4">
         Take action today and start participating 

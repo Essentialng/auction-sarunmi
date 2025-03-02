@@ -6,11 +6,13 @@ import { FaUserLarge } from "react-icons/fa6";
 import { usePathname } from "next/navigation";
 import useStore from "@/app/store";
 import {Logo, Search, Authentications, MobileSearch, NavLink} from "@/components/users/navSections";
+import DropDown from "@/components/users/userProfile";
+
 
 export default function NavBar(){
 const {user, getUser, categories, fetchCategory} = useStore()
     const [active, setActive] = useState("Home");
-    
+    const [activate, setActivate] = useState(false);
     const [menuToggle, setMenuToggle] = useState(false)
     const pathname = usePathname()
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
@@ -30,13 +32,41 @@ const {user, getUser, categories, fetchCategory} = useStore()
     const login = !user && pathname !== '/login'
     const menulink = pathname !== '/register' && pathname !== '/login'
     
+    const dropLinks = [
+        {
+            name: "Profile",
+            link: ""
+        },
+        {
+            name: "My Revenue",
+            link: ""
+        },
+        {
+            name: "Notification",
+            link: ""
+        },
+        {
+            name: "Message",
+            link: ""
+        },
+        {
+            name: "Upload Product",
+            link: ""
+        },
+        {
+            name: "History",
+            link: ""
+        },
+
+    ]
+
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
         <div className="fixed top-0 right-0 w-full bg-[#35318E] py-4 xl:px-[4rem] px-[1rem] 
         flex flex-col gap-4 text-[16px] font-[500] overflow-visible z-50 "
         >
             <div className="flex justify-between items-center text-white ">
-                <Logo setMenuToggle={setMenuToggle}/>
+                <Logo setMenuToggle={setMenuToggle} setActivate={setActivate}/>
                 {search && <Search/>}
                 <Authentications 
                 user={user}
@@ -44,9 +74,14 @@ const {user, getUser, categories, fetchCategory} = useStore()
                 signUp={signUp}
                 already={already}
                 login={login}
-                
+                dropLinks={dropLinks}
                 />
-                <FaUserLarge size={25} color="white" className="2xl:hidden xl:hidden"/>
+                <div className="2xl:hidden xl:hidden">
+                    <FaUserLarge size={25} color="white" onClick={()=>setActivate(!activate)}/>
+                    {activate &&
+                    <DropDown dropLinks={dropLinks}/>
+                    }
+                </div>
             </div>
             <MobileSearch/>
             <div className="text-white 2xl:flex xl:flex hidden justify-between">

@@ -46,6 +46,8 @@ export default function SliderProduct({ products }) {
     router.push('/description');  
   };
 
+  const item = products?.some(product=>product.item)
+
   return (
     <div className="flex flex-col gap-8 py-4 px-[1rem]">
       <Sliders 
@@ -62,9 +64,9 @@ export default function SliderProduct({ products }) {
               <div className="flex-col gap-8 flex items-center justify-center">
                 <div className="w-[400px] h-[300px] rounded-xl overflow-hidden">
                   <img
-                    src={product?.images[0]}
+                    src={ !item ? product?.images[0] : product?.item?.images[0]}
                     className="w-full h-full"
-                    alt={product?.name || "Product Image"}
+                    alt={"Product Image"}
                   />
                 </div>
                 <div className="w-full xl:grid grid-cols-7 flex flex-col gap-1 xl:px-6 px-2">
@@ -72,9 +74,9 @@ export default function SliderProduct({ products }) {
                     <h2 className="text-[24px]">Details</h2>
                     <div className="flex justify-between items-center">
                       <small className="font-normal">Name:</small>
-                      <small>{product?.name}</small>
+                      <small>{!item ? product?.name : product?.item?.name}</small>
                     </div>
-                    {Object.entries(product?.details).map(([key, value], index)=>(
+                    {Object.entries(!item ? product?.details : product?.item?.details).map(([key, value], index)=>(
                     <div className="flex justify-between gap-12 items-center">
                       <small className="font-normal">{formatText(key)}:</small>
                       <small className=' truncate'>{key == "ProofOfOwnership" ? "YES" : value}</small>
@@ -106,7 +108,7 @@ export default function SliderProduct({ products }) {
                         <small>N {product?.highestBid?.amount?.toLocaleString()}</small>
                       </div>
                     </div>
-                    <button onClick={()=>{handleViewAuction(product)}} 
+                    <button onClick={()=>{handleViewAuction(!item ? product : product.item)}} 
                     className={classNames(
                       "py-2 rounded-xl bg-[#EF6509] w-5/6 text-white mx-auto",
                       {"bg-[#C6CBC7] text-[#979998]" : calculateTimeLeft(product?.startTime, product?.endTime) == "00:00:00:00"}

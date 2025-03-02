@@ -30,7 +30,7 @@ export default function Dashboard(){
             const response = await axiosInstance.get(`/salesOrBid?userId=${user.id}`);
             const data = await response.data;
             if(response.status == 200){
-            setUserProduct(data)
+            setUserProduct(data.item)
             
             }
         }catch(error){

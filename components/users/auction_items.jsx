@@ -30,7 +30,12 @@ export function AuctionItems({ auctions, page }) {
 
   const handleViewAuction = (data) => {
     localStorage.setItem('auctionData', JSON.stringify(data)); 
-    router.push('/description');  
+    if (window.location.pathname === '/description') {
+      window.scrollTo(0, 0);
+      window.location.reload();
+    } else {
+      router.push('/description');
+    }
   };
 
   const [stateUpdated, setStateUpdated] = useState(false);

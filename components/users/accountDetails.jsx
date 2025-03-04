@@ -4,11 +4,12 @@ import { axiosInstance } from '@/package/axios';
 import { Toast } from "@/package/alert";
 import { useState } from 'react';
 
-export function AccountDetails({card, user, setEdit, index, setFormValue}){
+export function AccountDetails({card, user, setEdit, index, setFormValue, setEmailVerified}){
 
     const toggleHandler = (index)=>{
         setEdit(index);
         setFormValue({id: user?.id });
+        setEmailVerified("");
     };
 
     return(

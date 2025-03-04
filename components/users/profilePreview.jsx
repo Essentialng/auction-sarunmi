@@ -50,7 +50,6 @@ const submitEmail = async()=>{
   setLoading(true);
     try{
 
-
       if (emailVerified?.code != formValue?.code) {
         Toast.fire({
           icon: "error",
@@ -59,7 +58,6 @@ const submitEmail = async()=>{
         setLoading(false);
         return;
       }
-
 
         const response = await axiosInstance.put("/editUserEmail", formValue);
         const data = await response.data;
@@ -85,6 +83,42 @@ const submitEmail = async()=>{
     }
 }
 
+
+const submitPassword = async()=>{
+  setLoading(true);
+    try{
+
+      if (emailVerified?.code != formValue?.code) {
+        Toast.fire({
+          icon: "error",
+          title: "Verification code does not match.",
+        });
+        setLoading(false);
+        return;
+      }
+
+        const response = await axiosInstance.put("/changePassword", formValue);
+        const data = await response.data;
+        if(response.status == 200){
+          initializeUser(data.token)
+          setEdit(false);
+          setFormValue({});
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+        }
+    }catch(error){
+      const errorMessage = error.response.data
+
+      Toast.fire({
+        icon: "error",
+        title: errorMessage.message,
+      });
+    }finally{
+      setLoading(false);
+    }
+}
   const cards = [
     {
       header : "Account Details",
@@ -165,19 +199,28 @@ const submitEmail = async()=>{
         text: "Current Password",
         text2: "*********",
         button : "CHANGE PASSWORD",
+        onSubmit: submitPassword,
         forms:  [
           {
               label : "New Password",
-              name : "oldPassword",
+              name : "password",
               type : "text",
               placeholder: "Type new password"
           },
           {
               label : "Confirmed New Password",
-              name : "newPassword",
+              name : "confirmPassword",
               type : "text",
+              code : "Enter the verification code sent to your email",
               placeholder: "Type new password"
           },
+          {
+            label : "Code",
+            name: "code",
+            type : "text",
+            placeholder: "input the one time code",
+            button : "Get code"
+        },
       ]
       },
 
@@ -201,6 +244,7 @@ const submitEmail = async()=>{
   const cancealHandler = ()=>{
     setEdit(false);
     setFormValue({id: user?.id });
+    setEmailVerified("");
   };
 
   useEffect(() => {
@@ -251,6 +295,7 @@ const submitEmail = async()=>{
           setEdit={setEdit}
           index={index}
           setFormValue={setFormValue}
+          setEmailVerified={setEmailVerified}
           />
             :
           <AccountDetailsForm 

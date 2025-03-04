@@ -35,7 +35,9 @@ export async function PUT(request) {
       data: updateData,
     });
 
-    const token = await generateToken(updatedUser);
+    const { password, ...userWithoutPassword } = updatedUser;
+
+    const token = await generateToken(userWithoutPassword);
 
     return NextResponse.json({ message: "User updated successfully", token }, { status: 200 });
   } catch (error) {

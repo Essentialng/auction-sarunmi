@@ -24,7 +24,9 @@ export async function PUT(request) {
       data : {email}
     })
 
-    const token = await generateToken(updateEmail);
+    const { password, ...userWithoutPassword } = updateEmail;
+
+    const token = await generateToken(userWithoutPassword);
 
     return NextResponse.json({ message: "User email updated successfully", token }, { status: 200 });
   } catch (error) {

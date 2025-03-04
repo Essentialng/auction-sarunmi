@@ -45,10 +45,7 @@ const {user, getUser, categories, fetchCategory} = useStore()
             name: "Notification",
             link: ""
         },
-        {
-            name: "Message",
-            link: ""
-        },
+       
         {
             name: "Upload Product",
             link: ""

@@ -83,7 +83,11 @@ export function Authentications({user, account, signUp, already, login, dropLink
                     <IoIosArrowDown color="#EF6509"/>
                 </div>
                 {activate &&
-                <DropDown dropLinks={dropLinks}/>
+                <DropDown 
+                dropLinks={dropLinks} 
+                user={user}
+                setActivate={setActivate}
+                />
                 }
             </div>
             }
@@ -153,29 +157,31 @@ export function NavLink({menuContents, active, nav_btn, setActive, categories}){
 }
 
 
-export function UploadLink(){
+export function UploadLink({setActivate}){
 
-    const [activate, setActivate] = useState(false);
+    const [activateDropDown, setActivateDropDown] = useState(false);
 
     return(
         <div className="w-full" >
             <div 
             className="py-4 hover:bg-[#B7A5F9] w-full px-8 flex justify-between items-center cursor-pointer"
-            onClick={()=>setActivate(!activate)}
+            onClick={()=>setActivateDropDown(!activateDropDown)}
             >
             Upload Product
             <IoIosArrowDown />
             </div>
 
-            {activate &&
-            <div className="relative  bg-[#B7A5F9] w-full flex flex-col">
-                <a href="#" className="py-3 px-8 hover:bg-[#A192F5]">
+            {activateDropDown &&
+            <div
+            onClick={()=>setActivate(false)} 
+            className="relative  bg-[#B7A5F9] w-full flex flex-col">
+                <a href={`/hub/${user?.id}/${user?.type}/profile`} className="py-3 px-8 hover:bg-[#A192F5]">
                 Cars
                 </a>
-                <a href="#" className="py-3 px-8 hover:bg-[#A192F5]">
+                <a href={`/hub/${user?.id}/${user?.type}/profile`} className="py-3 px-8 hover:bg-[#A192F5]">
                 Properties
                 </a>
-                <a href="#" className="py-3 px-8 hover:bg-[#A192F5]">
+                <a href={`/hub/${user?.id}/${user?.type}/profile`} className="py-3 px-8 hover:bg-[#A192F5]">
                 Others
                 </a>
             </div>

@@ -2,8 +2,17 @@ import { PiUserCircleLight } from "react-icons/pi";
 import { FaRegEnvelope } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { SlBadge } from "react-icons/sl";
+import { axiosInstance } from "@/package/axios";
 
 
+
+const submitUserDetails = async()=>{
+    try{
+        const response = await axiosInstance.post("")
+    }catch(error){
+        console.log(error)
+    }
+}
 
 export const cards = [
     {
@@ -76,7 +85,8 @@ export const cards = [
       {
         header : "Password",
         icon : <RiLockPasswordLine size={35} color="#EF6509"/>,
-        firstValue: "Current Password",
+        text: "Current Password",
+        text2: "*********",
         button : "CHANGE PASSWORD",
         forms:  [
           {
@@ -97,9 +107,10 @@ export const cards = [
       {
         header : "Subscription",
         icon : <SlBadge size={35} color="#EF6509"/>,
-        firstValue: "40,000",
+        text: "Premium Membership",
+        text2 : "20,000.00",
         button: "RENEW",
-        forms:  []
+        button2: "BECOME A VENDOR"
       }
       
   ]

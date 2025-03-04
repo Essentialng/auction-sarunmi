@@ -8,35 +8,61 @@ import { cards } from "@/utils/userDetails";
 const ProfileOverview = ({user}) => {
 
   const [edit, setEdit] = useState(false);
+  const [formValue, setFormValue] = useState({});
+
+  const formHandler = (e)=>{
+      const {name, value} = e.target
+      console.log(name)
+      setFormValue({...formValue, [name]: value})
+  }
+
+  const cancealHandler = ()=>{
+    setEdit(false);
+    setFormValue({});
+  }
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Profile Overview</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Account Details */}
-        {cards.map((card, index)=>(
-        <div key={index} className="border p-4 rounded-lg shadow-md">
+      
+        {cards.map((card, index)=>{
+          const count = index !== 3 ? true : false
+          return (
+        <div key={index} className={`border p-4 rounded-lg shadow-md ${(!count || index !== edit) && "max-h-[250px]"}`}>
           <div className="flex items-center justify-between  border-b-2 py-2">
             <h3 className="text-lg font-medium mb-2">{card.header}</h3>
-            <IoClose 
+
+            {(count && index === edit) &&
+            <IoClose
+            className="cursor-pointer"
+            onClick={cancealHandler}
             size={25}
             />
+          }
           </div>
           
+          {edit !== index ?   
           <AccountDetails
           card={card}
           user={user}
           setEdit={setEdit}
+          index={index}
+          setFormValue={setFormValue}
           />
-           
+            :
           <AccountDetailsForm 
           card={card.forms}
           user={user}
           setEdit={setEdit}
+          formHandler={formHandler}
+          formValue={formValue}
           />
-        
+        }
+
         </div>
-        ))}
+          )
+      })}
 
         {/* Email */}
         {/* <div className="border p-4 rounded-lg shadow-md">

@@ -5,23 +5,37 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
+
     if (!userId) {
-      return NextResponse.json({ success: false, message: "User ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { success: false, message: "User ID is required" },
+        { status: 400 }
+      );
     }
 
-    const itemsWithBids = await prisma.item.findMany({
+    const itemsWithHighestBids = await prisma.item.findMany({
       where: {
         userId,
-        bids: { some: {} },
+        bids: { some: {} }, // Ensures items have at least one bid
       },
-      include: { bids: true }, 
+      include: {
+        bids: {
+          orderBy: { amount: "desc" }, 
+          take: 1, 
+          select: { id: true, amount: true, userId: true, createdAt: true } // Select only relevant fields
+        },
+      },
     });
 
-    if (itemsWithBids.length === 0) {
-      return NextResponse.json({ success: false, message: "No items with bids found" }, { status: 404 });
-    }
+    const formattedItems = itemsWithHighestBids.map((item) => ({
+      ...item,
+      highestBid: item.bids.length > 0 ? item.bids[0] : null, 
+    }));
 
-    return NextResponse.json({ success: true, item: itemsWithBids }, { status: 200 });
+    return NextResponse.json(
+      { success: true, item: formattedItems },
+      { status: 200 }
+    );
 
   } catch (error) {
     return NextResponse.json(

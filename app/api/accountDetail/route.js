@@ -4,10 +4,10 @@ import prisma from '@/lib/global_client';
 export async function PUT(request) {
   try {
     const body = await request.json();
-    const { id, username, phonenumber } = body;
+    const { id, firstName, lastName, phoneNumber, address, profilePicture } = body;
 
-    if (!id || !username || !phonenumber) {
-      return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
+    if (!id) {
+      return NextResponse.json({ message: "User ID is required" }, { status: 400 });
     }
 
     const user = await prisma.user.findUnique({
@@ -18,9 +18,16 @@ export async function PUT(request) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
+    const updateData = {};
+    if (firstName !== undefined) updateData.firstName = firstName;
+    if (lastName !== undefined) updateData.lastName = lastName;
+    if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
+    if (address !== undefined) updateData.address = address;
+    if (profilePicture !== undefined) updateData.profilePicture = profilePicture;
+
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: { username, phonenumber },
+      data: updateData,
     });
 
     return NextResponse.json({ message: "User updated successfully", user: updatedUser }, { status: 200 });

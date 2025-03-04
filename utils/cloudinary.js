@@ -20,7 +20,7 @@ export const handleCloudinary=async(image)=>{
     
     }catch(error){
         
-    return error 
+    console.log(error)
     }
  
 

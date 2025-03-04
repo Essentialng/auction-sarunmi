@@ -2,24 +2,183 @@ import React from "react";
 import { IoClose } from "react-icons/io5";
 import { AccountDetails } from "./accountDetails";
 import { AccountDetailsForm } from "./accountDetails";
-import { useState } from "react";
-import { cards } from "@/utils/userDetails";
+import { useState, useEffect } from "react";
+import { axiosInstance } from "@/package/axios";
+import { Toast } from "@/package/alert";
+import { PiUserCircleLight } from "react-icons/pi";
+import { FaRegEnvelope } from "react-icons/fa";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { SlBadge } from "react-icons/sl";
+import { handleCloudinary } from "@/utils/cloudinary";
 
-const ProfileOverview = ({user}) => {
+const ProfileOverview = ({user, initializeUser}) => {
 
   const [edit, setEdit] = useState(false);
-  const [formValue, setFormValue] = useState({});
+  const [formValue, setFormValue] = useState({id : user?.id});
+  const [imageSrc, setImageSrc] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  
+  const submitUserDetails = async()=>{
+    setLoading(true);
+    try{
+        const response = await axiosInstance.put("/accountDetail", formValue);
+        const data = await response.data;
+        if(response.status == 200){
+          initializeUser(data.token)
+          setEdit(false);
+          setFormValue({});
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+        }
+    }catch(error){
+      console.log(error)
+      const errorMessage = error.response.data
+
+      Toast.fire({
+        icon: "error",
+        title: errorMessage.message,
+      });
+    }finally{
+      setLoading(false);
+    }
+}
+
+
+  const cards = [
+    {
+      header : "Account Details",
+      icon : <PiUserCircleLight size={35} color="#EF6509"/>,
+      firstValue: "firstName",
+      lastValue: "lastName",
+      extraValue : "phoneNumber",
+      stateValue: "state",
+      button : "EDIT",
+      onSubmit: submitUserDetails,
+      forms:  [
+        {
+            label : "First Name",
+            name : "firstName",
+            type : "text"
+        },
+        {
+            label : "Last Name",
+            name : "lastName",
+            type : "text"
+        },
+        {
+            label : "Phone Number",
+            name : "phoneNumber",
+            type : "number"
+        },
+        {
+            label : "Address",
+            name : "address",
+            placeholder: "Type your address",
+            type : "text"
+        },
+        {
+            label : "Change Profile Picture",
+            name : "profilePicture",
+            placeholder : "Upload profile picture",
+            type : "file"
+        },
+    ]
+    },
+
+    {
+        header : "Email",
+        icon : <FaRegEnvelope size={35} color="#EF6509"/>,
+        firstValue: "email",
+        lastValue: "status",
+        button : "UPDATE EMAIL",
+        forms:  [
+          {
+              label : "Old Email",
+              name : "email",
+              type : "text",
+              placeholder: "Type new email"
+          },
+          {
+              label : "New Email",
+              name : "newEmail",
+              type : "text",
+              placeholder: "Type new email"
+          },
+          {
+              label : "Code",
+              name : "code",
+              type : "text",
+              placeholder: "input the one time code"
+          },
+      ]
+      },
+
+      {
+        header : "Password",
+        icon : <RiLockPasswordLine size={35} color="#EF6509"/>,
+        text: "Current Password",
+        text2: "*********",
+        button : "CHANGE PASSWORD",
+        forms:  [
+          {
+              label : "New Password",
+              name : "oldPassword",
+              type : "text",
+              placeholder: "Type new password"
+          },
+          {
+              label : "Confirmed New Password",
+              name : "newPassword",
+              type : "text",
+              placeholder: "Type new password"
+          },
+      ]
+      },
+
+      {
+        header : "Subscription",
+        icon : <SlBadge size={35} color="#EF6509"/>,
+        text: "Premium Membership",
+        text2 : "20,000.00",
+        button: "RENEW",
+        button2: "BECOME A VENDOR"
+      }
+      
+  ]
+
 
   const formHandler = (e)=>{
       const {name, value} = e.target
-      console.log(name)
       setFormValue({...formValue, [name]: value})
-  }
+  };
 
   const cancealHandler = ()=>{
     setEdit(false);
-    setFormValue({});
-  }
+    setFormValue({id: user?.id });
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      setFormValue({id: user?.id });
+    }
+  }, [user?.id]);
+
+ const profilePricture = async (event) => {
+    const file = event.target.files[0];
+    const name = event.target.name
+      const url = await handleCloudinary(file); 
+      if (url) {
+        setImageSrc(file.name)
+        setFormValue({...formValue, [name]: url });
+        Toast.fire({
+          icon: "success",
+          title: "Image upload successfully",
+        });
+      }
+  };
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
@@ -53,10 +212,14 @@ const ProfileOverview = ({user}) => {
             :
           <AccountDetailsForm 
           card={card.forms}
+          submit={card.onSubmit}
           user={user}
           setEdit={setEdit}
           formHandler={formHandler}
           formValue={formValue}
+          profilePricture={profilePricture}
+          imageSrc={imageSrc}
+          loading={loading}
           />
         }
 

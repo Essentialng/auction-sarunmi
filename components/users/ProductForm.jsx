@@ -73,7 +73,7 @@ const ProductUpload = ({id, product, handleClick}) => {
     };
   }
 
-  const handleImageProperty = async (event, name) => {
+  const certificateOfOcupancy = async (event, name) => {
     const file = event.target.files[0];
     if (file) {
       const url = await handleCloudinary(file); 
@@ -200,7 +200,7 @@ const ProductUpload = ({id, product, handleClick}) => {
       details={details}
       success={success}
       detailHandler={detailHandler}
-      handleImageProperty={handleImageProperty}
+      certificateOfOcupancy={certificateOfOcupancy}
       categories={categories}
       setFormValues={setFormValues}
       />

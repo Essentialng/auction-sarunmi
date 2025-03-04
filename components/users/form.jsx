@@ -14,7 +14,7 @@ export default function FormField({
     details,
     success,
     detailHandler,
-    handleImageProperty,
+    certificateOfOcupancy,
     product,
     categoryChange,
     categories,
@@ -187,7 +187,7 @@ export default function FormField({
                         type="file"
                         name={data?.value}
                         className={input_style}
-                        onChange={(e) => handleImageProperty(e, data?.value)} // Trigger the image upload function
+                        onChange={(e) => certificateOfOcupancy(e, data?.value)} 
                         required
                       />
                     ) : (

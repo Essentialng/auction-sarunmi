@@ -25,7 +25,9 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
     }
 
-    const token = await generateToken(user);
+    const { password: _, ...userWithoutPassword } = user;
+
+    const token = await generateToken(userWithoutPassword);
 
     return NextResponse.json({ message: 'Login successful', token }, { status: 200 });
   } catch (error) {

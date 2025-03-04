@@ -1,8 +1,12 @@
+import { Rings } from 'react-loading-icons';
+import classNames from 'classnames';
+
+
 export function AccountDetails({card, user, setEdit, index, setFormValue}){
 
     const toggleHandler = (index)=>{
         setEdit(index);
-        setFormValue({});
+        setFormValue({id: user?.id });
     };
 
     return(
@@ -42,19 +46,36 @@ export function AccountDetails({card, user, setEdit, index, setFormValue}){
 }
 
 
-export function AccountDetailsForm({user, card, formHandler, formValue}){
+export function AccountDetailsForm({
+    user, 
+    card, 
+    formHandler, 
+    formValue,
+    submit,
+    profilePricture,
+    imageSrc,
+    loading
+}){
+
+
+    
   
     return(
         <div className="w-full py-4 flex flex-col gap-4 items-end justify-end px-12">
-            {card.map((form, index)=>(
+            {card.map((form, index)=>{
+                
+                const formType = form.type == "file"
+                const onChangehandler = formType ? profilePricture : formHandler
+
+                return(
                 <div key={index} className="flex flex-col gap-2 w-full">
                     <label>{form.label}</label>
                     <input 
                     className="border p-3 rounded-lg"
                     type={form.type} 
                     name={form.name}
-                    onChange={formHandler}
-                    value={formValue?.[form.name]}
+                    onChange={onChangehandler}
+                    value={formType ? "" : formValue?.[form.name]}
                     placeholder={
                         form.name == "firstName" ?
                         user?.firstName : 
@@ -66,10 +87,23 @@ export function AccountDetailsForm({user, card, formHandler, formValue}){
                         user?.email :
                         form.placeholder} 
                         />
+                    {formType &&
+                    <small>{imageSrc}</small>
+                    }
                 </div>
-            ))}
-            <button className="bg-orange-600 text-white px-4 py-2 rounded">
-                SAVE
+            )
+            
+            })}
+            <button
+             onClick={submit}
+            className={classNames({
+                " px-4 py-2 rounded" : true,
+                "bg-orange-600 text-white " : !loading,
+                "bg-[#C6CBC7] text-[#979998]" : loading
+            })}
+            disabled={loading}
+            >
+            {loading ? <Rings width={25} height={25}/> : "SAVE"}
             </button>
         </div>
     )

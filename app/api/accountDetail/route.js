@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/global_client';
+import { generateToken } from '@/package/jwt';
 
 export async function PUT(request) {
   try {
@@ -25,12 +26,20 @@ export async function PUT(request) {
     if (address !== undefined) updateData.address = address;
     if (profilePicture !== undefined) updateData.profilePicture = profilePicture;
 
+    if (Object.keys(updateData).length === 0) {
+      return NextResponse.json({ message: "No fields provided for update" }, { status: 400 });
+    }
+
     const updatedUser = await prisma.user.update({
       where: { id },
       data: updateData,
     });
 
-    return NextResponse.json({ message: "User updated successfully", user: updatedUser }, { status: 200 });
+    const { password, ...userWithoutPassword } = updatedUser;
+
+    const token = await generateToken(userWithoutPassword);
+
+    return NextResponse.json({ message: "User updated successfully", token }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "An error occurred", error: error.message }, { status: 500 });

@@ -68,8 +68,16 @@ export function Authentications({user, account, signUp, already, login, dropLink
                 <div 
                 className="relative flex gap-3 items-center text-[#EF6509] cursor-pointer text-wrap truncate whitespace-nowrap overflow-hidden text-ellipsis"
                 onClick={()=>setActivate(!activate)}>
-                    <div className="border border-[#EF6509] p-2 rounded-full">
+                    <div className={classNames({
+                        "relative flex items-center border  rounded-full overflow-hidden w-10 h-10" : true,
+                        "border-[#EF6509] p-2" : !user?.profilePicture,
+                        "border-[#B1B1B1]" : user?.profilePicture
+                        })}>
+                        {!user.profilePicture ?
                         <FaUser color="white"/>
+                        :
+                        <img src={user?.profilePicture} alt="" className="w-full h-full object-cover rounded-full" />
+                    }
                     </div>
                     <p className="truncate whitespace-nowrap overflow-hidden text-ellipsis min-w-0 max-w-[120px]">{user.firstName} {user.lastName}</p>
                     <IoIosArrowDown color="#EF6509"/>

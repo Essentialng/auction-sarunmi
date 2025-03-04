@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 
 const Hub = () => {
 
-  const {user, clearUser} = useStore();
+  const {user, clearUser, initializeUser} = useStore();
   const {id, type, action} = useParams();
   const router = useRouter()
   
@@ -163,7 +163,10 @@ const Hub = () => {
         }
         {toggle === "profile" &&
         <div className='col-span-4'>
-            <ProfileOverview user={user}/>
+            <ProfileOverview 
+            user={user} 
+            initializeUser={initializeUser}
+            />
         </div>
         }
         {toggle === "upload" &&

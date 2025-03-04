@@ -1,6 +1,8 @@
 import { Rings } from 'react-loading-icons';
 import classNames from 'classnames';
-
+import { axiosInstance } from '@/package/axios';
+import { Toast } from "@/package/alert";
+import { useState } from 'react';
 
 export function AccountDetails({card, user, setEdit, index, setFormValue}){
 
@@ -54,12 +56,39 @@ export function AccountDetailsForm({
     submit,
     profilePricture,
     imageSrc,
-    loading
+    loading,
+    setEmailVerified
 }){
 
 
+     const sendEmail =async ()=>{
+        try{
+          
+        const response = await axiosInstance.post("sendEmail", {email : user?.email});
     
-  
+        const data = await response.data
+    
+        if(response.status == 201){
+          
+          Toast.fire({
+            icon: "success",
+            title: "Verification code sent!",
+          });
+          setEmailVerified(data.verifyCode)
+        }
+        
+        }catch(error){
+          Toast.fire({
+            icon: "error",
+            title: "Connect to a strong network",
+    
+          });
+        }
+      };
+
+
+
+      
     return(
         <div className="w-full py-4 flex flex-col gap-4 items-end justify-end px-12">
             {card.map((form, index)=>{
@@ -76,6 +105,7 @@ export function AccountDetailsForm({
                     name={form.name}
                     onChange={onChangehandler}
                     value={formType ? "" : formValue?.[form.name]}
+                    disabled={form.disable}
                     placeholder={
                         form.name == "firstName" ?
                         user?.firstName : 
@@ -87,8 +117,19 @@ export function AccountDetailsForm({
                         user?.email :
                         form.placeholder} 
                         />
+
+                    {form.code &&    
+                    <small>{form.code}</small>
+                    }
+
                     {formType &&
                     <small>{imageSrc}</small>
+                    }
+
+                    {form.button &&
+                    <button 
+                    onClick={sendEmail}
+                    className='bg-black text-white'>{form.button}</button>
                     }
                 </div>
             )

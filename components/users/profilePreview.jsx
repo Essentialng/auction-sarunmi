@@ -17,7 +17,7 @@ const ProfileOverview = ({user, initializeUser}) => {
   const [formValue, setFormValue] = useState({id : user?.id});
   const [imageSrc, setImageSrc] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [emailVerified, setEmailVerified] = useState(null);
   
   const submitUserDetails = async()=>{
     setLoading(true);
@@ -46,6 +46,44 @@ const ProfileOverview = ({user, initializeUser}) => {
     }
 }
 
+const submitEmail = async()=>{
+  setLoading(true);
+    try{
+
+
+      if (emailVerified?.code != formValue?.code) {
+        Toast.fire({
+          icon: "error",
+          title: "Verification code does not match.",
+        });
+        setLoading(false);
+        return;
+      }
+
+
+        const response = await axiosInstance.put("/editUserEmail", formValue);
+        const data = await response.data;
+        if(response.status == 200){
+          initializeUser(data.token)
+          setEdit(false);
+          setFormValue({});
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+        }
+    }catch(error){
+      console.log(error)
+      const errorMessage = error.response.data
+
+      Toast.fire({
+        icon: "error",
+        title: errorMessage.message,
+      });
+    }finally{
+      setLoading(false);
+    }
+}
 
   const cards = [
     {
@@ -94,24 +132,29 @@ const ProfileOverview = ({user, initializeUser}) => {
         firstValue: "email",
         lastValue: "status",
         button : "UPDATE EMAIL",
+        onSubmit : submitEmail,
         forms:  [
           {
               label : "Old Email",
-              name : "email",
+              name : "oldEmail",
               type : "text",
-              placeholder: "Type new email"
+              disable : true,
+              placeholder: user?.email
           },
           {
               label : "New Email",
-              name : "newEmail",
-              type : "text",
+              name : "email",
+              type : "email",
+              code : "Enter the verification code sent to your email",
               placeholder: "Type new email"
+              
           },
           {
               label : "Code",
-              name : "code",
+              name: "code",
               type : "text",
-              placeholder: "input the one time code"
+              placeholder: "input the one time code",
+              button : "Get code"
           },
       ]
       },
@@ -220,6 +263,7 @@ const ProfileOverview = ({user, initializeUser}) => {
           profilePricture={profilePricture}
           imageSrc={imageSrc}
           loading={loading}
+          setEmailVerified={setEmailVerified}
           />
         }
 

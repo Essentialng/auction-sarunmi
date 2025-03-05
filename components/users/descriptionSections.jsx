@@ -68,7 +68,8 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
     const {user} = useStore();
 
   
-    const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false;    
+    const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false;  
+    const endTime = calculateTimeLeft(products.endTime)  
 
     return(
     <>
@@ -83,7 +84,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                 <div className="space-y-4">
                     <div>
                         <span className="font-semibold">Time Left:</span>
-                        <span className="ml-2">{calculateTimeLeft(products.endTime)}</span>
+                        <span className="ml-2">{endTime}</span>
                         </div>
                         <div>
                         <span className="font-semibold">Bid Status:</span>
@@ -105,6 +106,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         <input 
                         type="number" 
                         placeholder="Type amount" 
+                        disabled={endTime == "00:00:00:00"}
                         className="w-full px-4 py-4 rounded-md text-black text-center"
                         value={amount} // Bind the state value to the input field
                         onChange={handleChange}
@@ -114,15 +116,19 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         <button
                             className={`border border-white py-3 rounded-md w-full ${isInWatchlist && "bg-gray-200"}`}
                             onClick={() => watchListHandler(products.id)}
-                            disabled={isInWatchlist}
+                            disabled={isInWatchlist || endTime}
                         >
                             Add to Watchlist
                         </button>
                         
                         <button
-                            className="bg-[#EF6509] hover:bg-[#e25d08] py-3 rounded-md w-full"
+                            className={
+                                ` ${disableBtn || endTime ? 
+                                    "bg-gray-300 hover:bg-gray-300" : 
+                                    "bg-[#EF6509] hover:bg-[#e25d08]"} 
+                                    py-3 rounded-md w-full`}
                             onClick={() => bidHandler(products.id)}
-                            disabled={disableBtn}
+                            disabled={disableBtn || endTime}
                         >
                             Bid
                         </button>

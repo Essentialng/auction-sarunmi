@@ -158,7 +158,7 @@ const ProductUpload = ({id, product, handleClick}) => {
 
     const handleCategories = async()=>{
       setFetchedModel(true);
-
+      setLoading(true)
       try{
         if(!fetchedModel){
         const response = await axiosInstance.get("/category");
@@ -169,6 +169,8 @@ const ProductUpload = ({id, product, handleClick}) => {
       }
       }catch(error){
         console.log(error)
+      }finally{
+        setLoading(false);
       }
     }
 

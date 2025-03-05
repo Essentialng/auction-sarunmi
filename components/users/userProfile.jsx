@@ -32,6 +32,7 @@ export default function DropDown({ dropLinks, user, setActivate }) {
       <small
         onClick={() => {
           clearUser();
+          setActivate(false);
           router.push("/");
         }}
         className="py-4 cursor-pointer text-[16px] hover:bg-[#B7A5F9] w-full px-8"

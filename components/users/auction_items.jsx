@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import classnames from "classnames";
+import classNames from "classnames";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
@@ -43,7 +43,7 @@ export function AuctionItems({ auctions, page }) {
   return (
     
       <div
-        className={classnames({
+        className={classNames({
           "grid md:grid-cols-2 grid-cols-1 gap-4 relative": true,
           "2xl:grid-cols-4 xl:grid-cols-4": page !== "categories",
           "2xl:grid-cols-3 xl:grid-cols-3": (page === "categories"),
@@ -57,16 +57,18 @@ export function AuctionItems({ auctions, page }) {
             <div key={index}>
               <div className="flex flex-col gap-2 items-center justify-center hover:scale-95 transition-all duration-500 ease-in-out">
                 <div
-                  className={classnames({
+                  className={classNames({
                     "w-1/3 text-center py-4 rounded-[10px] border border-[#7BC27A] font-[700] shadow-md ": true,
+                    "border-[#989FA1]" : timeLeft == "00:00:00:00",
                     "border-[#FF9354] ": timeToStart,
                   })}
                 >
                   <p>{timeToStart ? timeToStart : timeLeft}</p>
                 </div>
                 <div
-                  className={classnames({
+                  className={classNames({
                     "py-4 px-[20px] rounded-[10px] items-center flex flex-col gap-10 border border-[#7BC27A] font-[700] shadow-md h-fit": true,
+                    "border-[#989FA1]" : timeLeft == "00:00:00:00",
                     "border-[#FF9354]": timeToStart,
                   })}
                 >
@@ -75,14 +77,19 @@ export function AuctionItems({ auctions, page }) {
                   </div>
                   <div className="flex flex-col gap-4">
                     <div
-                      className={classnames({
+                      className={classNames({
                         "flex justify-between items-center text-[14px] font-[400] text-[#7BC27A]": true,
+                        "text-[#989FA1]": timeLeft == "00:00:00:00",
                         "text-[#FF7B58]": timeToStart,
                       })}
                     >
                       <div className="flex gap-2 items-center">
                         <FaCircle size={10} />
-                        <small>{timeToStart ? "Upcoming Auction" : "Live Auction"}</small>
+                        <small>
+                          {timeToStart ? "Upcoming Auction" : 
+                          timeLeft == "00:00:00:00" ? 
+                          "Ended Auction" : "Live Auction"}
+                        </small>
                       </div>
                       <div>
                         <IoIosCheckmarkCircleOutline size={16} />
@@ -102,7 +109,11 @@ export function AuctionItems({ auctions, page }) {
                     </div>
                   </div>
                   {!timeToStart ? (
-                    <button className={btn_class} onClick={()=>handleViewAuction(item)}>JOIN AUCTION</button>
+                    <button 
+                      className={`${timeLeft === "00:00:00:00" ? "bg-gray-200 text-[#989FA1]" : "bg-[#FF9354]"} ${btn_class}`}
+                      onClick={()=>handleViewAuction(item)}>
+                      {timeLeft == "00:00:00:00" ? "AUCTION ENDED" : "JOIN AUCTION"}
+                    </button>
                   ) : (
                     <div className="flex gap-3">
                       <button className={btn_class}

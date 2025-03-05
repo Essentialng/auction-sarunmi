@@ -12,7 +12,7 @@ export default function Auctions() {
 
   useEffect(() => {
     fetchAllProduct();
-  }, [user]);
+  }, []);
 
 
   const itemsData = [

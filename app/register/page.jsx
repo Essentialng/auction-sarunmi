@@ -1,6 +1,5 @@
 "use client";
 import React from 'react';
-import Link from 'next/link';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -9,13 +8,14 @@ import PopUp from '@/components/users/signup-pop';
 import { IoIosArrowBack } from "react-icons/io";
 import { axiosInstance } from '@/package/axios';
 import { Rings } from 'react-loading-icons';
-import useStore from '../store';
 import { Toast } from '@/package/alert';
 import States from '@/utils/states';
+import { FaEyeSlash } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
+
 
 
 export default function SignUp() {
-  const {initializeUser} = useStore();
   const [vendor, setVendor] = useState(true);
   const [status, setStatus] = useState(false);
   const [password, setPassword] = useState(false);
@@ -25,6 +25,7 @@ export default function SignUp() {
   const [loadingResend, setLoadingResend] = useState(false)
   const [age, setAge] = useState(false)
   const [verification, setVerification] = useState(null)
+  const [show, setShow] = useState(false)
 
 
   const details = {
@@ -152,7 +153,7 @@ export default function SignUp() {
 
 
   
-  const inputStyle= "border px-2 py-4 rounded-md bg-[#F4FDFF]"
+  const inputStyle= "border px-2 py-4 rounded-md bg-[#F4FDFF] w-full"
   const vendorDisable = (
   formik.values.firstName &&
   formik.values.lastName &&
@@ -169,7 +170,6 @@ export default function SignUp() {
     formik.values.phoneNumber && age
   )
 
-console.log(formik.values)
   return (
     <>
     <div  className="lg:px-24 px-4 py-12 lg:grid grid-cols-5 mt-28">
@@ -177,7 +177,7 @@ console.log(formik.values)
       onSubmit={formik.handleSubmit}
       className=" col-span-3 text-center items-center relative ">
 
-      {!password ?
+      {password ?
       <div 
       
        className='shadow-md border rounded-2xl relative px-8 pb-12'>
@@ -394,15 +394,28 @@ console.log(formik.values)
               <div className="flex flex-col gap-6">
                   <div className="flex flex-col">
                       <label htmlFor="email">Password</label>
-                      <input
-                      placeholder="Type your password"
-                      id="Password"
-                      name="password"
-                      type="Password"
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                      className={inputStyle}
-                      />
+                      <div className={`flex items-center ${inputStyle}`}>
+                        <input
+                        placeholder="Type your password"
+                        id="Password"
+                        name="password"
+                        type={`${!show ? "Password" : "text"}`}
+                          onChange={formik.handleChange}
+                          value={formik.values.password}
+                        className="w-full bg-[#F4FDFF] outline-none"
+                        />
+                        <div>
+                          {!show ?
+                          <FaEyeSlash
+                          onClick={()=>setShow(true)}
+                          />
+                          :
+                          <IoEyeSharp
+                          onClick={()=>setShow(false)}
+                          />
+                        }
+                        </div>
+                      </div>
                       {formik.touched.password && formik.errors.password ? (
                       <div className="text-red-500 text-sm">{formik.errors.password}</div>
                       ) : null}
@@ -410,15 +423,28 @@ console.log(formik.values)
 
                   <div className="flex flex-col">
                       <label htmlFor="confirmPassword">Confirm password</label>
-                      <input
-                      placeholder="Retype your password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                        onChange={formik.handleChange}
-                        value={formik.values.confirmPassword}
-                      className={inputStyle}
-                      />
+                      <div className={`flex items-center ${inputStyle}`}>
+                        <input
+                        placeholder="Retype your password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        type={`${!show ? "Password" : "text"}`}
+                          onChange={formik.handleChange}
+                          value={formik.values.confirmPassword}
+                          className="w-full bg-[#F4FDFF] outline-none"     
+                          />                
+                          <div>
+                          {!show ?
+                          <FaEyeSlash
+                          onClick={()=>setShow(true)}
+                          />
+                          :
+                          <IoEyeSharp
+                          onClick={()=>setShow(false)}
+                          />
+                        }
+                        </div>
+                      </div>
                       {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
                       <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
                       ) : null}

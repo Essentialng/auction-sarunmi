@@ -9,12 +9,17 @@ import { axiosInstance } from '@/package/axios';
 import { useRouter } from 'next/navigation';
 import { Rings } from 'react-loading-icons';
 import { Toast } from '@/package/alert';
+import { FaEyeSlash } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
+
 
 export default function SignUp() {
   const {initializeUser} = useStore();
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
+  const [show, setShow] = useState(false)
+  
   
   const formik = useFormik({
     initialValues: {
@@ -100,14 +105,28 @@ export default function SignUp() {
 
           <div className="flex flex-col">
             <label htmlFor="password">Password</label>
-            <input
-              id="password"
+            <div className={`flex items-center ${inputStyle}`}>
+              <input
+              placeholder="Type your password"
+              id="Password"
               name="password"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              className={inputStyle}
-            />
+              type={`${!show ? "Password" : "text"}`}
+                onChange={formik.handleChange}
+                value={formik.values.password}
+              className="w-full bg-[#F4FDFF] outline-none"
+              />
+              <div>
+                {!show ?
+                <FaEyeSlash
+                onClick={()=>setShow(true)}
+                />
+                :
+                <IoEyeSharp
+                onClick={()=>setShow(false)}
+                />
+              }
+              </div>
+            </div>
             {formik.touched.password && formik.errors.password ? (
               <div className="text-red-500 text-sm">{formik.errors.password}</div>
             ) : null}

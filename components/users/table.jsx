@@ -1,4 +1,5 @@
-import classnames from "classnames";
+import classNames from "classnames";
+
 
 export default function Table({headers}){
    
@@ -12,18 +13,18 @@ export default function Table({headers}){
                 {headers.map((header, index) => (
                     <th
                     key={index}
-                    className={classnames({
+                    className={classNames({
                         "xl:py-8 py-4" : true,
                         "rounded-tl-2xl rounded-bl-2xl" : index === 0,
                          "rounded-tr-2xl rounded-br-2xl" : index === 4
                     })}
                     >
-                    <p className={classnames({
-                        "w-full xl:border-r-2 border-r-white text-center" : true,
-                        "border-r-[#35318E] " : index === 4 
-                        })}
-                        >
-                        {header}
+                        <p className={classNames({
+                            "w-full xl:border-r-2 border-r-white text-center" : true,
+                            "border-r-[#35318E] " : index === 4 
+                            })}
+                            >
+                            {header}
                         </p>
                     </th>
                 ))}

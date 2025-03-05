@@ -6,11 +6,15 @@ import { calculateTimeLeft, calculateDays } from '@/utils/methods';
 import { useRouter } from 'next/navigation';
 import {BidDetails, Details, Images} from './dashBoardCards';
 import { responsive } from '@/utils/responsivenes';
+import BiddersList from './listOfBidders';
+import { useState } from 'react';
 
-export default function SliderProduct({ products }) {
+
+
+export default function SliderProduct({ products, bidProducts }) {
 
   const router = useRouter();
-
+  const [isOpen, setIsOpen] = useState(null);
  
 
   const handleViewAuction = (data) => {
@@ -42,7 +46,12 @@ export default function SliderProduct({ products }) {
           const currentBid = product?.highestBid?.amount?.toLocaleString() 
 
           return(
-          <div key={index} className="xl:px-12 px-2">
+            <>
+          <div 
+          key={index} 
+          className={`xl:px-12 px-2 ${bidProducts && "cursor-pointer"}`}
+          onClick={()=>setIsOpen(index)}
+          >
             <div className="w-full xl:py-12 py-2">
               <div className="flex-col gap-8 flex items-center justify-center">
                 <Images
@@ -67,6 +76,14 @@ export default function SliderProduct({ products }) {
               </div>
             </div>
           </div>
+          
+          {(isOpen !== null && bidProducts) &&
+            <BiddersList
+            bids ={product.bids}
+            setIsOpen={setIsOpen}                />
+          }
+
+          </>
           )
         })}
       </Sliders>

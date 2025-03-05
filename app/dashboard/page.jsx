@@ -61,6 +61,7 @@ export default function Dashboard(){
                 
                 <SliderProduct
                 products={userProducts}
+                bidProducts = {true}
                 />
             </div>
             }
@@ -73,6 +74,7 @@ export default function Dashboard(){
                 
                 <SliderProduct
                 products={bidData}
+                bidProducts = {false}
                 />
             </div>
             }

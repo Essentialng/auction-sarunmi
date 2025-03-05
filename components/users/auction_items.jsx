@@ -110,8 +110,10 @@ export function AuctionItems({ auctions, page }) {
                   </div>
                   {!timeToStart ? (
                     <button 
-                      className={`${timeLeft === "00:00:00:00" ? "bg-gray-200 text-[#989FA1]" : "bg-[#FF9354]"} ${btn_class}`}
-                      onClick={()=>handleViewAuction(item)}>
+                      className={`${timeLeft === "00:00:00:00" ? "bg-gray-200 text-[#989FA1] hover:bg-gray-200 shadow-none" : "bg-[#FF9354]"} ${btn_class}`}
+                      onClick={()=>handleViewAuction(item)}
+                      disabled={timeLeft == "00:00:00:00"}
+                      >
                       {timeLeft == "00:00:00:00" ? "AUCTION ENDED" : "JOIN AUCTION"}
                     </button>
                   ) : (

@@ -40,7 +40,7 @@ export default function Hero(){
             "image": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290608/machines.png",
             "image3": "",
             "button": "CATEGORIES",
-            "link" : "/categories",
+            "link" : "/categories/3",
         },
         {
             "title": "Gadget Galore:",
@@ -50,7 +50,7 @@ export default function Hero(){
             "details": "Dive into a world of tech wonders at our gadget auctions, where you can uncover coveted gadgets and secure fantastic savings. Don't miss out on the opportunity to elevate your tech game while keeping your budget intact!",
             "image": "https://res.cloudinary.com/dxsvadizj/image/upload/v1718290624/iphones.png",
             "button": "CATEGORIES",
-            "link" : "/categories",
+            "link" : "/categories/3",
         }
     ]
     

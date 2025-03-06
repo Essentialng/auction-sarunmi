@@ -177,7 +177,7 @@ export default function SignUp() {
       onSubmit={formik.handleSubmit}
       className=" col-span-3 text-center items-center relative ">
 
-      {password ?
+      {!password ?
       <div 
       
        className='shadow-md border rounded-2xl relative px-8 pb-12'>

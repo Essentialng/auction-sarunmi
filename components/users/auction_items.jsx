@@ -16,8 +16,10 @@ export function AuctionItems({ auctions, page }) {
   const router = useRouter();
 
   const {loading} = useStore();
-  const btn_class =
-    "bg-[#EF6509] text-white 2xl:text-[15px] xl:text-[15px] md:text-[15px] text-[12px] font-[500] px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm";
+  const btn_class = `bg-[#EF6509] text-white 2xl:text-[15px] 
+                    xl:text-[15px] md:text-[15px] text-[12px] font-[500] 
+                    px-5 py-2 rounded-lg hover:bg-[#35318E] 
+                    hover:shadow-black shadow-sm`;
 
 
   useEffect(() => {

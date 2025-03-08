@@ -14,7 +14,8 @@ import { productFilter, locationFilter } from "@/utils/methods";
 
 export default function Page(){
     const {id} = useParams();
-    
+    const {categories} = useStore();
+
     const { cars, fetchAllProduct,user} = useStore();
     const { filter, loading, error, fetchProducts } = useFetchProducts();
     const [others, setOthers] = useState([]);
@@ -35,6 +36,8 @@ export default function Page(){
                 console.log(error)
             }
         };
+
+
 
     const othersFilter = useCallback((id)=>{
         const filteredCars = productFilter(filterItems, id);
@@ -70,7 +73,7 @@ export default function Page(){
             <div className=" xl:grid block grid-cols-4 pt-24  xl:px-[4rem] px-[1rem]">
                 <OtherCategories
                 handleFetchProducts={othersFilter}
-                categories={models}
+                categories={categories}
                 filter={filter}
                 />
                 <div className="col-span-3 ">

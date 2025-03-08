@@ -10,7 +10,7 @@ import DropDown from "@/components/users/userProfile";
 
 
 export default function NavBar(){
-const {user, getUser, categories, fetchCategory} = useStore()
+const {user, getUser, categories, fetchCategory, auctions} = useStore()
     const [active, setActive] = useState("Home");
     const [activate, setActivate] = useState(false);
     const [menuToggle, setMenuToggle] = useState(false)
@@ -18,6 +18,7 @@ const {user, getUser, categories, fetchCategory} = useStore()
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
     
    
+
     useEffect(()=>{
         if(!user){
         getUser()
@@ -31,7 +32,22 @@ const {user, getUser, categories, fetchCategory} = useStore()
     const already = pathname === '/register'
     const login = !user && pathname !== '/login'
     const menulink = pathname !== '/register' && pathname !== '/login'
-    
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredAuctions, setFilteredAuctions] = useState([]);
+
+    const handleSearchChange = (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+
+        if (term.length > 0) {
+            const filtered = auctions.filter(auction =>
+                auction.name.toLowerCase().includes(term.toLowerCase())
+            );
+            setFilteredAuctions(filtered);
+        } else {
+            setFilteredAuctions([]);
+        }
+    };
     const dropLinks = [
         {
             name: "Profile",
@@ -64,7 +80,13 @@ const {user, getUser, categories, fetchCategory} = useStore()
         >
             <div className="flex justify-between items-center text-white ">
                 <Logo setMenuToggle={setMenuToggle} setActivate={setActivate}/>
-                {search && <Search/>}
+                {search && <Search
+                 handleSearchChange={handleSearchChange}
+                 searchTerm={searchTerm}
+                 setSearchTerm={setSearchTerm}
+                 filteredAuctions={filteredAuctions}
+                 setFilteredAuctions={setFilteredAuctions}
+                 />}
                 <Authentications 
                 user={user}
                 account={account}
@@ -80,7 +102,11 @@ const {user, getUser, categories, fetchCategory} = useStore()
                     }
                 </div>
             </div>
-            <MobileSearch/>
+            <MobileSearch
+             handleSearchChange={handleSearchChange}
+             searchTerm={searchTerm}
+             setSearchTerm={setSearchTerm}
+             filteredAuctions={filteredAuctions}/>
             <div className="text-white 2xl:flex xl:flex hidden justify-between">
                 {menulink && 
                 <NavLink

@@ -3,19 +3,25 @@ import { NextResponse } from 'next/server';
 
 
 
-export async function GET(request) {
+export async function GET() {
   try {
     const category = await prisma.category.findMany({
       where: {
         id: {
-          notIn: [1, 2] 
-        }
-      }
+          notIn: [1, 2],
+        },
+      },
+      include: {
+        model: true, 
+      },
     });
 
     return NextResponse.json({ category: category }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ success: false, message: `Failed to fetch category: ${error.message}` }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: `Failed to fetch categories: ${error.message}` },
+      { status: 500 }
+    );
   }
 }
 

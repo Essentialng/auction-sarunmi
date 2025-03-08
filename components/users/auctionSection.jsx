@@ -71,7 +71,7 @@ const AuctionStatus = ({ timeLeft, timeToStart }) => {
   return (
     <div
       className={classNames(
-        "flex justify-between items-center text-[14px] font-[400]",
+        "w-full flex justify-between items-center text-[14px] font-[400]",
         {
           "text-[#7BC27A]": !timeToStart && timeLeft !== "00:00:00:00",
           "text-[#989FA1]": timeLeft === "00:00:00:00",

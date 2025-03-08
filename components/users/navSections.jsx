@@ -28,17 +28,45 @@ export function Logo({setMenuToggle, setActivate}){
     )
 }
 
-export function Search(){
-    return(
-        <div className="2xl:flex xl:flex hidden gap-2 w-1/4">
-            <input 
-            placeholder="Search auctions"
-            className="w-5/6 px-4 py-2 border-[#B1B1B1] rounded-md
-                text-[12px] text-[#6C6C6C] font-[400] bg-white outline-none border-none" type="text" />
+export function Search({ searchTerm, handleSearchChange, filteredAuctions, setFilteredAuctions, setSearchTerm }) {
+
+    const clearSearch=()=>{
+        setSearchTerm("");
+        setFilteredAuctions([])
+    }
+
+
+    return (
+        <div className="2xl:flex xl:flex hidden gap-2 w-1/4 relative z-50">
+            <input
+                placeholder="Search auctions"
+                className="w-5/6 px-4 py-2 border-[#B1B1B1] rounded-md text-[12px] text-[#6C6C6C] 
+                font-[400] bg-white outline-none border-none"
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+            />
             <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Search</span>
+            {searchTerm.length > 0 && filteredAuctions.length > 0 && (
+            <div className="w-full absolute bg-white border py-8 top-12 rounded-xl shadow-lg text-[#6C6C6C] z-50">
+            
+                <ul className="search-preview flex flex-col">
+                    {filteredAuctions.map(auction => (
+                        <Link
+                        href={`/categories/${auction.id}`} 
+                        className="p-4 hover:bg-[#B1B1B1] hover:text-black" key={auction.id}
+                        onClick={clearSearch}>
+                            {auction.name}
+                        </Link>
+                    ))}
+                </ul>
+            
+            </div>
+        )}
         </div>
-    )
+    );
 }
+
 
 
 export function Authentications({user, account, signUp, already, login, dropLinks}){
@@ -97,22 +125,53 @@ export function Authentications({user, account, signUp, already, login, dropLink
 }
 
 
-export function MobileSearch(){
+export function MobileSearch({searchTerm, handleSearchChange, filteredAuctions, setFilteredAuctions, setSearchTerm}){
+
+    const clearSearch=()=>{
+        setSearchTerm("");
+        setFilteredAuctions([])
+    }
+
     return(
-        <div className="2xl:hidden xl:hidden flex justify-center gap-3 items-center py-2 px-4 w-full bg-white rounded-2xl">
-            <IoIosSearch size={30}/>
-            <input 
-            placeholder="Search auctions"
-            className="w-full  px-4 border-[#B1B1B1] rounded-md
-                text-[18px] text-[#6C6C6C] font-[400] bg-white outline-none border-none" type="text" 
-                />
+        <div className="w-full relative xl:hidden block">
+                <div className="flex justify-center gap-3 items-center py-2 px-4 w-full bg-white rounded-2xl">
+                
+                <IoIosSearch size={30}/>
+                <input 
+                placeholder="Search auctions"
+                className="w-full  px-4 border-[#B1B1B1] rounded-md
+                    text-[18px] text-[#6C6C6C] font-[400] bg-white outline-none border-none" 
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}    />
+            </div>
+            
+            {searchTerm.length > 0 && filteredAuctions.length > 0 && (
+                <div className="w-full absolute bg-white border py-8 top-12 rounded-xl shadow-lg text-[#6C6C6C] z-50">
+                
+                    <ul className="search-preview flex flex-col">
+                        {filteredAuctions.map(auction => (
+                            <Link
+                            href={`/categories/${auction.id}`} 
+                            className="p-4 hover:bg-[#B1B1B1] hover:text-black" key={auction.id}
+                            onClick={clearSearch}>
+                                {auction.name}
+                            </Link>
+                        ))}
+                    </ul>
+                
+                </div>
+            )}
         </div>
+
     )
 };
 
 
 export function NavLink({menuContents, active, nav_btn, setActive, categories}){
     
+    const [isModel, setIsModel] = useState(null)
+
     return(
         <div className="flex items-center justify-between w-1/2">
             {menuContents.map((menu, index)=>(
@@ -137,15 +196,34 @@ export function NavLink({menuContents, active, nav_btn, setActive, categories}){
                         <div className="flex items-center gap-2">Others Categories <IoIosArrowDown/></div>
                         </div>
                         <div 
-                        className=" drop w-full hidden absolute border-[#35318E] top-10 bg-[#35318E] group-hover:block group-focus-within:block py-8 hover:block z-50">
+                        className=" drop w-full h-[450px] hidden absolute border-[#35318E] top-10 bg-[#35318E] text-[18px] group-hover:block group-focus-within:block py-4 hover:block  z-50">
                             {categories.map((item, index)=>(
                             <div key={index} className="relative group">
-                                <Link href={`/categories/${item.id}`} className={`flex justify-between items-center p-4 cursor-pointer hover:bg-[#8474DA]`}>
-                                    <small className="text-[12px]">{item?.name}</small>
+                                <div 
+                                onClick={()=>setIsModel(index)}
+                                className={`category flex justify-between items-center p-4 cursor-pointer hover:bg-[#8474DA] ${isModel == index && "bg-[#8474DA]"}`}
+                                >
+                                    <small>{item?.name}</small>
                                     <IoIosArrowForward/>
-                                </Link>
+                                </div>
+
+                                {isModel == index &&
+                                <div className="model absolute bg-[#8474DA] top-0 left-44 w-full h-[435px]">
+                                {item?.model?.map((value, num )=>(
+                                    <div className="px-4 py-3 text-white hover:bg-orange-300 hover:text-black w-full cursor-pointer ">
+                                        <Link
+                                        href={`/categories/${value.id}`} 
+                                        onClick={()=>setIsModel(null)}
+                                        >
+                                            <small>{value?.name}</small>
+                                        </Link>
+                                    </div>
+                                ))}
+                                </div>
+                                }
                             </div> 
                             ))}
+                             
                         </div>
                     </div>
                 }

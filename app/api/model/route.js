@@ -7,18 +7,36 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const categoryId = searchParams.get('categoryId');
+    const modelId = searchParams.get("modelId");
 
-    const model = await prisma.model.findMany({
-      where: {
-        categoryId: Number(categoryId)
-      }
-    });
+    if (categoryId) {
+      const models = await prisma.model.findMany({
+        where: { categoryId: Number(categoryId) },
+        include: { items: true } 
+      });
 
-    return NextResponse.json(model, {status: 200});
+      return NextResponse.json(models, { status: 200 });
+
+    } else if (modelId) {
+      const items = await prisma.item.findMany({
+        where: { modelId: Number(modelId) }
+      });
+
+      return NextResponse.json(items, { status: 200 });
+    } 
+    // else {
+    //   const allItems = await prisma.item.findMany();
+
+    //   return NextResponse.json(allItems, { status: 200 });
+    // }
   } catch (error) {
-    return NextResponse.json({ success: false, message: 'Failed to fetch cars' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: `Failed to fetch data: ${error.message}` },
+      { status: 500 }
+    );
   }
 }
+
 
 
 

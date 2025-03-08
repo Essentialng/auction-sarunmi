@@ -75,9 +75,9 @@ model Field {
   label       String
   value       String
   placeholder String     
-  dataType    String      // For example: "text", "number", "file", etc.
+  dataType    String      
   required    Boolean     @default(false)
-  options     String?     // If dropdown options are needed (comma-separated values)
+  options     String?    
   category    Category    @relation(fields: [categoryId], references: [id])
 }
 
@@ -109,7 +109,7 @@ model Notification {
   id          Int      @id @default(autoincrement())
   userId      String
   message     String
-  type        String   // For example: "BidOutbid", "AuctionEnd"
+  type        String   
   read        Boolean  @default(false)
   createdAt   DateTime @default(now())
   user        User     @relation("notification", fields: [userId], references: [id])

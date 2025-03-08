@@ -152,6 +152,7 @@ ul li:hover{
   display: block;
 }
 
+
 @media(max-width : 1050px) {
   .mobile-auction{
     height: 34rem !important;

@@ -29,6 +29,11 @@ export async function POST(request) {
 
     const token = await generateToken(userWithoutPassword);
 
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastLogin: new Date() },
+    });
+    
     return NextResponse.json({ message: 'Login successful', token }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: `Internal server error: ${error.message}` }, { status: 500 });

@@ -2,9 +2,10 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import DonutChart from "./Charts";
 
 
-export function Card({card}){
+export function Card({card, index}){
+
     return(
-        <div className={`flex flex-col gap-4 rounded-2xl p-8 bg-[${card.color}]`}>
+        <div className={`flex flex-col gap-4 rounded-2xl p-8 ${index % 2 == 0 ? "bg-[#E7DEFF]" : "bg-[#FFD7BC]"}`}>
             <div className={`h-fit rounded-xl text-[12px]`}>
                 {card.name}
             </div>
@@ -12,10 +13,7 @@ export function Card({card}){
                 <h4 className="text-2xl font-bold text-end">{card.count}</h4>
                 <div className="flex items-center gap-1">
                     <small className="text-[12px]">
-                        +{card.percent} 
-                    <small className="text-black">
-                        {card.date}
-                    </small>
+                        {card.percent}% 
                     </small>
                     <FaArrowTrendUp size={12}/>
                 </div>

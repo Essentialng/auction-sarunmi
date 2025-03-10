@@ -11,8 +11,13 @@ import { MdOutlineEditCalendar } from "react-icons/md";
 import { TbSpeakerphone } from "react-icons/tb";
 import Activity from "@/components/admin/activity";
 import { Card, Revenue } from "@/components/admin/dashBoardSections";
+import { axiosInstance } from "@/package/axios";
+import { useState, useEffect } from "react";
+
+
 export default function UserManagement(){
 
+    const [users, setUsers] = useState([]);
     const cards = [
         {
             name: "Vendors",
@@ -21,19 +26,19 @@ export default function UserManagement(){
             color: "#FFA687"
         },
         {
-            name: "Vendors",
+            name: "Bidders",
             count: "7,265",
             percent: "11.02%",
             color: "#B7A5F9"
         },
         {
-            name: "Vendors",
+            name: "New Users",
             count: "7,265",
             percent: "11.02%",
             color: "#FFA687"
         },
         {
-            name: "Vendors",
+            name: "Active Users",
             count: "7,265",
             percent: "11.02%",
             color: "#B7A5F9"
@@ -67,6 +72,21 @@ export default function UserManagement(){
         },
     ]
 
+    const fetchUsers = async()=>{
+        try{
+            const response =await axiosInstance.get("allUsers");
+            const data = await response.data;
+            if(response.status == 200){
+                setUsers(data.data);
+            }
+        }catch(error){
+            console.log(error)
+        }
+    };
+
+    useEffect(()=>{
+        fetchUsers();
+    },[])
 
 
     return(
@@ -75,8 +95,8 @@ export default function UserManagement(){
             <Header/>
 
             <div className="grid grid-cols-4 items-center gap-8">
-                {cards.map((card, index)=>(
-                    <Card card={card}/>
+                {users?.cards?.map((card, index)=>(
+                    <Card card={card} index={index}/>
                 ))}
             </div>
             <div className="grid grid-cols-12 gap-8">
@@ -88,7 +108,7 @@ export default function UserManagement(){
                             <IoIosArrowDropdown size={12}/>
                         </div>
                     </div>
-                    <Static/>
+                    <Static stats={users?.userBar}/>
                 </div>
                 <div className="col-span-3 p-8 bg-[#F7F9FB] rounded-xl">
                     <div className="mb-4">

@@ -1,4 +1,4 @@
-export default function AuctionStat(){
+export default function AuctionStat({stats}){
     return(
         <div className="flex flex-col gap-4 w-full">
             <div className="flex items-center justify-between border-l-2 border-[#35318E] px-2">

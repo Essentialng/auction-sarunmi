@@ -20,8 +20,10 @@ model User {
   profilePicture      String?
   type                String
   cashBalance         Float     @default(0.00)
+  subscriptionType    String?
   // orders            Order[]    @relation("UserOrders")
   notifications     Notification[] @relation("notification") 
+  lastLogin           DateTime?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
   watchlist         Watchlist[] @relation("UserWatchlist")

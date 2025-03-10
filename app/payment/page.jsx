@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Background from "@/components/users/backgroundImg";
 import { useState } from "react";
 import { PaymentOptions, TransferDetails, CardPaymentForm } from "@/components/users/paymentOptions";

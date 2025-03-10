@@ -13,37 +13,12 @@ import Activity from "@/components/admin/activity";
 import { Card, Revenue } from "@/components/admin/dashBoardSections";
 import { axiosInstance } from "@/package/axios";
 import { useState, useEffect } from "react";
+import useStore from "@/app/store";
 
 
 export default function UserManagement(){
-
+    const {fetchAllProduct, auctions} = useStore();
     const [users, setUsers] = useState([]);
-    const cards = [
-        {
-            name: "Vendors",
-            count: "7,265",
-            percent: "11.02%",
-            color: "#FFA687"
-        },
-        {
-            name: "Bidders",
-            count: "7,265",
-            percent: "11.02%",
-            color: "#B7A5F9"
-        },
-        {
-            name: "New Users",
-            count: "7,265",
-            percent: "11.02%",
-            color: "#FFA687"
-        },
-        {
-            name: "Active Users",
-            count: "7,265",
-            percent: "11.02%",
-            color: "#B7A5F9"
-        },
-    ]
 
     const recentActivity = [
         {
@@ -70,7 +45,9 @@ export default function UserManagement(){
             status: "Active",
             date: "Suspended"
         },
-    ]
+    ];
+
+
 
     const fetchUsers = async()=>{
         try{
@@ -86,6 +63,7 @@ export default function UserManagement(){
 
     useEffect(()=>{
         fetchUsers();
+        fetchAllProduct();
     },[])
 
 
@@ -115,7 +93,7 @@ export default function UserManagement(){
                         <p>Auctions</p>
                         <small>Auction Stats</small>
                     </div>
-                    <AuctionStat/>
+                    <AuctionStat auctions={auctions}/>
                 </div>
                 <Revenue/>
             </div>

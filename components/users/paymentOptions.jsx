@@ -1,22 +1,27 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
 import { RiErrorWarningLine } from "react-icons/ri";
 import classNames from "classnames";
-import { PaystackButton } from "react-paystack";
+import dynamic from "next/dynamic";
 
+const PaystackButton = dynamic(() => import("react-paystack").then(module => module.PaystackButton), { ssr: false });
+export function PaymentOptions({ togglePayment, setTogglePayment }){
+  const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => {
+    setIsClient(typeof window !== "undefined");
+  }, []);
 
-export const PaymentOptions = ({ togglePayment, setTogglePayment }) => {
-
-    const publicKey = "pk_test_f0a7e900e3367840ca8ac7d6ddff3720f122ee28"
-    
-    const paymentData = {
-        email: "webmasterjd@gmail.com", 
-        amount: 500 * 100,
-        currency: "NGN", 
-        reference: `ref-${Math.floor(Math.random() * 1000000000)}`,
-      };
-
+  const publicKey = "pk_test_f0a7e900e3367840ca8ac7d6ddff3720f122ee28";
+  const paymentData = {
+    email: "webmasterjd@gmail.com",
+    amount: 500 * 100,
+    currency: "NGN",
+    reference: `ref-${Math.floor(Math.random() * 1000000000)}`,
+  };
 
   return (
     <div className="flex justify-center mb-12">
@@ -24,34 +29,37 @@ export const PaymentOptions = ({ togglePayment, setTogglePayment }) => {
         { id: "card", src: "/card.png" },
         { id: "payPal", src: "/paystackLg.png" },
         { id: "transfer", src: "/transfer.png" },
-
       ].map((option) => (
         <button
           key={option.id}
           className={classNames(
-            { "ring-orange-500 border-orange-500 bg-orange-100 border": togglePayment === option.id },
+            {
+              "ring-orange-500 border-orange-500 bg-orange-100 border":
+                togglePayment === option.id,
+            },
             "flex items-center justify-center rounded-lg py-2 px-4 mx-2 focus:ring-2 relative border"
           )}
           onClick={() => setTogglePayment(option.id)}
         >
-          <Image alt="" 
-          src={option.src} 
-          width={80} height={20} 
-          className={`${option.id == "payPal" && "rounded-xl shadow-md border"}`} 
+          <Image
+            alt=""
+            src={option.src}
+            width={80}
+            height={20}
+            className={`${option.id == "payPal" && "rounded-xl shadow-md border"}`}
           />
-
-          {option.id == "payPal" &&
-          <PaystackButton
-            publicKey={publicKey}
-            email={paymentData.email}
-            amount={paymentData.amount}
-            currency={paymentData.currency}
-            // reference={paymentData.reference}
-            // onSuccess={handleSuccess}
-            // onClose={handleClose}
-            className="h-full w-full absolute top-0 right-0"
-        />
-        }
+          {option.id == "payPal" && isClient && (
+            <PaystackButton
+              publicKey={publicKey}
+              email={paymentData.email}
+              amount={paymentData.amount}
+              currency={paymentData.currency}
+              // reference={paymentData.reference}
+              // onSuccess={handleSuccess}
+              // onClose={handleClose}
+              className="h-full w-full absolute top-0 right-0"
+            />
+          )}
         </button>
       ))}
     </div>
@@ -60,7 +68,8 @@ export const PaymentOptions = ({ togglePayment, setTogglePayment }) => {
 
 
 
-export const CardPaymentForm = () => {
+
+export function CardPaymentForm(){
     return (
       <form className="space-y-4">
         <div className="w-1/3 flex items-center gap-4">
@@ -99,7 +108,7 @@ export const CardPaymentForm = () => {
   };
 
 
-  export const TransferDetails = () => {
+  export function TransferDetails(){
     return (
       <div className="flex flex-col gap-8">
         <p className="text-[18px] font-medium">Bank Transfer</p>

@@ -36,9 +36,9 @@ export function AuctionItems({ auctions, page }) {
       })}
     >
       {auctions?.map((item, index) => (
-        <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} />
+          <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} />
       ))}
-
+      
       {loading && <Loading />}
     </div>
   );

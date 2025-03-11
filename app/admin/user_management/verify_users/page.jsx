@@ -89,9 +89,13 @@ export default function DashBoard(){
 
     return(
         <div className="w-full border mt-28 p-6">
-            <div className="w-10/12 ml-auto border rounded-lg shadow-2xl py-8 px-12 flex flex-col gap-4">
+            <div className="w-10/12 ml-auto border rounded-lg shadow-2xl py-8 px-12 flex flex-col gap-8">
                 
-                <Header/>
+                <Header
+                topic={"Users Management"}
+                content={"User Management  "}
+                link={"Verify Users"}
+                />
 
                 <div className="grid grid-cols-6 gap-8">
                     <UserCard userData={userData}/>

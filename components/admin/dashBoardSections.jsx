@@ -50,7 +50,7 @@ export function Revenue(){
                             <div className="h-4 w-4 bg-[#FF7762]"/>
                             <small>20%</small>
                         </div>
-                        <small>Auctions</small>
+                        <small>Others</small>
                     </div>
                 </div>
                 <DonutChart/>

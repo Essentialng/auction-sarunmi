@@ -70,7 +70,10 @@ export default function UserManagement(){
     return(
     <div className="w-full border mt-28 py-6 h-fit">
          <div className="w-10/12 ml-auto border rounded-lg shadow-2xl py-6 px-12 flex flex-col gap-4">
-            <Header/>
+            <Header
+            topic={"Welcome Back"}
+            link={"Dashbord"}
+            />
 
             <div className="grid grid-cols-4 items-center gap-8">
                 {users?.cards?.map((card, index)=>(
@@ -79,11 +82,11 @@ export default function UserManagement(){
             </div>
             <div className="grid grid-cols-12 gap-8">
                 <div className="col-span-6  p-8 bg-[#F7F9FB] rounded-xl">
-                    <div className="mb-4">
+                    <div className="mb-4 text-base font-bold">
                         <p>Users</p>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 font-normal text-sm text-[#7E7E7E]">
                             <small>User Stats</small>
-                            <IoIosArrowDropdown size={12}/>
+                            <IoIosArrowDropdown size={18}/>
                         </div>
                     </div>
                     <Static stats={users?.userBar}/>

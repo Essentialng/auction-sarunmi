@@ -40,12 +40,12 @@ export default function Page(){
     ]
 
     const header = [
-        "Date Joined",
+        "Transaction ID",
         "Name",
-        "Email",
+        "Auction Title",
         "Status",
-        "Subscription Type",
-        "Last Login"
+        "Amount",
+        "Date"
     ]
 
     const contents = [
@@ -90,6 +90,9 @@ export default function Page(){
             cards={cards}
             header={header}
             contents={contents}
+            topic={"Financial Management"}
+            content={"Financial Management  "}
+            link={"Payment History"}
             />
         </div>
     )

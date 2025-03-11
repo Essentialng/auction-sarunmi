@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Submitted from "@/components/admin/submitted"
 import { ApprovedUsers, CheckBox } from "@/components/admin/adminApproveSections"
+import Header from "@/components/admin/dashboardHeader"
 
 
 export default function Approve(){
@@ -112,7 +113,13 @@ export default function Approve(){
 
     
     return(
-        <div className="w-10/12 ml-auto mt-24 p-9 grid grid-cols-12 gap-8 bg-white">
+    <div className="w-10/12 ml-auto mt-24 px-8 py-20 bg-white flex flex-col gap-12">
+        <Header
+        topic={"Auction Management"}
+        content={"Auction Management  "}
+        link={"Approve Auction"}
+        />
+        <div className="grid grid-cols-12 gap-8">
             <ApprovedUsers users={users}/>
             <div className="col-span-7 border shadow-lg rounded-2xl p-8">
                 <Submitted data={submittedDetails}/>
@@ -154,5 +161,6 @@ export default function Approve(){
                 </div>
             </div>
         </div>
+    </div>
     )
 }

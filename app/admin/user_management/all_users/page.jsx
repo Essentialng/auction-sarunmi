@@ -182,11 +182,14 @@ export default function Page(){
 
     return(
         <div>
-            {toggle ?
+            {!toggle ?
             <AdminPage
             cards={cards}
             header={header}
             contents={contents}
+            topic = {"User Management"}
+            content ={"User Management"}
+            link={"All Users"}
             />
             :
             <Individaul

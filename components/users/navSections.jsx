@@ -97,7 +97,7 @@ export function Authentications({user, account, signUp, already, login, dropLink
                 className="relative flex gap-3 items-center text-[#EF6509] cursor-pointer text-wrap truncate whitespace-nowrap overflow-hidden text-ellipsis"
                 onClick={()=>setActivate(!activate)}>
                     <div className={classNames({
-                        "relative flex items-center border  rounded-full overflow-hidden w-10 h-10" : true,
+                        "relative flex items-center justify-center border  rounded-full overflow-hidden w-10 h-10" : true,
                         "border-[#EF6509] p-2" : !user?.profilePicture,
                         "border-[#B1B1B1]" : user?.profilePicture
                         })}>
@@ -134,7 +134,7 @@ export function MobileSearch({searchTerm, handleSearchChange, filteredAuctions, 
 
     return(
         <div className="w-full relative xl:hidden block">
-                <div className="flex justify-center gap-3 items-center py-2 px-4 w-full bg-white rounded-2xl">
+            <div className="flex justify-center gap-3 items-center py-2 px-4 w-full bg-white rounded-2xl">
                 
                 <IoIosSearch size={30}/>
                 <input 

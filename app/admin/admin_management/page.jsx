@@ -50,11 +50,11 @@ export default function Page(){
     ]
 
     const header = [
-        "Date Joined",
+        "Admin ID",
         "Name",
         "Email",
         "Status",
-        "Subscription Type",
+        "Role",
         "Last Login"
     ]
 
@@ -213,6 +213,8 @@ export default function Page(){
             cards={cards}
             header={header}
             contents={contents}
+            topic={"Admins Management"}
+            link={"Admins Management"}
             />
             :
             <div 

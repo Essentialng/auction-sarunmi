@@ -90,6 +90,8 @@ export default function Page(){
             cards={cards}
             header={header}
             contents={contents}
+            topic={"Welcome Back"}
+            link={"Notification"}
             />
         </div>
     )

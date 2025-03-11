@@ -11,27 +11,90 @@ import useStore from "@/app/store";
 export default function SideBar() {
   const pathname = usePathname();
   const {user} = useStore();
-  const [toggleBtn, setToggleBtn] = useState("dashboard");
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const sidebarLinks = [
     { name: "Dashboard", path: "/admin/dashboard" },
+    
     {
       name: "Users Management",
-      dropdown: ["All Users", "Verify Users", "Activity Logs"],
+      prePath: "/admin/user_management/",
+      path: "/admin/user_management/all_users",
+      dropdown: [
+        {
+          name : "All Users",
+          url : "/admin/user_management/all_users",
+
+        },
+        {
+          name : "Verify Users",
+          url: "/admin/user_management/verify_users"
+        },
+        { 
+          name: "Activity Logs",
+          url: "#"
+        }
+      ],
     },
-    { name: "Auction Management", dropdown: [] },
-    { name: "Financial Management", dropdown: [] },
-    { name: "Content Management", dropdown: [] },
-    { name: "Message" },
-    { name: "Admins Management" },
-    { name: "Analytics", dropdown: [] },
-    { name: "Help & Support" },
-    { name: "LOG OUT", className: "bg-[#EF6509] text-white text-center rounded-2xl" },
+    
+    { 
+      name: "Auction Management",
+      prePath: "/admin/approve_auction",
+      path: "/admin/approve_auction",
+       dropdown: [
+        {
+          name : "Approve Auction",
+          url : "/admin/approve_auction",
+
+        },
+        {
+          name : "Schedule Auction",
+          url: "#"
+        },
+        { 
+          name: "Monitor Live Auction",
+          url: "#"
+        }
+       ] 
+    },
+
+    { 
+      name: "Financial Management",
+      prePath: "/admin/payment_history",
+      path: "/admin/payment_history",
+       dropdown: [
+        {
+          name : "Payment History",
+          url : "/admin/payment_history",
+
+        },
+        {
+          name : "Manage Subscriptions",
+          url: "#"
+        },
+        { 
+          name: "Revenue Reports",
+          url: "#"
+        }
+       ] 
+      },
+
+    { 
+      name: "Message",
+      path: "/admin/message" 
+    },
+
+    { 
+      name: "Admins Management",
+      prePath: "/admin/admin_management",
+      path: "/admin/admin_management",
+     },
+
+    { name: "LOG OUT", className: "bg-[#EF6509] text-white text-center rounded-2xl flex justify-center" },
   ];
 
   const toggleDropdown = (index) => {
-    setOpenDropdown(openDropdown === index ? null : index);
+    setOpenDropdown(index);
   };
 
   const triggerBtn = "flex items-center gap-2 text-[16px] rounded-t-xl p-4 cursor-pointer";
@@ -40,7 +103,7 @@ export default function SideBar() {
 
   return (
     pathname.startsWith("/admin") && (
-      <div className="absolute w-2/6 h-[100vh] left-0 top-28 overflow-scroll z-30">
+      <div className="fixed w-2/6 h-[100vh] left-0 top-28 overflow-scroll bg-[#F7F9FB]">
         <div className="p-6 flex flex-col gap-2 bg-[#35318E] text-white">
           <div className="flex items-center gap-4 font-semibold">
             <FaUser /> <small>{user?.firstName} {user?.lastName}</small>
@@ -52,27 +115,22 @@ export default function SideBar() {
             <FiPhone /> <small>{user?.phoneNumber}</small>
           </div>
         </div>
-        <ul className={`flex flex-col gap-4 text-[16px] py-6 px-3 ${sideBg}`}>
+        <ul className={`relative flex flex-col gap-2 text-[16px] py-6 px-3 overflow-scroll`}>
           {sidebarLinks.map((link, index) => (
-            <li key={index} className="px-2">
-              {link.path ? (
+            <li key={index} className="rounded-xl overflow-hidden">
                 <Link
-                  href={link.path}
+                  href={link.path ? link.path : ""}
                   className={classNames({ [activeBtn]: pathname.startsWith(link.path) }, triggerBtn, link.className)}
-                  onClick={() => setToggleBtn(link.name)}
+                  onClick={() => toggleDropdown(link.prePath)}
                 >
                   {link.name}
-                </Link>
-              ) : (
-                <div className={classNames({ [activeBtn]: toggleBtn === link.name }, triggerBtn)} onClick={() => toggleDropdown(index)}>
-                  <p>{link.name}</p>
                   {link.dropdown && <MdOutlineArrowDropDown />}
-                </div>
-              )}
-              {openDropdown === index && link.dropdown?.length > 0 && (
-                <div className="flex flex-col gap-2 text-[16px] px-2 py-4 bg-[#B7A5F9] w-full">
-                  {link.dropdown.map((item, idx) => (
-                    <p key={idx}>{item}</p>
+                </Link>
+
+              {(openDropdown === link.prePath && link.dropdown) && (
+                <div className="flex flex-col text-[16px] px-2 py-4 bg-[#B7A5F9] w-full text-black">
+                  {link.dropdown?.map((item, idx) => (
+                    <Link href={item?.url} key={idx} className={classNames({ "text-orange-600": pathname.startsWith(item?.url) }, {"p-4 cursor-pointer" : true} )}>{item.name}</Link>
                   ))}
                 </div>
               )}

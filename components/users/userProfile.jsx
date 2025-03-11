@@ -1,7 +1,5 @@
-import { useState } from "react";
 import useStore from "@/app/store";
 import { useRouter } from "next/navigation";
-import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
 import { UploadLink } from "./navSections";
 
@@ -11,7 +9,8 @@ export default function DropDown({ dropLinks, user, setActivate }) {
   const router = useRouter();
 
   return (
-    <div className="absolute xl:right-0 right-0 xl:top-10 top-12 xl:w-[230px] w-1/2 flex flex-col items-start text-start rounded-2xl py-4 text-white text-[16px] bg-[#8474DA]">
+    <div className="absolute xl:right-0 right-0 xl:top-10 top-12 xl:w-[230px] w-1/2 flex flex-col
+     items-start text-start rounded-2xl py-4 text-white text-[16px] bg-[#8474DA] z-50">
       {dropLinks.map((link, index) => (
         <div
         onClick={()=>setActivate(false)} 

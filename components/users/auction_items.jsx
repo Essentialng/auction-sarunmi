@@ -31,8 +31,8 @@ export function AuctionItems({ auctions, page }) {
   return (
     <div
       className={classNames("grid md:grid-cols-2 grid-cols-1 gap-4 relative", {
-        "2xl:grid-cols-4 xl:grid-cols-4": page !== "categories",
-        "2xl:grid-cols-3 xl:grid-cols-3": page === "categories",
+        "lg:grid-cols-4": page !== "categories",
+        "lg:grid-cols-3": page === "categories",
       })}
     >
       {auctions?.map((item, index) => (

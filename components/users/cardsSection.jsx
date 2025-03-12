@@ -63,7 +63,7 @@ export default function Section(){
     const list_style = "flex flex-col cursor-pointer transition-all duration-500 ease-in-out"
 
     return(
-        <div className="bg-[#E8E9E8] font-[700] text-[24px] h-[492px] rounded-2xl 2xl:flex xl:flex hidden gap-14">
+        <div className="bg-[#E8E9E8] font-[700] text-[24px] h-[492px] rounded-2xl lg:flex hidden gap-14">
                 <div className="w-[575px] px-[20px] rounded-2xl bg-white font-[700] text-[24px] py-6 shadow-2xl">
                     <h1 className="text-[#EF6509]">What is Essential E-Auction?</h1>
                     <div className="info text-[14px] flex flex-col gap-10 py-4">

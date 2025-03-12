@@ -38,7 +38,7 @@ export default function Auctions() {
 
   return (
     <div className="lg:px-[4rem]  px-[2rem] py-24 bg-gray-100">
-          <h1 className="xl:text-[30px] text-[22px] font-[700] py-12">
+          <h1 className="lg:text-[30px] text-[22px] font-[700] py-12">
             Top Auctions
           </h1>
           <div className="flex flex-col gap-20">

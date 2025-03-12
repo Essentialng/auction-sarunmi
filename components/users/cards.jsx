@@ -22,9 +22,9 @@ export default function Cards(){
     
     
     return(
-        <div className="2xl:px-[4rem] xl:px-[4rem] px-[2rem] 2xl:py-24 xl:py-24 py-12 flex flex-col gap-12">
-            <h1 className="2xl:text-[30px] xl:text-[30px] text-[24px] font-[700] pt-12 text-[#EF6509]">Why Essential E-Auction</h1>
-            <div className=" w-full flex 2xl:flex-row xl:flex-row flex-col gap-4">
+        <div className="lg:px-[4rem] px-[2rem] lg:py-24 py-12 flex flex-col gap-12">
+            <h1 className="lg:text-[30px] text-[24px] font-[700] pt-12 text-[#EF6509]">Why Essential E-Auction</h1>
+            <div className=" w-full flex lg:flex-row flex-col gap-4">
                 {items.map((item, index)=>(
                     <div 
                     key={index}

@@ -21,9 +21,9 @@ export default function Footer(){
     return(
         <div className="flex flex-col gap-20 py-24 ">
            <FooterCard/>
-            <div className="flex flex-col gap-4 justify-center items-center 2xl:px-[4rem] xl:px-[4rem] px-[2rem]">
+            <div className="flex flex-col gap-4 justify-center items-center lg:px-[4rem] px-[2rem]">
                 <p className="text-[24px] font-[600] text-[#EF6509]">Our Other Services</p>
-                <div className="w-full 2xl:flex xl:flex hidden justify-between">
+                <div className="w-full lg:flex hidden justify-between">
                     {otherService.map((service, index)=>(
                         <div 
                         key={index}
@@ -73,7 +73,7 @@ function OtherServiceMobile(){
         
       };
     return(
-        <div className="w-full  xl:hidden block justify-between">
+        <div className="w-full  lg:hidden block justify-between">
         <Slider {...settings}>
         {otherService.map((service, index)=>(
             <div 

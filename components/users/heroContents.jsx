@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 export function HeroTitle({ title, orangeText }) {
   return (
-    <p className="xl:text-[36px]">
+    <p className="lg:text-[36px]">
       {title}
       <span className="text-[#EF6509]">{orangeText}</span>
     </p>

@@ -44,7 +44,7 @@ export default function Hero() {
   ];
 
   return (
-    <div className="xl:block hidden">
+    <div className="lg:block hidden">
       <Sliders slideShow={1} margin={40} scroll={1} play={true} speed={50} infinite={true} className="max-h-[80vh] relative">
         {hero_section.map((hero, index) => (
           <div
@@ -63,7 +63,7 @@ export default function Hero() {
                   <HeroSubTitle bfOrangeText={hero.bf_orange_text} title2={hero.title2} frOrangeText={hero.fr_orange_text} />
                   <HeroDetails details={hero.details} isLarge={index === 1 || index === 2} />
 
-                  <div className="2xl:flex xl:flex hidden gap-[2rem] w-[1000px]">
+                  <div className="lg:flex hidden gap-[2rem] w-[1000px]">
                     {hero.cards?.map((card, cardIndex) => (
                       <HeroCard key={cardIndex} title={card.title} details={card.details} />
                     ))}

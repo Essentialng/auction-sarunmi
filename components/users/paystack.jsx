@@ -15,6 +15,8 @@ const PaystackButtonComponent = ({ price, className, onSuccess, onClose }) => {
       amount={amount}
       currency={"NGN"}
       className={className}
+      onSuccess={onSuccess}
+      onClose={onClose}
     />
   );
 };

@@ -1,9 +1,11 @@
-import Link from "next/link";
 import { FcCheckmark } from "react-icons/fc";
 import { TbHammer } from "react-icons/tb";
 import classNames from "classnames";
 import { TbCurrencyNaira } from "react-icons/tb";
 import PaystackButtonComponent from "./paystack";
+import { axiosInstance } from "@/package/axios";
+import { Toast } from '@/package/alert';
+
 
 const FeatureList = ({ features }) => {
   return (
@@ -33,9 +35,44 @@ const FeatureList = ({ features }) => {
 
 
 
-export const SubscriptionCard = ({index, subscriptions}) => {
+export const SubscriptionCard = ({index, subscriptions, user, initializeUser, setSubscribe}) => {
 
   const activeSub = subscriptions[index];
+  const subType =activeSub.type
+  const subscribeHandler = async ()=>{
+    const endpoint = "/subscription"
+    const body = {
+      subscriptionType :subType,
+      id : user.id
+    }
+    try{
+      const response = await axiosInstance.post(endpoint,body);
+      const data = await response.data;
+      if(response.status == 201){
+        Toast.fire({
+          icon: "success",
+          title: data.message,
+        });
+
+        initializeUser(data.token) 
+        setSubscribe(true);
+      }
+    }catch(error){
+      Toast.fire({
+        icon: "error",
+        title: "Connect to a strong network!",
+      });
+    }
+  };
+
+  const onCloseHandler = ()=>{
+    Toast.fire({
+        icon: "error",
+        title: "You can try again!",
+      });
+  }
+
+
 
   return (
     <div className="bg-white w-2/3 flex flex-col gap-8">
@@ -68,16 +105,18 @@ export const SubscriptionCard = ({index, subscriptions}) => {
           features={activeSub.features}
         />
       </div>
-      <div className="relative">
+      <button disabled={subType == user?.subscriptionType} className="relative">
         <PaystackButtonComponent
-        price={Number(subscriptions[index].price)}
+        price={Number(subscriptions[index]?.price)}
         className={"absolute bg-transparent w-full h-12 "}
+        onSuccess={subscribeHandler}
+        onClose={onCloseHandler}
         />
-        <button className="bg-orange-500 text-white font-semibold py-3 w-full rounded-lg hover:bg-orange-600"
+        <button className={`bg-orange-500 text-white font-semibold py-3 w-full rounded-lg hover:bg-orange-600 ${subType == user?.subscriptionType && "bg-gray-400 text-white"}`}
  >
           SUBSCRIBE
         </button>
-      </div>
+      </button>
     </div>
   );
 };

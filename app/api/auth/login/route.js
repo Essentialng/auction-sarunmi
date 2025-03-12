@@ -25,14 +25,13 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
     }
 
-    // const { password: _, ...userWithoutPassword } = user;
 
-    const token = await generateToken(user);
-
-    await prisma.user.update({
+   const userUpdate = await prisma.user.update({
       where: { id: user.id },
       data: { lastLogin: new Date() },
     });
+
+    const token = await generateToken(userUpdate);
     
     return NextResponse.json({ message: 'Login successful', token }, { status: 200 });
   } catch (error) {

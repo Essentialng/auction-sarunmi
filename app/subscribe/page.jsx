@@ -1,17 +1,19 @@
 "use client";
 import Background from "@/components/users/backgroundImg";
 import { SubscriptionCard } from "@/components/users/subsribeSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import classNames from "classnames";
 import { useRouter } from 'next/navigation';
+import useStore from "../store";
+import PopUp from "@/components/users/signup-pop";
 
 
 
 export default function SubscriptionPage() {
-    const router = useRouter()
+    const {user, initializeUser} = useStore();
     const [index, setIndex] = useState(0);
-
+    const [subscribe, setSubscribe] = useState(false);
     const subscriptions = [
         
       {
@@ -45,7 +47,7 @@ export default function SubscriptionPage() {
           content: "Exclusive access for standard member",
           price: "50000",
           duration: "NGN / YEAR",
-          bgColor: "[#092809]",
+          bgColor: "green-950",
           features: [
               {
               title:"Bidding",
@@ -70,7 +72,7 @@ export default function SubscriptionPage() {
           content: "Exclusive access for premium member",
           price: "75000",
           duration: "NGN / YEAR",
-          bgColor: "[#30136a]",
+          bgColor: "purple-950",
           features: [
               {
               title:"Bidding",
@@ -91,10 +93,20 @@ export default function SubscriptionPage() {
       }
   ];
 
+
+  const popDetails = {
+    headers: "Subscription Successful!!",
+    texts: `Thank you for subscribing to Essential E-Auction Premium Membership!
+We are excited to welcome you to our exclusive community of premium members. Your premium benefits are now active, and you’re all set to experience an enhanced auction journey.
+
+Happy bidding!
+    `,
+    btn2: "CONTINUE",
+    link2: "/"
+  }
     
    
     const navigation = "rounded-lg p-2";
-
 
   return (
     <div className="px-24 py-12 grid grid-cols-5 mt-28">
@@ -114,12 +126,18 @@ export default function SubscriptionPage() {
          />
         </button>
 
-        <SubscriptionCard index={index} subscriptions={subscriptions} />
+        <SubscriptionCard 
+        index={index} 
+        subscriptions={subscriptions} 
+        user={user} 
+        initializeUser={initializeUser}
+        setSubscribe={setSubscribe} 
+        />
 
         <button 
         className={classNames({
         [navigation]: true,
-        "bg-[#0000001A]" : index == 2,
+        "bg-[#1488401a]" : index == 2,
         "bg-black" : index < 2
     })} 
         disabled={index == 2}
@@ -133,6 +151,11 @@ export default function SubscriptionPage() {
          </button>
       </div>
       <Background />
+
+      {subscribe &&
+      <PopUp details={popDetails}/>
+        }
+
     </div>
   );
 }

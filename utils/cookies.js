@@ -7,6 +7,7 @@ export const setCookies = (token)=> {
     Cookies.set('auction-auth', token, {
     httpOnly: false, 
     path: '/',  
+    expires: 7
 
   });}
 

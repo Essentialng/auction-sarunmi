@@ -13,7 +13,13 @@ export async function generateToken(user) {
       phoneNumber: user.phoneNumber,
       profilePicture: user.profilePicture,
       nin: user.nin,
-      type: user.type
+      type: user.type,
+      address: user.address,
+      cashBalance: user.cashBalance,
+      subscriptionType: user.subscriptionType,
+      lastLogin: user.lastLogin,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     })
       .setProtectedHeader({ alg: 'HS256' })  
       .sign(new TextEncoder().encode(JWT_SECRET)); 

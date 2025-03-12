@@ -175,6 +175,7 @@ const Hub = () => {
             product = {product} 
             id={id}
             handleClick={handleClick}
+            user={user}
             />
         </div>
         }

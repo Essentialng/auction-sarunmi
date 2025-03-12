@@ -3,9 +3,12 @@
 import Background from "@/components/users/backgroundImg";
 import { useState } from "react";
 import { PaymentOptions, TransferDetails, CardPaymentForm } from "@/components/users/paymentOptions";
+import { useParams } from "next/navigation";
 
 
 export default function PaymentPage() {
+
+  const {sub, amount} = useParams();
   const [togglePayment, setTogglePayment] = useState("card");
 
   return (

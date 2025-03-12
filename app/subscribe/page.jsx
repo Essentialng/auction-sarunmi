@@ -4,10 +4,95 @@ import { SubscriptionCard } from "@/components/users/subsribeSection";
 import { useState } from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import classNames from "classnames";
+import { useRouter } from 'next/navigation';
+
+
 
 export default function SubscriptionPage() {
-
+    const router = useRouter()
     const [index, setIndex] = useState(0);
+
+    const subscriptions = [
+        
+      {
+          type :"Basic",
+          content: "Exclusive access for basic member",
+          price: "20000",
+          duration: "NGN / YEAR",
+          bgColor: "[#35318E]",
+          features: [
+              {
+              title:"Bidding",
+              contents :[
+                  "Bid up to N 10,000 daily", 
+                  "Bid up to 10 products daily"
+                  ]
+              },
+              {
+              title:"Benefit",
+              contents :[
+                  "Follow Multiple Auctions", 
+                  "Personalized Alert",
+                  "Saved Searches",
+                  "Watchlist"
+              ]
+              }
+          ]
+      },
+
+      {
+          type :"Standard",
+          content: "Exclusive access for standard member",
+          price: "50000",
+          duration: "NGN / YEAR",
+          bgColor: "[#092809]",
+          features: [
+              {
+              title:"Bidding",
+              contents :[
+                  "Bid up to N 50,000 daily", 
+                  "Bid up to 20 products daily"
+                  ]
+              },
+              {
+              title:"Benefit",
+              contents :[
+                  "All Basic Benefits", 
+                  "Priority Bid Alert",
+                  "Bidding Insights",
+              ]
+              }
+          ]
+      },
+
+      {
+          type :"Premium",
+          content: "Exclusive access for premium member",
+          price: "75000",
+          duration: "NGN / YEAR",
+          bgColor: "[#30136a]",
+          features: [
+              {
+              title:"Bidding",
+              contents :[
+                  "Bid up to N 200,000 daily", 
+                  "Bid up to 40 products daily"
+                  ]
+              },
+              {
+              title:"Benefit",
+              contents :[
+                  "All Basic and Standard Benefits", 
+                  "Exclusive Auctions",
+                  "Premium Badge",
+              ]
+              }
+          ]
+      }
+  ];
+
+    
+   
     const navigation = "rounded-lg p-2";
 
 
@@ -29,7 +114,7 @@ export default function SubscriptionPage() {
          />
         </button>
 
-        <SubscriptionCard index={index}/>
+        <SubscriptionCard index={index} subscriptions={subscriptions} />
 
         <button 
         className={classNames({

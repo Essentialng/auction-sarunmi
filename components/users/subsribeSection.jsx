@@ -1,9 +1,9 @@
-import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import Link from "next/link";
 import { FcCheckmark } from "react-icons/fc";
 import { TbHammer } from "react-icons/tb";
 import classNames from "classnames";
-
+import { TbCurrencyNaira } from "react-icons/tb";
+import PaystackButtonComponent from "./paystack";
 
 const FeatureList = ({ features }) => {
   return (
@@ -33,87 +33,7 @@ const FeatureList = ({ features }) => {
 
 
 
-export const SubscriptionCard = ({index}) => {
-
-    const subscriptions = [
-        
-        {
-            type :"Basic",
-            content: "Exclusive access for basic member",
-            price: "N 20,000",
-            duration: "NGN / YEAR",
-            bgColor: "[#35318E]",
-            features: [
-                {
-                title:"Bidding",
-                contents :[
-                    "Bid up to N 10,000 daily", 
-                    "Bid up to 10 products daily"
-                    ]
-                },
-                {
-                title:"Benefit",
-                contents :[
-                    "Follow Multiple Auctions", 
-                    "Personalized Alert",
-                    "Saved Searches",
-                    "Watchlist"
-                ]
-                }
-            ]
-        },
-
-        {
-            type :"Standard",
-            content: "Exclusive access for standard member",
-            price: "N 50,000",
-            duration: "NGN / YEAR",
-            bgColor: "[#092809]",
-            features: [
-                {
-                title:"Bidding",
-                contents :[
-                    "Bid up to N 50,000 daily", 
-                    "Bid up to 20 products daily"
-                    ]
-                },
-                {
-                title:"Benefit",
-                contents :[
-                    "All Basic Benefits", 
-                    "Priority Bid Alert",
-                    "Bidding Insights",
-                ]
-                }
-            ]
-        },
-
-        {
-            type :"Premium",
-            content: "Exclusive access for premium member",
-            price: "N 75,000",
-            duration: "NGN / YEAR",
-            bgColor: "[#30136a]",
-            features: [
-                {
-                title:"Bidding",
-                contents :[
-                    "Bid up to N 200,000 daily", 
-                    "Bid up to 40 products daily"
-                    ]
-                },
-                {
-                title:"Benefit",
-                contents :[
-                    "All Basic and Standard Benefits", 
-                    "Exclusive Auctions",
-                    "Premium Badge",
-                ]
-                }
-            ]
-        }
-    ];
-
+export const SubscriptionCard = ({index, subscriptions}) => {
 
   const activeSub = subscriptions[index];
 
@@ -137,7 +57,10 @@ export const SubscriptionCard = ({index}) => {
           <h4 className="text-[22px] font-bold">{activeSub.type}</h4>
           <p className="text-lg font-medium">{activeSub.content}</p>
           <div className="flex items-center gap-4 pt-4">
-            <p className="text-3xl font-bold text-orange-600 ">{activeSub.price}</p>
+            <div className="flex items-center text-orange-600 text-3xl font-bold  ">
+              <TbCurrencyNaira size={30}/>
+              <p>{Number(activeSub.price).toLocaleString()}</p>
+            </div>
             <small className="text-sm">{activeSub.duration}</small>
           </div>
         </div>
@@ -145,11 +68,16 @@ export const SubscriptionCard = ({index}) => {
           features={activeSub.features}
         />
       </div>
-      <Link href="/payment">
-        <button className="bg-orange-500 text-white font-semibold py-3 w-full rounded-lg hover:bg-orange-600">
+      <div className="relative">
+        <PaystackButtonComponent
+        price={Number(subscriptions[index].price)}
+        className={"absolute bg-transparent w-full h-12 "}
+        />
+        <button className="bg-orange-500 text-white font-semibold py-3 w-full rounded-lg hover:bg-orange-600"
+ >
           SUBSCRIBE
         </button>
-      </Link>
+      </div>
     </div>
   );
 };

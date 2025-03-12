@@ -5,9 +5,9 @@ import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
 import { RiErrorWarningLine } from "react-icons/ri";
 import classNames from "classnames";
-import dynamic from "next/dynamic";
+import PaystackButtonComponent from "./paystack";
 
-const PaystackButton = dynamic(() => import("react-paystack").then(module => module.PaystackButton), { ssr: false });
+
 export function PaymentOptions({ togglePayment, setTogglePayment }){
   const [isClient, setIsClient] = useState(false);
 
@@ -15,13 +15,13 @@ export function PaymentOptions({ togglePayment, setTogglePayment }){
     setIsClient(typeof window !== "undefined");
   }, []);
 
-  const publicKey = "pk_test_f0a7e900e3367840ca8ac7d6ddff3720f122ee28";
-  const paymentData = {
-    email: "webmasterjd@gmail.com",
-    amount: 500 * 100,
-    currency: "NGN",
-    reference: `ref-${Math.floor(Math.random() * 1000000000)}`,
-  };
+  // const publicKey = "pk_test_f0a7e900e3367840ca8ac7d6ddff3720f122ee28";
+  // const paymentData = {
+  //   email: "webmasterjd@gmail.com",
+  //   amount: 500 * 100,
+  //   currency: "NGN",
+  //   reference: `ref-${Math.floor(Math.random() * 1000000000)}`,
+  // };
 
   return (
     <div className="flex justify-center mb-12">
@@ -48,18 +48,13 @@ export function PaymentOptions({ togglePayment, setTogglePayment }){
             height={20}
             className={`${option.id == "payPal" && "rounded-xl shadow-md border"}`}
           />
-          {option.id == "payPal" && isClient && (
-            <PaystackButton
-              publicKey={publicKey}
-              email={paymentData.email}
-              amount={paymentData.amount}
-              currency={paymentData.currency}
+            <PaystackButtonComponent
+              price={5000}
               // reference={paymentData.reference}
               // onSuccess={handleSuccess}
               // onClose={handleClose}
               className="h-full w-full absolute top-0 right-0"
             />
-          )}
         </button>
       ))}
     </div>

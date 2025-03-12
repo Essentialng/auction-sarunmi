@@ -1,7 +1,17 @@
-import React from "react";
 import ProductUpload from "./ProductForm";
+import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
 
-const Page = ({product, id, handleClick}) => {
+
+const Page = ({product, id, handleClick, user}) => {
+  const router = useRouter()
+
+  useEffect(()=>{
+    if(user.subscriptionType == null ){
+      router.push("/subscribe")
+    }
+  },[]);
+
 
   return (
     <div className="p-8 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">

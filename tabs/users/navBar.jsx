@@ -75,7 +75,7 @@ const {user, getUser, categories, fetchCategory, auctions} = useStore()
 
     const nav_btn = "cursor-pointer hover:bg-[#FFB485] px-3 py-2 rounded-xl"
     return(
-        <div className="fixed top-0 right-0 w-full bg-[#35318E] py-4 xl:px-[4rem] px-[1rem] 
+        <div className="fixed top-0 right-0 w-full xl:bg-[#35318E] lg:bgblack py-4 lg:px-[4rem] px-[1rem] 
         flex flex-col gap-4 text-[16px] font-[500] overflow-visible z-50 "
         >
             <div className="flex justify-between items-center text-white ">
@@ -95,7 +95,7 @@ const {user, getUser, categories, fetchCategory, auctions} = useStore()
                 login={login}
                 dropLinks={dropLinks}
                 />
-                <div className="2xl:hidden xl:hidden">
+                <div className="lg:hidden">
                     <FaUserLarge size={25} color="white" onClick={()=>setActivate(!activate)}/>
                     {activate &&
                     <DropDown dropLinks={dropLinks}/>
@@ -107,7 +107,7 @@ const {user, getUser, categories, fetchCategory, auctions} = useStore()
              searchTerm={searchTerm}
              setSearchTerm={setSearchTerm}
              filteredAuctions={filteredAuctions}/>
-            <div className="text-white 2xl:flex xl:flex hidden justify-between">
+            <div className="text-white lg:flex hidden justify-between">
                 {menulink && 
                 <NavLink
                 menuContents={menuContents}

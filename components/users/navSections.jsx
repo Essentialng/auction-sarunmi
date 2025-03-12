@@ -18,7 +18,7 @@ export function Logo({setMenuToggle, setActivate}){
     return( 
     <div className="flex gap-1 items-center">
         <TiThMenu size={30} color="white"
-        className="xl:hidden"
+        className="lg:hidden"
         onClick={menuLink}
         />
         <Link className="cursor-pointer" href="/">
@@ -37,7 +37,7 @@ export function Search({ searchTerm, handleSearchChange, filteredAuctions, setFi
 
 
     return (
-        <div className="2xl:flex xl:flex hidden gap-2 w-1/4 relative z-50">
+        <div className="lg:flex hidden gap-2 w-1/4 relative z-50">
             <input
                 placeholder="Search auctions"
                 className="w-5/6 px-4 py-2 border-[#B1B1B1] rounded-md text-[12px] text-[#6C6C6C] 
@@ -73,7 +73,7 @@ export function Authentications({user, account, signUp, already, login, dropLink
     const [activate, setActivate] = useState(false);
 
     return(
-    <div className="relative 2xl:flex xl:flex hidden gap-4 text-center justify-center items-center min-w-1/6 max-w-2/7">
+    <div className="relative lg:flex hidden gap-4 text-center justify-center items-center min-w-1/6 max-w-2/7">
         {account && 
             <small className="font-bold text-[14px] w-full text-nowrap">Don’t  have an account?</small>
         }
@@ -133,7 +133,7 @@ export function MobileSearch({searchTerm, handleSearchChange, filteredAuctions, 
     }
 
     return(
-        <div className="w-full relative xl:hidden block">
+        <div className="w-full relative lg:hidden block">
             <div className="flex justify-center gap-3 items-center py-2 px-4 w-full bg-white rounded-2xl">
                 
                 <IoIosSearch size={30}/>

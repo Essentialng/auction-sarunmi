@@ -39,7 +39,8 @@ export function HeroDetails({ details, isLarge }) {
 
 export function HeroCard({ title, details }) {
   return (
-    <div className="bg-[#6B5EC1] bg-opacity-45 rounded-[20px] shadow-black-300 shadow-md w-full px-[1rem] py-[2rem] z-50 my-[5rem] flex flex-col gap-4">
+    <div className="bg-[#6B5EC1] bg-opacity-45 rounded-[20px] shadow-black-300 shadow-md 
+    w-full px-[1rem] py-[2rem] z-50 my-[2rem] flex flex-col gap-4">
       <p className="text-center text-[#FFB485] text-[20px]">{title}</p>
       <small className="text-[14px]">{details}</small>
     </div>
@@ -51,7 +52,8 @@ export function HeroButton({ link, button }) {
   return (
     <Link
       href={link}
-      className="text-left bg-[#EF6509] rounded-[10px] px-[2rem] py-[10px] items-center text-white w-1/2 cursor-pointer text-[16px] font-[500] flex justify-between hover:bg-[#35318E] hover:shadow-white shadow-md"
+      className="text-left bg-[#EF6509] rounded-[10px] px-[2rem] py-[10px] items-center text-white 
+      2xl:w-1/2 xl:2/3 lg:w-1/2 cursor-pointer text-[16px] font-[500] flex justify-between hover:bg-[#35318E] hover:shadow-white shadow-md"
     >
       <span>{button}</span>
       <FaArrowRight size={20} />

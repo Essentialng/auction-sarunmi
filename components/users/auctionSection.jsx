@@ -45,7 +45,7 @@ const AuctionTimer = ({ timeLeft, timeToStart }) => {
   return (
     <div
       className={classNames(
-        "2xl:w-1/3 xl:w-2/3 lg:w-1/3 text-center py-4 rounded-[10px] border font-[700] shadow-md",
+        "sm:w-1/3 w-2/3 text-center py-4 rounded-[10px] border font-[700] shadow-md",
         {
           "border-[#7BC27A]": !timeToStart && timeLeft !== "00:00:00:00",
           "border-[#989FA1]": timeLeft === "00:00:00:00",

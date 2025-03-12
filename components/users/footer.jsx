@@ -3,7 +3,6 @@ import { FaArrowRight } from "react-icons/fa6";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import FooterContact from "./footerContact";
 import FooterCard from "./footerCard";
 
 
@@ -21,7 +20,7 @@ export default function Footer(){
     return(
         <div className="flex flex-col gap-20 py-24 ">
            <FooterCard/>
-            <div className="flex flex-col gap-4 justify-center items-center lg:px-[4rem] px-[2rem]">
+            <div className="flex flex-col gap-4 justify-center items-center sm:px-[4rem] md:px-[2rem]">
                 <p className="text-[24px] font-[600] text-[#EF6509]">Our Other Services</p>
                 <div className="w-full lg:flex hidden justify-between">
                     {otherService.map((service, index)=>(

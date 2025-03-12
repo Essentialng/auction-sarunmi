@@ -104,7 +104,7 @@ export default function HeroSectionMobile(){
                         </div>
                     </div>
                     <div className=" relative text-left bg-[#EF6509] rounded-[10px] px-[2rem] py-[10px] items-center
-                     text-white w-4/5 cursor-pointer text-[12px] font-[500] flex justify-between
+                     text-white w-2/3 cursor-pointer text-[12px] font-[500] flex justify-between
                       hover:bg-[#35318E] hover:shadow-white shadow-md" >
                         <small>{hero.button}</small>
                         <FaArrowRight size={20}/>

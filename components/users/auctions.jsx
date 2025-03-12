@@ -32,8 +32,8 @@ export default function Auctions() {
     },
   ];
 
-  const header = "xl:text-[24px] text-[18px] font-[600]";
-  const small = "xl:text-[20px] text-[14px] font-[500] text-[#EF6509]";
+  const header = "sm:text-[24px] text-[18px] font-[600]";
+  const small = "sm:text-[20px] text-[14px] font-[500] text-[#EF6509]";
 
   return (
     <div className="lg:px-[4rem]  px-[2rem] py-24 bg-gray-100">

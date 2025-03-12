@@ -53,7 +53,7 @@ export function HeroButton({ link, button }) {
     <Link
       href={link}
       className="text-left bg-[#EF6509] rounded-[10px] px-[2rem] py-[10px] items-center text-white 
-      2xl:w-1/2 xl:2/3 lg:w-1/2 cursor-pointer text-[16px] font-[500] flex justify-between hover:bg-[#35318E] hover:shadow-white shadow-md"
+      w-1/2 sm:w-2/3  cursor-pointer text-[16px] font-[500] flex justify-between hover:bg-[#35318E] hover:shadow-white shadow-md"
     >
       <span>{button}</span>
       <FaArrowRight size={20} />

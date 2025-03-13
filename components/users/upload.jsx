@@ -4,7 +4,9 @@ import { useEffect } from "react";
 
 
 const Page = ({product, id, handleClick, user}) => {
-  const router = useRouter()
+  const router = useRouter();
+
+  
 
   useEffect(()=>{
     if(user.subscriptionType == null ){

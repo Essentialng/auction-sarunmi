@@ -69,6 +69,7 @@ model Item {
   model       Model    @relation(fields: [modelId],  references: [id])
   watchlist   Watchlist[]
   bids        Bid[]
+  notification Notification[]
 }
 
 model Field {
@@ -108,14 +109,18 @@ model Bid {
 }
 
 model Notification {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   userId      String
+  itemId      Int 
   message     String
-  type        String   
-  read        Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  user        User     @relation("notification", fields: [userId], references: [id])
+  type        String  
+  createdAt   DateTime  @default(now())
+  user        User      @relation("notification", fields: [userId], references: [id])
+  item        Item      @relation(fields: [itemId], references: [id])
+  readBy      String[]  @default([]) 
+  deletedBy   String[]  @default([]) 
 }
+
 
 model Admin {
   id          String   @id @default(uuid())

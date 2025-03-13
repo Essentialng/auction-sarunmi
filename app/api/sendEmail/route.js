@@ -1,9 +1,8 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
-import { codeCharacters } from '@/utils/methods';
 
 export async function POST(request) {
-  const { email, name } = await request.json();
+  const { email, name, code } = await request.json();
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -12,8 +11,6 @@ export async function POST(request) {
       pass: process.env.GMAIL_PASS,
     },
   });
-
-  const code = codeCharacters();
 
   const mailOptions = {
     from: process.env.GMAIL_USER,
@@ -44,7 +41,7 @@ export async function POST(request) {
 
   try {
     await transporter.sendMail(mailOptions);
-    return NextResponse.json({ verifyCode: { code } }, { status: 201 });
+    return NextResponse.json({ message: "Code sent succeffully" }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: `Failed to send email ${error}` }, { status: 500 });
   }

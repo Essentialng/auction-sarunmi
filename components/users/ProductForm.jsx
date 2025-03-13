@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { axiosInstance } from "@/package/axios";
 import { handleCloudinary } from "@/utils/cloudinary";
 import FormField from "./form";
-
+import NotificationHandler from "@/utils/notification";
 
 const ProductUpload = ({id, product, handleClick}) => {
 
@@ -96,6 +96,7 @@ const ProductUpload = ({id, product, handleClick}) => {
         images: prevValues.images.filter((_, i) => i !== index), 
       }));
     };
+
 
 
     const submitHandler = async (e) => {

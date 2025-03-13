@@ -12,10 +12,12 @@ import { Toast } from '@/package/alert';
 import States from '@/utils/states';
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
+import { codeCharacters } from '@/utils/methods';
 
 
 
 export default function SignUp() {
+  const code = codeCharacters()
   const [vendor, setVendor] = useState(true);
   const [status, setStatus] = useState(false);
   const [password, setPassword] = useState(false);
@@ -24,7 +26,7 @@ export default function SignUp() {
   const [resend, setResend] = useState(false)
   const [loadingResend, setLoadingResend] = useState(false)
   const [age, setAge] = useState(false)
-  const [verification, setVerification] = useState(null)
+  // const [verification, setVerification] = useState(code)
   const [show, setShow] = useState(false)
 
 
@@ -38,7 +40,8 @@ export default function SignUp() {
     btn2: "SUBSCRIBE NOW",
     link: "/login",
     link2: "/subscribe"
-  }
+  };
+
 
   const formik = useFormik({
     initialValues: {
@@ -74,8 +77,7 @@ export default function SignUp() {
       .required("Verify code is required")
       .min(6, "Verify code must be six characters")
       .test("is-correct-code", "The verification code is incorrect", (value) => {
-        // Assuming `verification` is the correct value for comparison
-        return value === verification.code;  // validation will pass when `code === verification`
+        return value === code;  
       }),
         }),
 
@@ -122,10 +124,9 @@ export default function SignUp() {
       
     const response = await axiosInstance.post("sendEmail", {
       name: formik.values.firstName,
-      email : formik.values.email
+      email : formik.values.email,
+      code : code
     });
-
-    const data = await response.data
 
     if(response.status == 201){
       
@@ -137,7 +138,6 @@ export default function SignUp() {
           setPassword(true)
         },
       });
-      setVerification(data.verifyCode)
     }
     
     }catch(error){

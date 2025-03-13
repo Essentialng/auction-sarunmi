@@ -1,31 +1,31 @@
 import { FaArrowRight } from "react-icons/fa6";
 import { calculateTimeLeft, calculateDays } from "@/utils/methods";
 import useStore from "@/app/store";
-import { useEffect } from "react";
-
+import { Rings } from "react-loading-icons";
 
 export function ProductImages({products, setActiveImage, activeImage}){
 
 
     return(
         <div className=" col-span-3 xl:grid xl:grid-cols-4 gap-16">
-          <div className="flex xl:flex-col items-center gap-4 space-y-4 w-full col-span-1">
+          <div className="grid xl:grid-flow-row grid-cols-1 items-center gap-4 space-y-4 w-full col-span-1">
+            {products?.images?.map((image, index) => (
+                activeImage !== image && (
+                <div
+                    key={index}
+                    className="col-span-1 relative flex border border-[#FF9354] rounded-2xl h-full w-full items-center justify-center cursor-pointer overflow-hidden"
+                    onClick={() => setActiveImage(image)}
+                >
+                    <img src={image} className="rounded-md object-cover h-32 w-32" alt="BMW front view" />
+                </div>
+                )
+                ))}
+            </div>
 
-            {products?.images?.map((image, index)=>(
-                (activeImage != image) &&(
-              <div
-              key={index}
-                className="flex border border-[#FF9354] rounded-2xl h-32 w-28 items-center cursor-pointer"
-                onClick={() => setActiveImage(image)}
-              >
-                <img src={image} className="rounded-md object-cover w-full h-auto" alt="BMW front view" />
-              </div>
-              )
-            ))}
-          </div>
 
-          <div className="w-full h-full col-span-3 p-6 flex justify-center items-center">
-              <img src={activeImage} height={50} width={50} className="rounded-md w-full object-cover h-auto" alt="BMW main image"/>
+
+          <div className="w-full col-span-3 p-6 flex justify-center items-center h-full">
+              <img src={activeImage} height={50} width={50} className="rounded-md w-full object-contain h-full" alt="BMW main image"/>
           </div>
         </div>
     )
@@ -63,13 +63,15 @@ export function ProductDescription({setProductVerification, descriptions}){
 }
 
 
-export function ProductAuction({products, bids, amount, handleChange, disableBtn,watchListHandler, bidHandler }){
+export function ProductAuction({products, bids, amount, handleChange, disableBtn,watchListHandler, bidHandler, bidLoading, watchListLoading }){
 
     const {user} = useStore();
 
   
-    const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false;  
+    const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false; 
+    const userProduct = user ? products?.userId == user?.id : false 
     const endTime = calculateTimeLeft(products.endTime)  
+    const timeStatus = endTime == "00:00:00:00" ? true : false;
 
     return(
     <>
@@ -106,7 +108,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         <input 
                         type="number" 
                         placeholder="Type amount" 
-                        disabled={endTime == "00:00:00:00"}
+                        disabled={timeStatus || !user || userProduct}
                         className="w-full px-4 py-4 rounded-md text-black text-center"
                         value={amount} // Bind the state value to the input field
                         onChange={handleChange}
@@ -114,23 +116,24 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                     </div>
                     <div className="flex justify-between w-full gap-8">
                         <button
-                            className={`border border-white py-3 rounded-md w-full ${isInWatchlist && "bg-gray-200"}`}
+                            className={`border border-white py-3 rounded-md w-full flex items-center justify-center ${isInWatchlist && "bg-gray-200"}`}
                             onClick={() => watchListHandler(products.id)}
-                            disabled={isInWatchlist || endTime}
+                            disabled={isInWatchlist || timeStatus || userProduct}
                         >
-                            Add to Watchlist
+                            {watchListLoading ? <Rings width={30} height={30}/> : "Add to Watchlist"}
                         </button>
                         
                         <button
                             className={
-                                ` ${disableBtn || endTime ? 
+                                ` ${disableBtn || timeStatus || userProduct ? 
                                     "bg-gray-300 hover:bg-gray-300" : 
                                     "bg-[#EF6509] hover:bg-[#e25d08]"} 
-                                    py-3 rounded-md w-full`}
-                            onClick={() => bidHandler(products.id)}
-                            disabled={disableBtn || endTime}
+                                    py-3 rounded-md w-full flex items-center justify-center`}
+                            onClick={() => bidHandler(products.id, products.name)}
+                            disabled={disableBtn || timeStatus || userProduct || bidLoading}
                         >
-                            Bid
+                            
+                           {bidLoading ? <Rings width={30} height={30}/> : "Bid"}
                         </button>
                         </div>
 

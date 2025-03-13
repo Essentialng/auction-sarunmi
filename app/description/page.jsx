@@ -8,6 +8,7 @@ import useStore from "../store";
 import { Toast } from "@/package/alert";
 import { ProductImages, ProductDescription, ProductAuction } from "@/components/users/descriptionSections";
 import { AuctionItems } from "@/components/users/auction_items";
+import NotificationHandler from "@/utils/notification";
 
 
 export default function Page(){
@@ -19,7 +20,8 @@ export default function Page(){
   const [disableBtn, setDisableBtn] = useState(true);
   const [bids, setBids] = useState(null)
   const [activeImage, setActiveImage] = useState("");
-  const [similar, setSimilar] = useState([]);
+  const [bidLoading, setBidLoading] = useState(false);
+  const [watchListLoading, setWatchListLoading] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -28,6 +30,7 @@ export default function Page(){
   };
 
   const watchListHandler= async(itemId)=>{
+    setWatchListLoading(true);
     try{
       const response = await axiosInstance.post(`watchlist`,
         {userId : user.id, itemId : itemId}
@@ -45,28 +48,50 @@ export default function Page(){
         icon: "error",
         title: errorMessage.message,
       });
+    }finally{
+      setWatchListLoading(true);
     }
   }
 
 
-  const bidHandler= async(itemId)=>{
+  const bidHandler= async(itemId, name)=>{
+    setBidLoading(true);
+
+    const endpoint = "/bid";
+    const body = {
+      userId: user.id,
+      itemId: itemId,
+      amount: Number(amount)
+    }
+
     try{
-      const response = await axiosInstance.post(`bid`,
-        {userId : user.id, itemId : itemId, amount: Number(amount)}
-      );
+      const response = await axiosInstance.post(endpoint, body);
       if(response.status == 201){
         Toast.fire({
             icon: "success",
-              title:toLocaleString(response.data.message) ,
+              title:response.data.message ,
           });
-      }
-    }catch(error){
-      const errorMessage = error.response.data
 
+          const message = `Another user has outbid you on <strong>${name}</strong>. Place a higher bid now to stay in the lead!`;
+          NotificationHandler({
+            userId : user.id, 
+            itemId : itemId,
+            message : message, 
+            type : "bid" 
+          })
+      };
+
+    }catch(error){
+      console.log(error)
+      const errorMessage = error.response.data
+      
       Toast.fire({
         icon: "error",
         title: errorMessage.message,
       });
+    }finally{
+      setBidLoading(false);
+      fetchBid();
     }
   }
   
@@ -142,6 +167,8 @@ export default function Page(){
     disableBtn={disableBtn}
     bidHandler={bidHandler}
     watchListHandler={watchListHandler}
+    bidLoading={bidLoading}
+    watchListLoading={watchListLoading}
     />
     <div className="flex flex-col gap-12  py-12">
       <p className="text-[#EF6509] text-[24px]  font-semibold">Similar Auctions</p>

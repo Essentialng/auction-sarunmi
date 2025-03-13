@@ -1,39 +1,60 @@
+"use client";
+import { axiosInstance } from "@/package/axios";
+import useStore from "@/app/store";
+import { useState, useEffect } from "react";
+import { BiCheckDouble } from "react-icons/bi";
+import { dateFormat, timeFormat } from "@/utils/methods";
+
+
+
 export default function Notification(){
+  const {user} = useStore();
+  const [notifications, setNotifications] = useState([]);
+
+  const getNotifications= async()=>{
+
+    try{
+      const response =  await axiosInstance.get(`/notification?userId=${user.id}`);
+      const data = await response.data;
+      if(response.status == 200){
+        setNotifications(data.notifications);
+      }
+    }catch(error){
+      console.log(error)
+    }
+  };
+
+  useEffect(()=>{
+    getNotifications();
+  },[]);
+
+
+  const MessageComponent = (message) => {
+    return (
+      <p dangerouslySetInnerHTML={{ __html: message }} />
+    );
+  };
+
     return(
         <main className=" bg-white flex flex-col gap-8 h-full">
           <section className="mb-4 px-6 py-6 bg-[#FFFFFF] h-2/3 shadow-xl border rounded-2xl overflow-hidden">
             <h2 className="text-2xl font-bold pb-2">Notification</h2>
             <hr className="outline-slate-400 border-y-2"/>
-            <div className=" rounded-lg py-4 h-full">
+            <div className=" rounded-lg py-4 h-full overflow-y-scroll">
               <ul className="space-y-6 h-full overflow-y-scroll">
-                <li className="flex justify-between items-center">
+                {notifications?.map((notification, index)=>(
+                <li className="flex justify-between items-center cursor-pointer hover:bg-slate-100 p-2">
                   <div className="flex items-center space-x-2">
                     <span>🔔</span>
-                    <p>The auction has ended, and you've won <strong>Bungalow</strong>! Get ready to claim it.</p>
+                    {/* <BiCheckDouble color="green"/> */}
+                    <p>{MessageComponent(notification?.message)}</p>
                   </div>
-                  <span>22nd May 2024</span>
-                </li>
-                <li className="flex justify-between items-center">
-                  <div className="flex items-center space-x-2">
-                    <span>🔔</span>
-                    <p>Another user has outbid you on <strong>vehicle BMW</strong>. Place a higher bid now to stay in the lead!</p>
+                  <div className="flex flex-col items-center text-sm">
+                    <span>{dateFormat(notification.createdAt)}</span>
+                    <span className="text-xs text-gray-400">{timeFormat(notification.createdAt)}</span>
                   </div>
-                  <span>19th May 2024</span>
                 </li>
-                <li className="flex justify-between items-center">
-                  <div className="flex items-center space-x-2">
-                    <span>🔔</span>
-                    <p>Congratulations! Your product has sold out to the highest bidder.</p>
-                  </div>
-                  <span>17th May 2024</span>
-                </li>
-                <li className="flex justify-between items-center">
-                  <div className="flex items-center space-x-2">
-                    <span>🔔</span>
-                    <p>Thank you for verifying your account.</p>
-                  </div>
-                  <span>15th May 2024</span>
-                </li>
+                ))}
               </ul>
             </div>
           </section>

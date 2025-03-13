@@ -56,6 +56,7 @@ export function BidDetails({
 
 
 export function Details({ name, description }) {
+
     return (
         <div className="col-span-3 border shadow-xl flex flex-col gap-3 p-6 text-center rounded-xl font-semibold text-[14px]">
             <h2 className="text-[24px]">Details</h2>
@@ -63,12 +64,14 @@ export function Details({ name, description }) {
                 <small className="font-normal">Name:</small>
                 <small>{name}</small>
             </div>
-            {Object.entries(description)?.map(([key, value], index) => (
-                <div key={index} className="flex justify-between gap-12 items-center">
+            {description && Object.keys(description).length > 0 && (
+                Object.entries(description).map(([key, value], index) => (
+                    <div key={index} className="flex justify-between gap-12 items-center">
                     <small className="font-normal">{formatText(key)}:</small>
-                    <small className='truncate'>{key === "ProofOfOwnership" ? "YES" : value}</small>
-                </div>
-            ))}
+                    <small className="truncate">{key === "ProofOfOwnership" ? "YES" : value}</small>
+                    </div>
+                ))
+            )}
             <span className="pt-8 text-[16px] text-[#FF9354] cursor-pointer">See All</span>
         </div>
     );

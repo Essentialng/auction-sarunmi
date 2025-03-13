@@ -62,6 +62,29 @@ export const getTodayInLocalFormat = () => {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
+
+
+export const dateFormat = (timestamp)=>{
+  const date = new Date(timestamp);
+  const formattedDate = date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+  return formattedDate
+};
+
+export const timeFormat = (timestamp)=>  {
+  const date = new Date(timestamp);
+  const formattedTime = date.toLocaleTimeString('en-GB', { 
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+  return formattedTime
+};
+
+
 export const highestAmount =(bids)=>{ 
   return  bids.reduce((max, bid) => {
     return bid.amount > max ? bid.amount : max;

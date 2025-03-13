@@ -11,9 +11,6 @@ export default async function NotificationHandler({message, userId, itemId, type
 
     try{
         const response = await axiosInstance.post(endpoint, body);
-        if(response.status == 201){
-            console.log("perfect")
-        }
     }catch(error){
         console.log(error);
     }

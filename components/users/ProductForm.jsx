@@ -186,6 +186,7 @@ const ProductUpload = ({id, product, handleClick}) => {
       handleClick("Others", event.target.value)
     }
 
+
   return (
     
       <FormField

@@ -22,7 +22,7 @@ export default function SliderProduct({ products, bidProducts }) {
     router.push('/description');  
   };
 
-  const item = products?.some(product=>product.item)
+  const item = products?.some(product=>product?.bid)
 
   return (
     <div className="flex flex-col gap-8 py-4 px-[1rem]">
@@ -36,13 +36,13 @@ export default function SliderProduct({ products, bidProducts }) {
       >
         {products?.map((product, index) => {
 
-          const timeLeft = !item ? calculateTimeLeft(product?.startTime, product?.endTime) : calculateTimeLeft(product?.item?.startTime, product?.item?.endTime)
-          const auctionDuration = !item ? calculateDays(product?.startTime, product?.endTime) : calculateDays(product?.item?.startTime, product?.item?.endTime)
-          const status = !item ? product?.status : product?.item?.status
-          const image = !item ? product?.images[0] : product?.item?.images[0]
-          const name = !item ? product?.name : product?.item?.name
-          const description = !item ? product?.details : product?.item?.details
-          const yourBid = !item ? product?.price?.toLocaleString() : product?.item?.price?.toLocaleString()
+          const timeLeft = item ? calculateTimeLeft(product?.bid?.item?.startTime, product?.bid?.item?.endTime) : calculateTimeLeft(product?.startTime, product?.endTime)
+          const auctionDuration = item ? calculateDays(product?.bid?.item?.startTime, product?.bid?.item?.endTime) : calculateDays(product?.startTime, product?.endTime)
+          const status = item ? product?.bid?.item?.status : product?.status
+          const image = item ? product?.bid?.item?.images[0] : product?.images[0]
+          const name = item ? product?.bid?.item?.name : product?.name
+          const description = item ? product?.bid?.item?.details : product?.details
+          const yourBid = item ? product?.bid?.item?.price?.toLocaleString() : product?.price?.toLocaleString()
           const currentBid = product?.highestBid?.amount?.toLocaleString() 
 
           return(

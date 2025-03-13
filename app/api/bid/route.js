@@ -17,19 +17,24 @@ export async function GET(request) {
         return NextResponse.json({ success: false, message: "You are not participating in any bids", status: 404 });
       }
       
-      const userBids = await Promise.all(
+      const bidItems = await Promise.all(
         bids.map(async (bid) => {
           const highestBid = await prisma.bid.findFirst({
             where: { itemId: bid.itemId },
             orderBy: { amount: 'desc' },
           });
 
+
           return {
-            ...bid,
-            highestBid,  // Attach the highest bid to each user bid object
+            bid,
+            highestBid,  
           };
         })
       );
+
+      const filteredBids = bidItems.filter(item => item.bid.amount === item.highestBid.amount);
+
+      const userBids = filteredBids
 
       return NextResponse.json({ success: true, userBids }, { status: 200 });
     }
@@ -38,7 +43,7 @@ export async function GET(request) {
     if (itemId) {
       const bids = await prisma.bid.findMany({
         where: { itemId },
-        include: { item: true }, // This will include item details for each bid
+        include: { item: true }, 
       });
 
       if (bids.length === 0) {
@@ -75,7 +80,7 @@ export async function POST(request) {
         },
       });
   
-      return NextResponse.json({ success: true, message: `${amount} is successfully added to bid:`, bid: newBid }, { status: 201 });
+      return NextResponse.json({ success: true, message: `${toLocaleString(amount)} is successfully added to bid:`, bid: newBid }, { status: 201 });
     } catch (error) {
       return NextResponse.json(
         { success: false, message: `Failed to create bid: ${error.message}` },
@@ -83,4 +88,25 @@ export async function POST(request) {
       );
     }
   }
+  
+
+  export async function DELETE(request) {
+    try {
+      const { id } = await request.json();
+  
+      const deletedBid = await prisma.bid.delete({
+        where: {
+          id,
+        },
+      });
+  
+      return NextResponse.json({ success: true, message: `Bid deleted successfully.` }, { status: 201 });
+    } catch (error) {
+      return NextResponse.json(
+        { success: false, message: `Failed to delete bid: ${error.message}` },
+        { status: 500 }
+      );
+    }
+  }
+  
   

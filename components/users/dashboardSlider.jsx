@@ -79,7 +79,7 @@ export default function SliderProduct({ products, bidProducts }) {
           
           {(isOpen !== null && bidProducts) &&
             <BiddersList
-            bids ={product.bids}
+            bids ={products[isOpen].bids}
             setIsOpen={setIsOpen}                />
           }
 

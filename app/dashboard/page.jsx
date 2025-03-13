@@ -85,7 +85,7 @@ export default function Dashboard(){
                 <AuctionItems auctions={watchList.items}/>
             </div>
               }
-            {bidData == 0 && watchList == 0 &&
+            {(bidData?.length == 0 || !bidData) && (watchList?.length == 0 || !watchList) &&
             <NoParticipation/>
             }
         </div>

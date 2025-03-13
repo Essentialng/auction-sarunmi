@@ -1,6 +1,8 @@
 import PopUp from "./signup-pop";
 import { Rings } from 'react-loading-icons';
 import SelectStateLGA from "./location";
+import useStore from "@/app/store";
+
 export default function FormField({
     submitHandler,
     formValues,
@@ -20,11 +22,11 @@ export default function FormField({
     categories,
     setFormValues
 }){
-
+const {user} = useStore()
     const input_style = "mt-1 p-2 border border-gray-300 rounded w-full bg-[#F4FDFF]";
     const label_style = "block text-gray-700 text-[14px]";
-    
-      return (
+
+    return (
         
           <form
           onSubmit={submitHandler} 

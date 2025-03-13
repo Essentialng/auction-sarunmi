@@ -17,7 +17,7 @@ import { codeCharacters } from '@/utils/methods';
 
 
 export default function SignUp() {
-  const code = codeCharacters()
+   
   const [vendor, setVendor] = useState(true);
   const [status, setStatus] = useState(false);
   const [password, setPassword] = useState(false);
@@ -26,7 +26,7 @@ export default function SignUp() {
   const [resend, setResend] = useState(false)
   const [loadingResend, setLoadingResend] = useState(false)
   const [age, setAge] = useState(false)
-  // const [verification, setVerification] = useState(code)
+  const [code, setCode] = useState("")
   const [show, setShow] = useState(false)
 
 
@@ -77,7 +77,7 @@ export default function SignUp() {
       .required("Verify code is required")
       .min(6, "Verify code must be six characters")
       .test("is-correct-code", "The verification code is incorrect", (value) => {
-        return value === code;  
+        return value == code;  
       }),
         }),
 
@@ -119,13 +119,15 @@ export default function SignUp() {
 
   
   const sendEmail =async ()=>{
-    setLoading(true)
+    setLoading(true);
+    const verifyCode = codeCharacters();
+    setCode(verifyCode)
     try{
       
     const response = await axiosInstance.post("sendEmail", {
       name: formik.values.firstName,
       email : formik.values.email,
-      code : code
+      code : verifyCode
     });
 
     if(response.status == 201){

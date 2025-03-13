@@ -49,7 +49,7 @@ export default function Page(){
         title: errorMessage.message,
       });
     }finally{
-      setWatchListLoading(true);
+      setWatchListLoading(false);
     }
   }
 

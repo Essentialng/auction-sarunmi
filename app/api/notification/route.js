@@ -1,22 +1,49 @@
 import prisma from '@/lib/global_client';
 import { NextResponse } from 'next/server';
 
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
 
-    const notifications = await prisma.notification.findMany({
+    const userBids = await prisma.bid.findMany({
       where: {
-        NOT: { userId: userId }
-      }
+        userId: userId,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
 
-    return NextResponse.json({ message: 'Notifications retrieved successfully', notifications }, { status: 200 });
+    if (userBids.length === 0) {
+      return NextResponse.json({ message: 'No bids found for the user', notifications: [] }, { status: 200 });
+    }
+
+    const initialBidDate = userBids[0].createdAt;
+
+    const notificationItems = await prisma.notification.findMany({
+      where: {
+        NOT: { userId: userId },
+        createdAt: {
+          gte: initialBidDate,
+        },
+      },
+      include: {
+        item: true,
+      },
+    });
+
+    const filteredNotifications = notificationItems.filter(
+      (notification) => notification.item?.userId !== userId && notification.type === "bid"
+    );
+
+    return NextResponse.json({ message: 'Notifications retrieved successfully', notifications: filteredNotifications }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: `Internal server error: ${error.message}` }, { status: 500 });
   }
 }
+
 
 
 export async function POST(request) {

@@ -71,7 +71,6 @@ export async function GET(request) {
 export async function POST(request) {
     try {
       const { userId, itemId, amount } = await request.json();
-  
       const newBid = await prisma.bid.create({
         data: {
           userId,
@@ -80,7 +79,7 @@ export async function POST(request) {
         },
       });
   
-      return NextResponse.json({ success: true, message: `${toLocaleString(amount)} is successfully added to bid:`, bid: newBid }, { status: 201 });
+      return NextResponse.json({ success: true, message: ` successfully added to bid:`, bid: newBid }, { status: 201 });
     } catch (error) {
       return NextResponse.json(
         { success: false, message: `Failed to create bid: ${error.message}` },

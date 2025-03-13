@@ -12,7 +12,6 @@ export default function Notification(){
   const [notifications, setNotifications] = useState([]);
 
   const getNotifications= async()=>{
-
     try{
       const response =  await axiosInstance.get(`/notification?userId=${user.id}`);
       const data = await response.data;

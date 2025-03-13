@@ -1,5 +1,5 @@
 import { FaArrowRight } from "react-icons/fa6";
-import { calculateTimeLeft, calculateDays } from "@/utils/methods";
+import { calculateTimeLeft, calculateDays, calculateTimeToStart } from "@/utils/methods";
 import useStore from "@/app/store";
 import { Rings } from "react-loading-icons";
 
@@ -70,7 +70,8 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
   
     const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false; 
     const userProduct = user ? products?.userId == user?.id : false 
-    const endTime = calculateTimeLeft(products.endTime)  
+    const endTime = calculateTimeLeft(products.endTime) 
+    const toStart = calculateTimeToStart(products.startTime) 
     const timeStatus = endTime == "00:00:00:00" ? true : false;
 
     return(
@@ -108,7 +109,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         <input 
                         type="number" 
                         placeholder="Type amount" 
-                        disabled={timeStatus || !user || userProduct}
+                        disabled={(timeStatus && !toStart) || !user || userProduct}
                         className="w-full px-4 py-4 rounded-md text-black text-center"
                         value={amount} // Bind the state value to the input field
                         onChange={handleChange}
@@ -118,19 +119,19 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         <button
                             className={`border border-white py-3 rounded-md w-full flex items-center justify-center ${isInWatchlist && "bg-gray-200"}`}
                             onClick={() => watchListHandler(products.id)}
-                            disabled={isInWatchlist || timeStatus || userProduct}
+                            disabled={isInWatchlist || (timeStatus && !toStart) || userProduct}
                         >
                             {watchListLoading ? <Rings width={30} height={30}/> : "Add to Watchlist"}
                         </button>
                         
                         <button
                             className={
-                                ` ${disableBtn || timeStatus || userProduct ? 
+                                ` ${disableBtn || (timeStatus && !toStart) || userProduct ? 
                                     "bg-gray-300 hover:bg-gray-300" : 
                                     "bg-[#EF6509] hover:bg-[#e25d08]"} 
                                     py-3 rounded-md w-full flex items-center justify-center`}
                             onClick={() => bidHandler(products.id, products.name)}
-                            disabled={disableBtn || timeStatus || userProduct || bidLoading}
+                            disabled={disableBtn || (timeStatus && !toStart) || userProduct || bidLoading}
                         >
                             
                            {bidLoading ? <Rings width={30} height={30}/> : "Bid"}

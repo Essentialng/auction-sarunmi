@@ -8,6 +8,8 @@ import classNames from "classnames";
 import { IoIosArrowForward } from "react-icons/io";
 import DropDown from "./userProfile";
 import { useState } from "react";
+import { IoIosClose } from "react-icons/io";
+
 
 export function Logo({setMenuToggle, setActivate}){
 
@@ -48,8 +50,11 @@ export function Search({ searchTerm, handleSearchChange, filteredAuctions, setFi
             />
             <span className=" rounded-lg bg-[#EF6509] px-4 py-2 cursor-pointer">Search</span>
             {searchTerm.length > 0 && filteredAuctions.length > 0 && (
-            <div className="w-full absolute bg-white border py-8 top-12 rounded-xl shadow-lg text-[#6C6C6C] z-50">
-            
+            <div className="w-full max-h-96 overflow-y-scroll absolute bg-white border py-8 top-12 rounded-xl shadow-lg text-[#6C6C6C] z-50">
+                <div className="absolute top-2 right-4 hover:text-red-600">
+                    <IoIosClose
+                    onClick={clearSearch}/>
+                </div>
                 <ul className="search-preview flex flex-col">
                     {filteredAuctions.map(auction => (
                         <Link

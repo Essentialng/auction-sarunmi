@@ -62,7 +62,7 @@ const AuctionTimer = ({ timeLeft, timeToStart }) => {
 
 const AuctionImage = ({ src }) => (
   <div className="relative">
-    <Image src={src} width={260} height={170} className="h-48" alt="Auction Image" />
+    <Image src={src} width={260} height={190} className="h-40" alt="Auction Image" />
   </div>
 );
 
@@ -99,9 +99,9 @@ const AuctionStatus = ({ timeLeft, timeToStart }) => {
 
 const AuctionDetails = ({ type, description, price }) => (
   <div className="flex flex-col gap-8">
-    <div>
-      <h4 className="text-[16px] font-[700]">{type}</h4>
-      <small className="text-[14px] font-[400]">
+    <div className="h-12 overflow-clip">
+      {/* <h4 className="text-[16px] font-[700]">{type}</h4> */}
+      <small className="text-[14px] font-[400] ">
         {description?.length > 50 ? `${description.substring(0, 70)}...` : description}
       </small>
     </div>

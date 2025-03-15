@@ -16,14 +16,14 @@ export const SideLink = ({ navBtn, toggle, setToggle, type, product, handleClick
         Profile
       </button>
 
-      {type !== "bidder" && (
+      {/* {type !== "bidder" && (
         <button 
           className={`${navBtn} ${toggle == "revenue" && "text-orange-500"}`}
           onClick={() => setToggle("revenue")}
         >
           My Revenue
         </button>
-      )}
+      )} */}
 
       <button 
         className={`${navBtn} ${toggle == "notification" && "text-orange-500"}`}

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import classNames from "classnames";
+import { axiosInstance } from "@/package/axios";
+import useStore from "@/app/store";
+import { dateFormat } from "@/utils/methods";
 
 
 const History = () => {
+  const {user} = useStore();
   const [activeTab, setActiveTab] = useState(0);
-
+  const [historyData, setHistoryData] = useState([]);
   const tabs = ["Bid won", "Bid lost", "Product sold"];
   const tableHeaders = ["S/N", "Product Name", "Price", "Date", "Delivery"];
 
@@ -13,6 +17,24 @@ const History = () => {
     setActiveTab(tab);
   };
 
+  const HistoryHandler = async()=>{
+    const body ={userId:user?.id}
+    try{
+      const response = await axiosInstance.post("/history", body);
+      const data = await response.data;
+      if(response.status == 200){
+        setHistoryData(data)
+      }
+    }catch(error){
+      console.log(error);
+    }
+  };
+
+  useEffect(()=>{
+    HistoryHandler();
+  },[])
+
+ 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">History</h2>
@@ -54,38 +76,27 @@ const History = () => {
             ))}
         </thead>
         <tbody>
-          {activeTab === 0 && (
+            {historyData[activeTab]?.length > 0 && 
             <>
+            {historyData[activeTab]?.map((item, index) => (
               <tr className="border-b text-center text-[#1E2420]">
-                <td className="py-2 px-4">1</td>
-                <td className="py-2 px-4">Camry</td>
-                <td className="py-2 px-4">N 3,500,000.00</td>
-                <td className="py-2 px-4">16th May 2024</td>
+                <td className="py-2 px-4">{index + 1}</td>
+                <td className="py-2 px-4">{item?.item?.name}</td>
+                <td className="py-2 px-4">N {item?.soldPrice.toLocaleString()}</td>
+                <td className="py-2 px-4">{dateFormat(item?.soldAt)}</td>
                 <td className="py-2 px-4">Delivered</td>
               </tr>
-              <tr className="border-b text-center text-[#1E2420]">
-                <td className="py-2 px-4">2</td>
-                <td className="py-2 px-4">House</td>
-                <td className="py-2 px-4">N 7,250,000.00</td>
-                <td className="py-2 px-4">9th May 2024</td>
-                <td className="py-2 px-4">Delivered</td>
-              </tr>
+            ))}
             </>
-          )}
-          {activeTab === 1 && (
+            }
+          {historyData[activeTab]?.length < 1 && (
             <tr>
               <td className="py-2 px-4" colSpan="5">
-                No bids lost.
+                No histroy data.
               </td>
             </tr>
           )}
-          {activeTab === 2 && (
-            <tr>
-              <td className="py-2 px-4" colSpan="5">
-                No products sold.
-              </td>
-            </tr>
-          )}
+          
         </tbody>
       </table>
     </div>

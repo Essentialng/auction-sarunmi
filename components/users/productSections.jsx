@@ -50,7 +50,7 @@ export function ProductNav({page, category, statesData, data, productsFiter, loc
                 xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
                 >
                     <select 
-                    className={"flex gap-2 items-center bg-[#35318E] text-lg border-none outline-none"}
+                    className={"flex gap-2 items-center bg-[#35318E] 2xl:text-lg xl:text-md border-none outline-none"}
                     onChange={(e) => productsFiter(e.target.value)}
                     >
                         {category?.map((value, index)=>(

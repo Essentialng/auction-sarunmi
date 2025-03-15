@@ -25,8 +25,8 @@ const Hub = () => {
 
   
   return (
-    <div className="min-h-screen flex flex-col lg:px-24 mt-40">
-      <div className="lg:grid grid-cols-5 gap-12">
+    <div className="min-h-screen flex flex-col 2xl:px-24 px-12 mt-40">
+      <div className="lg:grid grid-cols-5 2xl:gap-12 xl:gap-4">
 
         <SideBard 
         setToggle={setToggle} 

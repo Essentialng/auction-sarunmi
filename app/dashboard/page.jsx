@@ -51,7 +51,7 @@ export default function Dashboard(){
 
     
     return(
-        <div className="xl:px-24 px-4 py-44 flex flex-col gap-44">
+        <div className="2xl:px-16 xl:px-12 px-2 py-44 flex flex-col gap-44">
            
            {userProducts?.length != 0 &&
             <div className="flex flex-col gap-12">
@@ -85,7 +85,11 @@ export default function Dashboard(){
                 <AuctionItems auctions={watchList.items}/>
             </div>
               }
-            {(bidData?.length == 0 || !bidData) && (watchList?.length == 0 || !watchList) &&
+            {(
+                (bidData?.length == 0 || !bidData)
+                 && (watchList?.length == 0 || !watchList)
+                  && (userProducts?.length == 0 || !userProducts))
+                   &&
             <NoParticipation/>
             }
         </div>

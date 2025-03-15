@@ -35,17 +35,16 @@ export default function Notification(){
   };
 
     return(
-        <main className=" bg-white flex flex-col gap-8 h-full">
+        <main className=" bg-white flex flex-col gap-8 h-full sm:px-0 px-4 sm:py-0 py-8">
           <section className="mb-4 px-6 py-6 bg-[#FFFFFF] h-2/3 shadow-xl border rounded-2xl overflow-hidden">
             <h2 className="text-2xl font-bold pb-2">Notification</h2>
             <hr className="outline-slate-400 border-y-2"/>
             <div className=" rounded-lg py-4 h-full overflow-y-scroll">
               <ul className="space-y-6 h-full overflow-y-scroll">
                 {notifications?.map((notification, index)=>(
-                <li className="flex justify-between items-center cursor-pointer hover:bg-slate-100 p-2">
+                <li className="flex justify-between items-center sm:text-[16px] text-[12px] cursor-pointer hover:bg-slate-100 p-2">
                   <div className="flex items-center space-x-2">
                     <span>🔔</span>
-                    {/* <BiCheckDouble color="green"/> */}
                     <p>{MessageComponent(notification?.message)}</p>
                   </div>
                   <div className="flex flex-col items-center text-sm">

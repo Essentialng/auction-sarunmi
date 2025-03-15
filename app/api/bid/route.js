@@ -9,8 +9,14 @@ export async function GET(request) {
 
     if (userId) {
       const bids = await prisma.bid.findMany({
-        where: { userId },
+        where: { 
+          userId,
+          status: {
+            not: "accepted", 
+          },
+         },
         include: { item: true }, 
+      
       });
 
       if (bids.length === 0) {
@@ -69,24 +75,49 @@ export async function GET(request) {
   
 
 export async function POST(request) {
-    try {
-      const { userId, itemId, amount } = await request.json();
-      const newBid = await prisma.bid.create({
+  try {
+    const { userId, itemId, amount } = await request.json();
+
+    // Check if the bid already exists
+    const existingBid = await prisma.bid.findFirst({
+      where: {
+        userId,
+        itemId,
+      },
+    });
+
+    let bid;
+
+    if (existingBid) {
+      bid = await prisma.bid.update({
+        where: { id: existingBid.id },
+        data: {
+          amount,
+          updatedAt: new Date(),
+        },
+      });
+    } else {
+      bid = await prisma.bid.create({
         data: {
           userId,
           itemId,
           amount,
         },
       });
-  
-      return NextResponse.json({ success: true, message: ` successfully added to bid:`, bid: newBid }, { status: 201 });
-    } catch (error) {
-      return NextResponse.json(
-        { success: false, message: `Failed to create bid: ${error.message}` },
-        { status: 500 }
-      );
     }
+
+    return NextResponse.json(
+      { success: true, message: existingBid ? "Bid updated successfully" : "Bid created successfully", bid },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: `Failed to process bid: ${error.message}` },
+      { status: 500 }
+    );
   }
+}
+
   
 
   export async function DELETE(request) {

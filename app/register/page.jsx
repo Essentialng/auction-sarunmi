@@ -192,7 +192,7 @@ export default function SignUp() {
             </p>
           </div>
 
-          <div className="flex lg:mx-60 justify-between bg-[#6B5EC1] rounded-md p-4 text-[14px] text-white font-normal">
+          <div className="flex sm:w-1/2 w-4/5 justify-between items-center mx-auto bg-[#6B5EC1] rounded-md p-4 text-[14px] text-white font-normal">
             <div className="flex gap-3 items-center">
               <input type="radio" checked={vendor}  name="type" value="vendor" className='w-6 h-6' onChange={formik.handleChange} onClick={()=>{setVendor(true)}} />
               <div className="flex flex-col gap-1 ">

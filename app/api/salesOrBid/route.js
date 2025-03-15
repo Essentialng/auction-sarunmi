@@ -16,18 +16,19 @@ export async function GET(request) {
     const itemsWithHighestBids = await prisma.item.findMany({
       where: {
         userId,
-        bids: { some: {} }, 
+        status: { not: "sold" }, // Exclude items with "sold" status
+        bids: { some: {} },
       },
       include: {
         bids: {
           orderBy: { amount: "desc" },
-          take: 1, 
+          take: 1,
           select: {
             id: true,
             amount: true,
             userId: true,
             createdAt: true,
-            user: { 
+            user: {
               select: {
                 firstName: true,
                 lastName: true,

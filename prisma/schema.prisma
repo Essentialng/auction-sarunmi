@@ -21,7 +21,7 @@ model User {
   type                String
   cashBalance         Float     @default(0.00)
   subscriptionType    String?
-  // orders            Order[]    @relation("UserOrders")
+  itemSold            ItemSold[]
   notifications     Notification[] @relation("notification") 
   lastLogin           DateTime?
   createdAt           DateTime  @default(now())
@@ -68,9 +68,11 @@ model Item {
   updatedAt   DateTime    @updatedAt
   model       Model    @relation(fields: [modelId],  references: [id])
   watchlist   Watchlist[]
+  itemSold    ItemSold[]
   bids        Bid[]
   notification Notification[]
 }
+
 
 model Field {
   id          Int         @id @default(autoincrement())
@@ -105,7 +107,21 @@ model Bid {
   updatedAt     DateTime @updatedAt
   user          User     @relation("UserBids", fields: [userId], references: [id])
   item          Item     @relation(fields: [itemId], references: [id])
+  itemSold      ItemSold[]
+}
 
+
+model ItemSold {
+  id          Int       @id @default(autoincrement())
+  bidId       Int
+  itemId      Int
+  ownerId     String
+  bidderId    String
+  soldPrice   Int
+  soldAt      DateTime  @default(now())
+  bid         Bid      @relation(fields: [bidId], references: [id])
+  item        Item      @relation(fields: [itemId], references: [id])
+  bidder      User      @relation(fields: [bidderId], references: [id])
 }
 
 model Notification {

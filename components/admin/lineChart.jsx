@@ -23,15 +23,15 @@ const data = [
 
 export default function TrafficOverviewChart() {
   return (
-    <div className="p-4 bg-[#F7F9FB] rounded-xl">
-      <div className="flex items-center gap-6">
+    <div className="py-4  bg-[#F7F9FB] rounded-xl">
+      <div className="flex items-center gap-6 px-8">
         <h2 className="">Traffic Overview</h2>
         <h2 className="">Traffic Overview</h2>
         <small>This Month</small>
         <small>Last Month</small>
-    </div>
+      </div>
       <LineChart
-        width={700}
+        width={630}
         height={300}
         data={data}
         margin={{ top: 10, right: 20, left: 10, bottom: 10 }}

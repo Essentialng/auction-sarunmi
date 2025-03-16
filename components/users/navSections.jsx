@@ -201,19 +201,22 @@ export function NavLink({menuContents, active, nav_btn, setActive, categories}){
                         <div className="flex items-center gap-2">Others Categories <IoIosArrowDown/></div>
                         </div>
                         <div 
-                        className=" drop w-full h-[450px] hidden absolute border-[#35318E] top-10 bg-[#35318E] text-[18px] group-hover:block group-focus-within:block py-4 hover:block  z-50">
+                        className=" drop w-full max-h-[450px] hidden absolute border-[#35318E] top-10 bg-[#35318E] 
+                        text-[18px] group-hover:block group-focus-within:block py-4 hover:block  z-50"
+                        >
                             {categories.map((item, index)=>(
                             <div key={index} className="relative group">
                                 <div 
                                 onClick={()=>setIsModel(index)}
-                                className={`category flex justify-between items-center p-4 cursor-pointer hover:bg-[#8474DA] ${isModel == index && "bg-[#8474DA]"}`}
+                                className={`category flex justify-between items-center p-4 cursor-pointer
+                                     hover:bg-[#8474DA] ${isModel == index && "bg-[#8474DA]"}`}
                                 >
                                     <small>{item?.name}</small>
                                     <IoIosArrowForward/>
                                 </div>
 
                                 {isModel == index &&
-                                <div className="model absolute bg-[#8474DA] top-0 left-44 w-full h-[435px]">
+                                <div className="model absolute bg-[#8474DA] top-0 left-44 w-full max-h-[400px] overflow-y-scroll">
                                 {item?.model?.map((value, num )=>(
                                     <div className="px-4 py-3 text-white hover:bg-orange-300 hover:text-black w-full cursor-pointer ">
                                         <Link

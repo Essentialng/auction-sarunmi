@@ -17,8 +17,7 @@ import useStore from "@/app/store";
 
 
 export default function UserManagement(){
-    const {fetchAllProduct, auctions} = useStore();
-    const [users, setUsers] = useState([]);
+    const {fetchAllProduct, auctions, fetchUsers, allUsers} = useStore();
 
     const recentActivity = [
         {
@@ -49,18 +48,6 @@ export default function UserManagement(){
 
 
 
-    const fetchUsers = async()=>{
-        try{
-            const response =await axiosInstance.get("allUsers");
-            const data = await response.data;
-            if(response.status == 200){
-                setUsers(data.data);
-            }
-        }catch(error){
-            console.log(error)
-        }
-    };
-
     useEffect(()=>{
         fetchUsers();
         fetchAllProduct();
@@ -69,18 +56,18 @@ export default function UserManagement(){
 
     return(
     <div className="w-full border mt-28 py-6 h-fit">
-         <div className="w-10/12 ml-auto border rounded-lg shadow-2xl py-6 px-12 flex flex-col gap-4">
+         <div className="w-10/12 ml-auto border rounded-lg shadow-2xl py-6 2xl:px-12 px-10 flex flex-col gap-4">
             <Header
             topic={"Welcome Back"}
             link={"Dashbord"}
             />
 
-            <div className="grid grid-cols-4 items-center gap-8">
-                {users?.cards?.map((card, index)=>(
+            <div className="grid grid-cols-4 items-center 2xl:gap-8 gap-4">
+                {allUsers?.cards?.map((card, index)=>(
                     <Card card={card} index={index}/>
                 ))}
             </div>
-            <div className="grid grid-cols-12 gap-8">
+            <div className="grid grid-cols-12 2xl:gap-8 gap-4">
                 <div className="col-span-6  p-8 bg-[#F7F9FB] rounded-xl">
                     <div className="mb-4 text-base font-bold">
                         <p>Users</p>
@@ -89,7 +76,7 @@ export default function UserManagement(){
                             <IoIosArrowDropdown size={18}/>
                         </div>
                     </div>
-                    <Static stats={users?.userBar}/>
+                    <Static stats={allUsers?.userBar}/>
                 </div>
                 <div className="col-span-3 p-8 bg-[#F7F9FB] rounded-xl">
                     <div className="mb-4">
@@ -100,7 +87,7 @@ export default function UserManagement(){
                 </div>
                 <Revenue/>
             </div>
-            <div className="grid grid-cols-6 gap-8">
+            <div className="grid grid-cols-6 2xl:gap-8 gap-4">
                 <div className="col-span-4 flex flex-col gap-4">
                     <TrafficOverviewChart/>
                     <div className="p-4 bg-[#F7F9FB] rounded-xl">

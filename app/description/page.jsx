@@ -55,6 +55,13 @@ export default function Page(){
 
 
   const bidHandler= async(itemId, name)=>{
+
+    if(amount <= products?.price){
+      Toast.fire({
+        icon: "error",
+          title:"Amount must be higher than the current price" ,
+      });
+    }
     setBidLoading(true);
 
     const endpoint = "/bid";

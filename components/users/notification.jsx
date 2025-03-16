@@ -22,7 +22,7 @@ export default function Notification(){
         setNotifications(data.notifications);
       }
     }catch(error){
-      console.log(error)
+      // console.log(error)
     }finally{
       setLoading(false);
     }
@@ -41,6 +41,7 @@ export default function Notification(){
 
     return(
         <main className=" bg-white flex flex-col gap-8 h-full sm:px-0 px-4 sm:py-0 py-8">
+
           <section className="mb-4 sm:px-6 px-2 py-6 bg-[#FFFFFF] h-2/3 shadow-xl border rounded-2xl overflow-hidden">
             <h2 className="text-2xl font-bold pb-2">Notification</h2>
             <hr className="outline-slate-400 border-y-2"/>
@@ -69,10 +70,9 @@ export default function Notification(){
             </div>
           </section>
 
-          {/* Notification Setting */}
+         
           <section>
             <h2 className="text-xl font-bold text-[#EF6509] sm:px-6 px-2">Notification Setting</h2>
-            
             <div className="mt-4 py-4 sm:px-6 px-2 sm:text-base text-xs rounded-lg flex gap-8 items-center justify-between shadow-xl">
               <p>Turn on notifications to receive bid updates via email or SMS.</p>
               <button className="relative inline-flex items-center h-6 rounded-full w-11 bg-gray-300 focus:outline-none">
@@ -80,6 +80,7 @@ export default function Notification(){
               </button>
             </div>
           </section>
+
         </main>
     )
 }

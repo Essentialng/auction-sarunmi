@@ -10,7 +10,11 @@ export async function GET() {
                 type: true,
                 createdAt: true,
                 lastLogin: true,
-                subscriptionType: true, 
+                subscriptionType: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+
             }
         });
 
@@ -23,9 +27,9 @@ export async function GET() {
         const activeUsers = users.filter(user => user.subscriptionType !== null).length;
         const inactiveUsers = totalUsers - activeUsers;
 
-        const basicSubscribers = users.filter(user => user.subscriptionType == 'basic').length;
-        const standardSubscribers = users.filter(user => user.subscriptionType == 'standard').length;
-        const premiumSubscribers = users.filter(user => user.subscriptionType == 'premium').length;
+        const basicSubscribers = users.filter(user => user.subscriptionType == 'Basic').length;
+        const standardSubscribers = users.filter(user => user.subscriptionType == 'Standard').length;
+        const premiumSubscribers = users.filter(user => user.subscriptionType == 'Premium').length;
 
         const getPercentage = (count) => totalUsers > 0 ? Math.round((count / totalUsers) * 100)  : 0;
 
@@ -45,7 +49,7 @@ export async function GET() {
             { name: "Premium Subscribers", count: premiumSubscribers, percent: getPercentage(premiumSubscribers)},
         ];
 
-        return NextResponse.json({ success: true, data: { cards, userBar } }, { status: 200 });
+        return NextResponse.json({ success: true, data: { cards, userBar, users } }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: `Failed to fetch users: ${error.message}` }, { status: 500 });
     }

@@ -109,6 +109,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         <input 
                         type="number" 
                         placeholder="Type amount" 
+                        min={products.price}
                         disabled={(timeStatus && !toStart) || !user || userProduct}
                         className="w-full px-4 py-4 rounded-md text-black text-center"
                         value={amount} // Bind the state value to the input field

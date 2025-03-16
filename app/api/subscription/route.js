@@ -2,6 +2,8 @@ import prisma from '@/lib/global_client';
 import { NextResponse } from 'next/server';
 import { generateToken } from '@/package/jwt';
 
+
+
 export async function POST(request) {
     try {
         const body = await request.json();
@@ -29,3 +31,6 @@ export async function POST(request) {
         return NextResponse.json({ success: false, message: `Failed to update subscription type: ${error.message}` }, { status: 500 });
     }
 }
+
+
+

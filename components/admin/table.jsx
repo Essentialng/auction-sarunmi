@@ -1,4 +1,5 @@
 import classNames from "classnames"
+import { dateFormat } from "@/utils/methods"
 
 export default function Table({header, contents}){
     return(
@@ -19,19 +20,23 @@ export default function Table({header, contents}){
                 ))}
             </thead>
             <tbody>
-                {contents.map((content, index)=>(
+                {contents?.map((content, index)=>(
                     <tr key={index} className="text-center h-12">
-                        <td>{content?.dateJoined}</td>
-                        <td>{content.name}</td>
-                        <td>{content.email}</td>
+                        <td>{dateFormat(content?.createdAt)}</td>
+                        <td>{content?.firstName} {content?.lastName}</td>
+                        <td>{content?.email}</td>
                         <td className={classNames(
-                            {"bg-[#A3D6A0]" : content.status == "Active" || content.status == "Successful"},
-                            {"bg-[#FFA687]" : content.status == "Inactive" || content.status == "Pending"}
+                            {"bg-[#A3D6A0]" : content?.status == "Active" || content.status == "Successful"},
+                            {"bg-[#FFA687]" : content?.status == "Inactive" || content.status == "Pending"}
                         )}>{content.status}</td>
-                        {contents.length > 3 && (
+                        {contents?.length > 3 && (
                         <>
-                            <td>{content?.subscription}</td>
-                            <td>{content?.lastLogin}</td>
+                            {content?.subscriptionType &&
+                            <td>{content?.subscriptionType}</td>
+                            }
+                            {content?.lastLogin &&
+                            <td>{dateFormat(content?.lastLogin)}</td>
+                            }
                         </>
                         )}
                     </tr>

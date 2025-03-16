@@ -25,11 +25,11 @@ export function Card({card, index}){
 
 export function Revenue(){
     return(
-        <div className="col-span-3 py-8 px-4 bg-[#F7F9FB] rounded-xl">
+        <div className="col-span-3 py-8 2xl:px-4 xl:px-2 bg-[#F7F9FB] rounded-xl">
             <div className="mb-4">
                 <p>Revenue Generated</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col items-center">
                         <div className="flex items-center gap-2">

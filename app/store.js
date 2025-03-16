@@ -17,6 +17,7 @@ const useStore = create((set) => ({
   watchList:[],
   categoryName: [],
   models: [],
+  allUsers : [],
   
 
 
@@ -114,6 +115,19 @@ const useStore = create((set) => ({
         console.log(error)
       }
     },
+
+
+    fetchUsers : async()=>{
+      try{
+          const response =await axiosInstance.get("allUsers");
+          const data = await response.data;
+          if(response.status == 200){
+              set({allUsers : data.data});
+          }
+      }catch(error){
+          console.log(error)
+      }
+  }
 
 }));
 

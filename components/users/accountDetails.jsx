@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { axiosInstance } from '@/package/axios';
 import { Toast } from "@/package/alert";
 import { useState } from 'react';
+import Link from 'next/link';
 
 export function AccountDetails({card, user, setEdit, index, setFormValue, setEmailVerified}){
 
@@ -13,7 +14,7 @@ export function AccountDetails({card, user, setEdit, index, setFormValue, setEma
     };
 
     return(
-    <div className="  relative flex flex-col justify-end items-end py-8">
+    <div className="  relative flex flex-col justify-end items-end py-8 font-medium text-[20px]">
         <div className="flex items-center mb-4 w-full">
             <div className="mr-4 text-4xl text-orange-600 flex flex-col">
             {card.icon}
@@ -27,22 +28,27 @@ export function AccountDetails({card, user, setEdit, index, setFormValue, setEma
             :
             <div>
                 <p>{card.text}</p>
-                <p>{card.text2}</p>
+                <p className={`${card.header == "Subscription" && "font-bold text-[20px]"}`}>{card.text2}</p>
             </div>
             }
 
         </div>
         <div className="flex items-center justify-end gap-4  w-full">
             {card.button2 &&
-            <button  className="border-orange-600 border bg-white text-orange-600 px-4 py-2 rounded">
+            <button className="border-orange-600 border bg-white text-orange-600 px-4 py-2 rounded">
                 {card.button2}
             </button>
             }
+
+            {(card.button != "RENEW") ?
             <button 
             onClick={()=>toggleHandler(index)}
             className="bg-orange-600 text-white px-4 py-2 rounded">
                 {card.button}
             </button>
+            :
+            <Link href="/subscribe" className='bg-orange-600 text-white px-4 py-2 rounded'>{card.button}</Link>
+            }
         </div>
     </div>
     )
@@ -124,7 +130,9 @@ export function AccountDetailsForm({
                     }
 
                     {formType &&
-                    <small>{imageSrc}</small>
+                    <div className='border flex items-center object-cover h-24 w-24 rounded-full overflow-hidden shadow-md'>
+                        <img src={imageSrc} alt="" width={100} height={100} className='w-full h-full' />
+                    </div>
                     }
 
                     {form.button &&

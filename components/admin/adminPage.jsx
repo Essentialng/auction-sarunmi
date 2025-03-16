@@ -1,4 +1,4 @@
-
+"use client";
 import { IoIosSearch } from "react-icons/io";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Table from "@/components/admin/table";

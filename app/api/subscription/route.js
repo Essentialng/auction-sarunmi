@@ -20,7 +20,10 @@ export async function POST(request) {
         
         const updatedUser = await prisma.user.update({
             where: {id },
-            data: { subscriptionType }
+            data: { 
+                subscriptionType,
+                type: 'vendor'
+             }
         });
 
         const token = await generateToken(updatedUser);

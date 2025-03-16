@@ -15,10 +15,10 @@ const ProfileOverview = ({user, initializeUser}) => {
 
   const [edit, setEdit] = useState(false);
   const [formValue, setFormValue] = useState({id : user?.id});
-  const [imageSrc, setImageSrc] = useState("");
+  const [imageSrc, setImageSrc] = useState(user && user?.profilePicture);
   const [loading, setLoading] = useState(false);
   const [emailVerified, setEmailVerified] = useState(null);
-  
+  const sub = user?.subscriptionType
   const submitUserDetails = async()=>{
     setLoading(true);
     try{
@@ -227,10 +227,10 @@ const submitPassword = async()=>{
       {
         header : "Subscription",
         icon : <SlBadge size={35} color="#EF6509"/>,
-        text: "Premium Membership",
-        text2 : "20,000.00",
-        button: "RENEW",
-        button2: "BECOME A VENDOR"
+        text: sub,
+        text2 : sub == "Basic" ? "20,000.00" : sub == "Standard" ? "50,000" : sub == "Premium" ? "75,000" : "------",
+        button: user?.type != "bidder" && "RENEW",
+        button2: user?.type == "bidder" && "BECOME A VENDOR",
       }
       
   ]
@@ -258,7 +258,7 @@ const submitPassword = async()=>{
     const name = event.target.name
       const url = await handleCloudinary(file); 
       if (url) {
-        setImageSrc(file.name)
+        setImageSrc(url)
         setFormValue({...formValue, [name]: url });
         Toast.fire({
           icon: "success",
@@ -275,9 +275,9 @@ const submitPassword = async()=>{
         {cards.map((card, index)=>{
           const count = index !== 3 ? true : false
           return (
-        <div key={index} className={`border p-4 rounded-lg shadow-md ${(!count || index !== edit) && "max-h-[250px]"}`}>
+        <div key={index} className={`border p-4 rounded-lg shadow-md ${(!count || index !== edit) && "max-h-[270px]"}`}>
           <div className="flex items-center justify-between  border-b-2 py-2">
-            <h3 className="text-lg font-medium mb-2">{card.header}</h3>
+            <h3 className="text-[20px] font-medium mb-2">{card.header}</h3>
 
             {(count && index === edit) &&
             <IoClose

@@ -1,7 +1,7 @@
 "use client";
 import React, {useState, useEffect} from 'react';
 // import { useSearchParams } from 'next/navigation'
-import SideBard from '@/components/users/mobileHubSide';
+import SideBar from '@/components/users/mobileHubSide';
 import { useParams } from "next/navigation";
 import useStore from '../../../../store';
 import { useRouter } from 'next/navigation';
@@ -28,7 +28,7 @@ const Hub = () => {
     <div className="min-h-screen flex flex-col sm:px-24 px-2 mt-40">
       <div className="lg:grid grid-cols-5 2xl:gap-12 xl:gap-4">
 
-        <SideBard 
+        <SideBar 
         setToggle={setToggle} 
         toggle={toggle} 
         type={type}

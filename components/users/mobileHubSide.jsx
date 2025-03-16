@@ -12,7 +12,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import { RiMenuSearchLine } from "react-icons/ri";
 
 
-export default function SideBard({setToggle, toggle, type, product, handleClick }){
+export default function SideBar({setToggle, toggle, type, product, handleClick }){
 
     //   const [product, handleClick] = useState("Car")
       const [menu, setMenu] = useState(false);

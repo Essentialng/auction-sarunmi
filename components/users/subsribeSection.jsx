@@ -38,7 +38,11 @@ const FeatureList = ({ features }) => {
 export const SubscriptionCard = ({index, subscriptions, user, initializeUser, setSubscribe}) => {
 
   const activeSub = subscriptions[index];
-  const subType =activeSub.type
+  const subType =activeSub?.type
+  const userSubscription = subType == user?.subscriptionType;
+
+
+
   const subscribeHandler = async ()=>{
     const endpoint = "/subscription"
     const body = {
@@ -73,9 +77,11 @@ export const SubscriptionCard = ({index, subscriptions, user, initializeUser, se
   }
 
 
-
   return (
-    <div className="bg-white w-2/3 flex flex-col gap-8">
+    <div className={classNames({
+      "bg-white w-2/3 flex flex-col gap-8" : true,
+      "bg-gray-200 opacity-45" : userSubscription,
+      })}>
       <h3 className="text-center text-xl font-semibold text-gray-800">SUBSCRIPTION</h3>
     
       <div className="rounded-lg shadow p-6 border">
@@ -105,14 +111,19 @@ export const SubscriptionCard = ({index, subscriptions, user, initializeUser, se
           features={activeSub.features}
         />
       </div>
-      <button disabled={subType == user?.subscriptionType} className="relative">
+      <button disabled={userSubscription} className="relative">
         <PaystackButtonComponent
         price={Number(subscriptions[index]?.price)}
         className={"absolute bg-transparent w-full h-12 "}
         onSuccess={subscribeHandler}
         onClose={onCloseHandler}
         />
-        <button className={`bg-orange-500 text-white font-semibold py-3 w-full rounded-lg hover:bg-orange-600 ${subType == user?.subscriptionType && "bg-gray-400 text-white"}`}
+        <button
+        disabled={userSubscription} 
+        className={classNames({
+          " text-white font-semibold py-3 w-full rounded-lg " : true, 
+          "hover:bg-orange-600 bg-orange-500" : !userSubscription,
+          "bg-gray-400 " : userSubscription})}
  >
           SUBSCRIBE
         </button>

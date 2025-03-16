@@ -18,6 +18,8 @@ export default function Page(){
             return <NotificationBar />; // default component
         }
       };
+
+      
     return(
         <div className="grid grid-cols-5 px-24 py-44 gap-12">
             <div className="col-span-1">

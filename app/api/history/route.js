@@ -69,38 +69,38 @@ export async function POST(request) {
 
 
 
-export async function DELETE(request) {
-  try {
-    const { itemId } = await request.json();
+// export async function DELETE(request) {
+//   try {
+//     const { id } = await request.json();
 
 
-    const item = await prisma.itemSold.findFirst({
-      where: { itemId, ownerId: userId },
-    });
+//     const item = await prisma.itemSold.findFirst({
+//       where: { id },
+//     });
 
-    if (!item) {
-      return NextResponse.json(
-        { success: false, message: "Item not found or not owned by user" },
-        { status: 404 }
-      );
-    }
+//     if (!item) {
+//       return NextResponse.json(
+//         { success: false, message: "Item not found or not owned by user" },
+//         { status: 404 }
+//       );
+//     }
 
-    // Delete the item
-    await prisma.itemSold.delete({
-      where: { id: item.id },
-    });
+//     // Delete the item
+//     await prisma.itemSold.delete({
+//       where: { id: item.id },
+//     });
 
-    return NextResponse.json(
-      { success: true, message: "Item deleted successfully" },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, message: `Internal server error: ${error.message}` },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json(
+//       { success: true, message: "Item deleted successfully" },
+//       { status: 200 }
+//     );
+//   } catch (error) {
+//     return NextResponse.json(
+//       { success: false, message: `Internal server error: ${error.message}` },
+//       { status: 500 }
+//     );
+//   }
+// }
 
 
 

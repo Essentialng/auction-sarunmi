@@ -1,37 +1,13 @@
+"use client";
 import { IoSearchOutline } from "react-icons/io5";
 import Table from "@/components/admin/table";
 import Header from "@/components/admin/dashboardHeader";
 import UserCard from "@/components/admin/usersCard";
-
+import useStore from "@/app/store";
+import { useEffect } from "react";
 
 export default function DashBoard(){
-
-    const userData = [
-        {
-          name: "Olufemi Chris",
-          email: "olufemichris23@gmail.com",
-          phone: "+2348199977444",
-          subscription: "Premium",
-        },
-        {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          phone: "+1234567890",
-          subscription: "Standard",
-        },
-        {
-          name: "Jane Smith",
-          email: "janesmith@example.com",
-          phone: "+9876543210",
-          subscription: "Premium",
-        },
-        {
-          name: "James Bond",
-          email: "jamesbond@mi6.com",
-          phone: "+1122334455",
-          subscription: "VIP",
-        },
-      ];
+    const {allUsers, fetchUsers, subscribers} = useStore();
 
     const header = ["Date Joined", "Name", "Email", "Status"]
 
@@ -84,7 +60,11 @@ export default function DashBoard(){
             email: "olufemichris23@gmail.com",
             status: "Inactive",
         },
-    ]
+    ];
+
+    useEffect(()=>{
+        fetchUsers()
+    },[])
 
 
     return(
@@ -98,7 +78,7 @@ export default function DashBoard(){
                 />
 
                 <div className="grid grid-cols-6 gap-8">
-                    <UserCard userData={userData}/>
+                    <UserCard userData={subscribers}/>
                     <div className="col-span-4 flex flex-col gap-4  h-fit">
                         <div className="flex items-center justify-between">
                             <div className="w-full flex flex-col gap-2">

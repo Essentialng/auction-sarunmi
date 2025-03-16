@@ -18,6 +18,7 @@ const useStore = create((set) => ({
   categoryName: [],
   models: [],
   allUsers : [],
+  subscribers: [],
   
 
 
@@ -122,7 +123,13 @@ const useStore = create((set) => ({
           const response =await axiosInstance.get("allUsers");
           const data = await response.data;
           if(response.status == 200){
-              set({allUsers : data.data});
+              set({
+                allUsers : data.data,
+                subscribers : data.data?.users?.filter(user =>
+                  user?.subscriptionType && user?.verifiedSubscription === false
+              )
+              });
+             
           }
       }catch(error){
           console.log(error)

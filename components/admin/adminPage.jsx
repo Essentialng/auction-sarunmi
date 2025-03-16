@@ -8,7 +8,7 @@ import classNames from "classnames";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useState } from "react";
 
-export default function AdminPage({cards, header, contents, topic, content, link}){
+export default function AdminPage({cards, header, contents, topic, content, link, userDetailsHandler}){
         const [searchQuery, setSearchQuery] = useState("");
         const [sortBy, setSortBy] = useState("firstName");
         const [sortOrder, setSortOrder] = useState("asc");
@@ -115,7 +115,7 @@ export default function AdminPage({cards, header, contents, topic, content, link
                         }
                     </div>
                 </div>
-                <Table header={header} contents={sortedContents}/>
+                <Table header={header} contents={sortedContents} userDetailsHandler={userDetailsHandler}/>
 
             </div>
         </div>

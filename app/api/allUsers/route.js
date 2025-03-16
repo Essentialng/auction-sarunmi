@@ -4,19 +4,7 @@ import { subDays } from 'date-fns';
 
 export async function GET() {
     try {
-        const users = await prisma.user.findMany({
-            select: {
-                id: true,
-                type: true,
-                createdAt: true,
-                lastLogin: true,
-                subscriptionType: true,
-                firstName: true,
-                lastName: true,
-                email: true,
-
-            }
-        });
+        const users = await prisma.user.findMany();
 
         const totalUsers = users.length;
 

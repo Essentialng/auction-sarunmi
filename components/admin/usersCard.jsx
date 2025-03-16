@@ -10,7 +10,7 @@ export default function UserCard({userData}){
             <div key={index} className="flex flex-col gap-2 bg-gray-100 rounded-xl py-8">
                 <div className="flex justify-center gap-8 ">
                     <div className="rounded-full border h-fit overflow-hidden">
-                        <Image alt="" width={50} height={50}/>
+                        <Image alt={data?.profilepicture ? data?.profilepicture : ""} width={50} height={50}/>
                     </div>
                     <div className="flex flex-col text-sm">
                         <p className="text-lg font-medium">{data?.name}</p>
@@ -20,10 +20,10 @@ export default function UserCard({userData}){
                         </div>
                         <div className="flex items-center gap-4">
                             <FiPhone size={12}/>
-                            <small>+{data?.phone}</small>
+                            <small>+{data?.phoneNumber}</small>
                         </div>
                         <div>
-                            <small>Subscription: <strong>{data?.subscription}</strong></small>
+                            <small>Subscription: <strong>{data?.subscriptionType}</strong></small>
                         </div>
                     </div>
                 </div>

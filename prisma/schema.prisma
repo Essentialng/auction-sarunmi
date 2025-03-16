@@ -21,6 +21,7 @@ model User {
   type                String
   cashBalance         Float     @default(0.00)
   subscriptionType    String?
+  verifiedSubscription  Boolean @default(false)
   itemSold            ItemSold[]
   notifications     Notification[] @relation("notification") 
   lastLogin           DateTime?

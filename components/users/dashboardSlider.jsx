@@ -43,102 +43,99 @@ export default function SliderProduct({ products, bidProducts }) {
 
   const navigationBtn = "p-2 bg-black text-gray-300 flex items-center justify-center rounded-xl border"
   return (
-    <div className="flex flex-col gap-8 py-4 sm:px-[1rem] px-2">
+    <div className="flex flex-col gap-8 py-4 xl:px-[1rem] px-2">
           <div className='w-full relative flex xl:flex-row flex-col sm:gap-0 gap-4 items-center justify-between'>
             
             <button 
             className={classNames({
               "bg-gray-300 text-gray-50" : navigate == 0,
               [navigationBtn] : true,
-              "sm:block hidden" : true
+              "xl:block hidden" : true
               })} 
               disabled={navigate == 0}
-              onClick={()=>setNavigate(navigate + 1)}
+              onClick={()=>setNavigate(navigate - 1)}
               >
               <MdArrowBackIos size={35}/>
             </button>
 
-            <div className='w-full flex items-center gap-0'>
+            <div className='w-full xl:grid xl:grid-cols-2 flex flex-col gap-4'>
 
+              {/* First Container */}
               <div 
-              className={`w-full px-2 ${bidProducts && "cursor-pointer"}`}
-              onClick={()=>setIsOpen(products[navigate])}
+                className={`col-span-1 w-full px-2 ${bidProducts && "cursor-pointer"}`}
               >
                 <div className="w-full xl:py-12 py-2">
                   <div className="flex-col gap-8 flex items-center justify-center">
-                    <Images
-                    image={image}
-                    />
-                    <div className="w-full xl:grid grid-cols-7 flex flex-col gap-1 xl:px-6 px-2">
-                      <Details
-                      name={name}
-                      description={description}
-                      />
+                    <div onClick={()=>setIsOpen(products[navigate])}>
+                      <Images image={image} />
+                     </div>
+                    <div className="w-full xl:grid grid-cols-7 flex flex-col gap-1 2xl:px-6 px-2">
+                      <Details name={name} description={description} />
                       <BidDetails
-                      timeLeft={timeLeft} 
-                      auctionDuration={auctionDuration} 
-                      status={status} 
-                      yourBid={yourBid} 
-                      currentBid={currentBid} 
-                      item={item} 
-                      product={products} 
-                      handleViewAuction = {handleViewAuction} 
+                        timeLeft={timeLeft} 
+                        auctionDuration={auctionDuration} 
+                        status={status} 
+                        yourBid={yourBid} 
+                        currentBid={currentBid} 
+                        item={item} 
+                        product={products} 
+                        handleViewAuction={handleViewAuction} 
                       />
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-          
-            {products[navigate + 1] &&
-            <div 
-            className={`w-full px-2 ${bidProducts && "cursor-pointer sm:block hidden"}`}
-            onClick={()=>setIsOpen(products[navigate + 1])}
-            >
-              <div className="w-full xl:py-12 py-2">
-                <div className="flex-col gap-8 flex items-center justify-center">
-                  <Images
-                  image={image_r}
-                  />
-                  <div className="w-full xl:grid grid-cols-7 flex flex-col gap-1 xl:px-6 px-2">
-                    <Details
-                    name={name_r}
-                    description={description_r}
-                    />
-                    <BidDetails
-                    timeLeft={timeLeft_r} 
-                    auctionDuration={auctionDuration_r} 
-                    status={status_r} 
-                    yourBid={yourBid_r} 
-                    currentBid={currentBid_r} 
-                    item={item} 
-                    product={products} 
-                    handleViewAuction = {handleViewAuction} 
-                    />
+              {/* Second Container */}
+              {(products.length) &&
+                <div 
+                  className={`col-span-1 w-full px-2 ${bidProducts && "cursor-pointer"} ${products.length > 1 ? "xl:block hidden" : ""}`}
+                  
+                >
+                  <div className="w-full xl:py-12 py-2">
+                    <div className="flex-col gap-8 flex items-center justify-center">
+                      <div onClick={()=>setIsOpen(products[navigate + 1])}>
+                      <Images image={image_r}/>
+                      </div>
+                     
+                      <div className="w-full xl:grid grid-cols-7 flex flex-col gap-1 2xl:px-6 px-2">
+                        <Details name={name_r} description={description_r} />
+                        <BidDetails
+                          timeLeft={timeLeft_r} 
+                          auctionDuration={auctionDuration_r} 
+                          status={status_r} 
+                          yourBid={yourBid_r} 
+                          currentBid={currentBid_r} 
+                          item={item} 
+                          product={products} 
+                          handleViewAuction={handleViewAuction} 
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              }
+
             </div>
-            }
+
             <div className='flex items-center gap-4'>
               <button 
               className={classNames({
                 "bg-gray-300 text-gray-50" : navigate == 0,
                 [navigationBtn] : true,
-                "sm:hidden block" : true
+                "xl:hidden block" : true
                 })} 
                 disabled={navigate == 0}
-                onClick={()=>setNavigate(navigate + 1)}
+                onClick={()=>setNavigate(navigate - 1)}
                 >
                 <MdArrowBackIos size={35}/>
               </button>
               <button className={classNames({
-                "bg-gray-300 text-gray-50" : navigate + 1 == productLength,
+                "bg-gray-300 text-gray-50" : navigate + 2 == productLength,
                 [navigationBtn] : true,
                 })} 
-                disabled={navigate + 1 == productLength}
-                onClick={()=>setNavigate(navigate - 1)}
+                disabled={navigate + 2 == productLength}
+                onClick={()=>setNavigate(navigate + 1)}
                 >
                 <MdArrowForwardIos size={35}/>
               </button>

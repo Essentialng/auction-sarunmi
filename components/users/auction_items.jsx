@@ -30,17 +30,27 @@ export function AuctionItems({ auctions, page }) {
   };
 
   return (
-    <div
-      className={classNames("grid md:grid-cols-2 grid-cols-1 gap-4 relative", {
-        "lg:grid-cols-4": page !== "categories",
-        "lg:grid-cols-3": page === "categories",
-      })}
-    >
-      {auctions?.map((item, index) => (
-          <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} />
-      ))}
-      
-      {loading && <Loading />}
+    <div>
+      {auctions?.length != 0 ?
+      <div
+        className={classNames("grid md:grid-cols-2 grid-cols-1 gap-4 relative", {
+          "lg:grid-cols-4": page !== "categories",
+          "lg:grid-cols-3": page === "categories",
+        })}
+      >
+        {auctions?.map((item, index) => (
+            <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} />
+        ))}
+
+        
+        
+        {loading && <Loading />}
+      </div>
+      :
+      <div className="w-full flex items-center justify-center text-center font-bold">
+        <h1>No Item available</h1>
+      </div>
+      }
     </div>
   );
 }

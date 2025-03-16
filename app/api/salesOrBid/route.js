@@ -16,8 +16,8 @@ export async function GET(request) {
     const itemsWithHighestBids = await prisma.item.findMany({
       where: {
         userId,
-        status: { not: "sold" }, // Exclude items with "sold" status
-        bids: { some: {} },
+        status: { not: "sold" },
+        // bids: { some: {} },
       },
       include: {
         bids: {

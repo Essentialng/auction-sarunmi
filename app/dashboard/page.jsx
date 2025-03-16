@@ -51,7 +51,7 @@ export default function Dashboard(){
 
     
     return(
-        <div className="2xl:px-16 xl:px-12 px-2 py-44 flex flex-col gap-44">
+        <div className="2xl:px-16 px-2 py-44 flex flex-col gap-44">
            
            {userProducts?.length != 0 &&
             <div className="flex flex-col gap-12">

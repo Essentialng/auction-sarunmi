@@ -11,6 +11,7 @@ const BiddersList = ({ items, setIsOpen }) => {
     const lists = ["Bidder", "Phone Number", "Bid Number", "Action"];
     const [loading, setLoading] = useState(false);
 
+    
     const sellHandler= async (bid)=>{
         setLoading(true)
         const endpoint = "/acceptBid";
@@ -73,6 +74,7 @@ const BiddersList = ({ items, setIsOpen }) => {
             <div className="bg-white w-2/3 p-5 rounded-lg shadow-lg">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold">Bidders List</h2>
+                    <h4>{items?.name}</h4>
                     <button 
                         className="text-gray-600 hover:text-red-500"
                         onClick={() => setIsOpen(null)}

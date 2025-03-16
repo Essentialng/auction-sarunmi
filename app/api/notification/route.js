@@ -46,7 +46,7 @@ export async function GET(request) {
       where: {
         NOT: { userId },
         type: "bid",
-        itemId: { in: Object.keys(bidDateMap) }, // Fetch notifications for items the user has bid on
+        itemId: { in: Object.keys(parseInt(bidDateMap)) }, // Fetch notifications for items the user has bid on
       },
       include: { item: true },
     });

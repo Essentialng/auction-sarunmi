@@ -125,3 +125,13 @@ export const codeCharacters = ()=>{
   }
   return code;
 }
+
+export  const getAuctionStatus = (startTime, endTime) => {
+  const now = new Date();
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+
+  if (now < start) return 'Upcoming';
+  if (now > end) return 'Ended';
+  return 'Ongoing'; // You can label it as 'Ending soon' based on remaining time
+};

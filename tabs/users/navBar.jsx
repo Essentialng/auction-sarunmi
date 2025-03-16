@@ -98,7 +98,7 @@ const {user, getUser, categories, fetchCategory, auctions} = useStore()
                 <div className="xl:hidden">
                     <FaUserLarge size={25} color="white" onClick={()=>setActivate(!activate)}/>
                     {activate &&
-                    <DropDown dropLinks={dropLinks}/>
+                    <DropDown dropLinks={dropLinks} user={user}/>
                     }
                 </div>
             </div>

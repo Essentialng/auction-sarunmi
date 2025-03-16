@@ -3,7 +3,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import Products from "@/components/users/products";
 import FooterCard from "@/components/users/footerCard";
 import { useEffect, useState, useCallback } from "react";
-import SleiderProduct from "@/components/users/slideProducts";
+import SliderProduct from "@/components/users/slideProducts";
 import useStore from "@/app/store";
 import { useParams } from "next/navigation";
 import useFetchProducts from "@/utils/category";
@@ -22,9 +22,9 @@ export default function Page(){
         const [models, setModels] = useState([]);
         const [filterItems, setFilterItems] = useState([]);
            
-        const fetchOthers = async()=>{
+        const fetchOthers = async(id)=>{
             try{
-                const response = await axiosInstance.get(`/others`)
+                const response = await axiosInstance.post(`/others`, {id :parseInt(id)})
                 const data = await response.data;
                 if(response.status == 200){
                 const items = data.data.map(other => other.items).flat();
@@ -50,7 +50,7 @@ export default function Page(){
     },[others])
 
     useEffect(() => {
-        fetchOthers()
+        fetchOthers(id)
         fetchAllProduct();
         }, [user]);
 
@@ -65,7 +65,7 @@ export default function Page(){
                 </div>
             </div>
 
-            <SleiderProduct 
+            <SliderProduct 
             data={cars} 
             header="Top Auctions"
             />
@@ -75,6 +75,8 @@ export default function Page(){
                 handleFetchProducts={othersFilter}
                 categories={categories}
                 filter={filter}
+                id={id}
+                fetchOthers={fetchOthers}
                 />
                 <div className="col-span-3 ">
                     <Products 

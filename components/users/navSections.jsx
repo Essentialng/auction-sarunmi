@@ -78,7 +78,7 @@ export function Authentications({user, account, signUp, already, login, dropLink
     const [activate, setActivate] = useState(false);
 
     return(
-    <div className="relative lg:flex hidden gap-4 text-center justify-center items-center min-w-1/6 max-w-2/7">
+    <div className="relative xl:flex hidden gap-4 text-center justify-center items-center min-w-1/6 max-w-2/7">
         {account && 
             <small className="font-bold text-[14px] w-full text-nowrap">Don’t  have an account?</small>
         }
@@ -99,8 +99,8 @@ export function Authentications({user, account, signUp, already, login, dropLink
             { user && 
             <div className="relative w-full">
                 <div 
-                className="relative flex gap-3 items-center text-[#EF6509] cursor-pointer text-wrap truncate whitespace-nowrap overflow-hidden text-ellipsis"
-                onClick={()=>setActivate(!activate)}>
+                className="relative flex gap-3 items-center text-[#EF6509]  text-wrap truncate whitespace-nowrap overflow-hidden text-ellipsis"
+               >
                     <div className={classNames({
                         "relative flex items-center justify-center border  rounded-full overflow-hidden w-10 h-10" : true,
                         "border-[#EF6509] p-2" : !user?.profilePicture,
@@ -109,10 +109,16 @@ export function Authentications({user, account, signUp, already, login, dropLink
                         {!user.profilePicture ?
                         <FaUser color="white"/>
                         :
-                        <img src={user?.profilePicture} alt="" className="w-full h-full object-cover rounded-full" />
+                        <Link href="/dashboard">
+                            <img src={user?.profilePicture} alt="" className="w-full h-full object-cover rounded-full cursor-pointer" />
+                        </Link>
                     }
                     </div>
-                    <p className="truncate whitespace-nowrap overflow-hidden text-ellipsis min-w-0 max-w-[120px]">{user.firstName} {user.lastName}</p>
+                    <p 
+                    className="truncate whitespace-nowrap overflow-hidden text-ellipsis min-w-0 max-w-[120px] cursor-pointer"
+                    onClick={()=>setActivate(!activate)}
+                    >
+                        {user.firstName} {user.lastName}</p>
                     <IoIosArrowDown color="#EF6509"/>
                 </div>
                 {activate &&
@@ -198,7 +204,7 @@ export function NavLink({menuContents, active, nav_btn, setActive, categories}){
                             })}
                             onClick={()=>setActive(menu)}
                             >
-                        <div className="flex items-center gap-2">Others Categories <IoIosArrowDown/></div>
+                            <div className="flex items-center gap-2">Others Categories <IoIosArrowDown/></div>
                         </div>
                         <div 
                         className=" drop w-full max-h-[450px] hidden absolute border-[#35318E] top-10 bg-[#35318E] 
@@ -218,14 +224,16 @@ export function NavLink({menuContents, active, nav_btn, setActive, categories}){
                                 {isModel == index &&
                                 <div className="model absolute bg-[#8474DA] top-0 left-44 w-full max-h-[400px] overflow-y-scroll">
                                 {item?.model?.map((value, num )=>(
-                                    <div className="px-4 py-3 text-white hover:bg-orange-300 hover:text-black w-full cursor-pointer ">
-                                        <Link
-                                        href={`/categories/${value.id}`} 
-                                        onClick={()=>setIsModel(null)}
-                                        >
+                                     <Link
+                                     href={`/categories/${value.categoryId}`} 
+                                     onClick={()=>setIsModel(null)}
+                                     >
+                                    <div className="relative px-4 py-[13px] text-white hover:bg-orange-300 hover:text-black w-full cursor-pointer ">
+                                       
                                             <small>{value?.name}</small>
-                                        </Link>
+                                       
                                     </div>
+                                    </Link>
                                 ))}
                                 </div>
                                 }

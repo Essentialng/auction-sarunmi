@@ -22,6 +22,7 @@ model User {
   cashBalance         Float     @default(0.00)
   subscriptionType    String?
   verifiedSubscription  Boolean @default(false)
+  items               Item[]
   itemSold            ItemSold[]
   notifications     Notification[] @relation("notification") 
   lastLogin           DateTime?
@@ -72,6 +73,7 @@ model Item {
   itemSold    ItemSold[]
   bids        Bid[]
   notification Notification[]
+   user        User     @relation( fields: [userId], references: [id])
   
 }
 

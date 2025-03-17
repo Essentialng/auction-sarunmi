@@ -1,5 +1,4 @@
 "use client";
-import { FaUsers } from "react-icons/fa6";
 import AdminPage from "@/components/admin/adminPage";
 import Individual from "@/components/admin/individual";
 import { useState, useEffect } from "react";

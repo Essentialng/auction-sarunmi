@@ -3,12 +3,19 @@ import classNames from "classnames";
 import { axiosInstance } from "@/package/axios";
 import useStore from "@/app/store";
 import { dateFormat } from "@/utils/methods";
-
+import { Rings } from "react-loading-icons";
+import { useRouter } from "next/navigation";
+import Loading from "@/tabs/admin/loading";
+import { Toast } from "@/package/alert";
 
 const History = () => {
   const {user} = useStore();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
   const [historyData, setHistoryData] = useState([]);
+  const [routerLoading, setRouterLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const tabs = ["Bid won", "Bid lost", "Product sold"];
   const tableHeaders = ["S/N", "Product Name", "Price", "Date", "Delivery"];
 
@@ -18,6 +25,7 @@ const History = () => {
   };
 
   const HistoryHandler = async()=>{
+    setLoading(true)
     const body ={userId:user?.id}
     try{
       const response = await axiosInstance.post("/history", body);
@@ -26,9 +34,29 @@ const History = () => {
         setHistoryData(data)
       }
     }catch(error){
-      console.log(error);
+      Toast({
+        title: "error",
+        message: "try again!",
+      })
+    }finally{
+      setLoading(false);
     }
   };
+
+  const fetchProductandler = (data)=>{
+    setRouterLoading(true);
+    const flatData = {
+      ...data,
+      ...data.item 
+    };
+
+    delete flatData.item; 
+  
+    // console.log(flatData);
+    localStorage.setItem("auctionData", JSON.stringify(flatData));
+    router.push("/description");
+  }
+
 
   useEffect(()=>{
     HistoryHandler();
@@ -54,7 +82,7 @@ const History = () => {
           </button>
         ))}
       </div>
-
+      {!loading ?
       <table className="w-full xl:text-[18px] text-[12px] font-[500] border-separate border-spacing-y-2">
         <thead className=" w-full text-white font-[500] bg-[#35318E] ">
           {tableHeaders.map((header, index) => (
@@ -79,7 +107,10 @@ const History = () => {
             {historyData[activeTab]?.length > 0 && 
             <>
             {historyData[activeTab]?.map((item, index) => (
-              <tr className="border-b text-center text-[#1E2420]">
+              <tr 
+              className="border-b text-center text-[#1E2420] hover:bg-gray-200 cursor-pointer"
+              onClick={()=>fetchProductandler(item)}
+               >
                 <td className="py-2 px-4">{index + 1}</td>
                 <td className="py-2 px-4">{item?.item?.name}</td>
                 <td className="py-2 px-4">N {item?.soldPrice.toLocaleString()}</td>
@@ -89,16 +120,28 @@ const History = () => {
             ))}
             </>
             }
-          {historyData[activeTab]?.length < 1 && (
+          {(historyData[activeTab]?.length < 1 || historyData.length == 0 ) && (
             <tr>
               <td className="py-2 px-4" colSpan="5">
                 No histroy data.
               </td>
             </tr>
           )}
+
+       
           
         </tbody>
       </table>
+      :
+      <div className="w-full flex items-center justify-center">
+        <Rings width={50} heigth={50} className="bg-orange-600 p-2 rounded-full"/>
+      </div>
+      }
+
+      {routerLoading &&
+      <Loading/>
+      }
+
     </div>
   );
 };

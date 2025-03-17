@@ -2,6 +2,8 @@ import { FaArrowRight } from "react-icons/fa6";
 import { calculateTimeLeft, calculateDays, calculateTimeToStart } from "@/utils/methods";
 import useStore from "@/app/store";
 import { Rings } from "react-loading-icons";
+import Link from "next/link";
+
 
 export function ProductImages({products, setActiveImage, activeImage}){
 
@@ -73,7 +75,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
     const endTime = calculateTimeLeft(products.endTime) 
     const toStart = calculateTimeToStart(products.startTime) 
     const timeStatus = endTime == "00:00:00:00" ? true : false;
-
+// console.log(products)
     return(
     <>
         <div className="w-full mt-24">
@@ -103,6 +105,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                     </div>
                 </div>
 
+                {(!products?.soldPrice && products?.bidderId != user?.id) ?
                 <div className="space-y-4 xl:w-1/3">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="lastName">Enter amount</label>
@@ -112,10 +115,12 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         min={products.price}
                         disabled={(timeStatus && !toStart) || !user || userProduct}
                         className="w-full px-4 py-4 rounded-md text-black text-center"
-                        value={amount} // Bind the state value to the input field
+                        value={amount} 
                         onChange={handleChange}
                         />
                     </div>
+
+                    
                     <div className="flex justify-between w-full gap-8">
                         <button
                             className={`border border-white py-3 rounded-md w-full flex items-center justify-center ${isInWatchlist && "bg-gray-200"}`}
@@ -137,9 +142,16 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                             
                            {bidLoading ? <Rings width={30} height={30}/> : "Bid"}
                         </button>
-                        </div>
-
+                    </div>
                 </div>
+                :
+                <Link href="#" className="flex flex-col">
+                    <button className="bg-orange-500 rounded-xl h-1/2 p-4 font-semibold shadow-xl hover:scale-95 transition-transform duration-500 ease-in-out cursor-pointer">
+                            Make Payment Now
+                    </button>
+                    <small>You won the bid with: <strong className="border-b">{products?.soldPrice}</strong></small>
+                </Link>
+                }
             </div>
         </div>
     </>

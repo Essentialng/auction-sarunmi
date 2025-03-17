@@ -37,7 +37,7 @@ export default function SideBar({setToggle, toggle, type, product, handleClick }
         
         {menu &&
         <nav className="flex flex-col gap-6 space-y-2 p-6 rounded-xl shadow-lg border text-[16px] font-medium">
-        <button 
+            <button 
             className={`${navBtn} ${toggle == "profile" && "text-orange-500"}`}
             onClick={()=>toggleHandling("profile")}
             >
@@ -98,6 +98,12 @@ export default function SideBar({setToggle, toggle, type, product, handleClick }
                     }
             </div>
             }
+             <button 
+                className={`${navBtn} ${toggle == "history" && "text-orange-500"}`}
+                onClick={() => setToggle("history")}
+            >
+                History
+            </button>
             </nav>
         }
     </div>

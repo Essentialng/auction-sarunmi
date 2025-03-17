@@ -9,13 +9,7 @@ export async function POST(request) {
     const itemSold = await prisma.itemSold.findMany({
       where: { ownerId: userId },
       include: {
-        item: {
-          select: {
-            name: true,
-            price: true,
-            endTime: true,
-          },
-        },
+        item: true
       },
     });
 

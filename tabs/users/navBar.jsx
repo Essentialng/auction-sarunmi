@@ -17,7 +17,6 @@ const {user, getUser, categories, fetchCategory, auctions} = useStore()
     const pathname = usePathname()
     const menuContents =["Home","Auctions","Cars","Properties","Others Categories","About"];
     
-   
 
     useEffect(()=>{
         if(!user){

@@ -72,6 +72,7 @@ model Item {
   itemSold    ItemSold[]
   bids        Bid[]
   notification Notification[]
+  
 }
 
 
@@ -119,11 +120,16 @@ model ItemSold {
   ownerId     String
   bidderId    String
   soldPrice   Int
+  paymentAmount          Int?
+  paymentStatus   String?
+  paymentDate     DateTime?  @updatedAt
   soldAt      DateTime  @default(now())
   bid         Bid      @relation(fields: [bidId], references: [id])
   item        Item      @relation(fields: [itemId], references: [id])
   bidder      User      @relation(fields: [bidderId], references: [id])
 }
+
+
 
 model Notification {
   id          Int       @id @default(autoincrement())
@@ -142,7 +148,7 @@ model Notification {
 model Admin {
   id          String   @id @default(uuid())
   userId      String
-  role        String   // For example: "admin", "moderator"
+  role        String   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   user        User     @relation("AdminUser", fields: [userId], references: [id])

@@ -2,34 +2,44 @@ import { FaArrowRight } from "react-icons/fa6";
 import { calculateTimeLeft, calculateDays, calculateTimeToStart } from "@/utils/methods";
 import useStore from "@/app/store";
 import { Rings } from "react-loading-icons";
-import Link from "next/link";
-
+import PaystackButtonComponent from "@/components/users/paystack";
+import { axiosInstance } from "@/package/axios";
+import { useState } from "react";
+import { Toast } from '@/package/alert';
+import classNames from "classnames";
 
 export function ProductImages({products, setActiveImage, activeImage}){
 
 
     return(
-        <div className=" col-span-3 xl:grid xl:grid-cols-4 gap-16">
-          <div className="grid xl:grid-flow-row grid-cols-1 items-center gap-4 space-y-4 w-full col-span-1">
-            {products?.images?.map((image, index) => (
-                activeImage !== image && (
-                <div
-                    key={index}
-                    className="col-span-1 relative flex border border-[#FF9354] rounded-2xl h-full w-full items-center justify-center cursor-pointer overflow-hidden"
-                    onClick={() => setActiveImage(image)}
-                >
-                    <img src={image} className="rounded-md object-cover h-32 w-32" alt="BMW front view" />
-                </div>
-                )
-                ))}
-            </div>
+        <div className="col-span-3 flex flex-col xl:grid xl:grid-cols-4 gap-6">
 
+  {/* Thumbnails */}
+  <div className="flex xl:grid xl:grid-flow-row grid-cols-1 flex-row xl:flex-col items-center xl:gap-20 gap-8 w-full col-span-1 order-2 xl:order-1 justify-center xl:justify-start
+  max-h-[100px] xl:max-h-[500px] overflow-x-auto xl:overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
 
-
-          <div className="w-full col-span-3 p-6 flex justify-center items-center h-full">
-              <img src={activeImage} height={50} width={50} className="rounded-md w-full object-contain h-full" alt="BMW main image"/>
-          </div>
+    {products?.images?.map((image, index) => (
+      activeImage !== image && (
+        <div
+          key={index}
+          className="relative flex border border-[#FF9354] rounded-2xl h-full w-full items-center justify-center cursor-pointer overflow-hidden max-w-[80px]"
+          onClick={() => setActiveImage(image)}
+        >
+          <img src={image} className="rounded-md object-cover h-20 w-20" alt="Product thumbnail" />
         </div>
+      )
+    ))}
+
+  </div>
+
+  {/* Main Image */}
+  <div className="w-full col-span-3 p-4 flex justify-center items-center h-full order-1 xl:order-2">
+    <img src={activeImage} className="rounded-md w-full object-contain xl:max-h-[400px] max-h-[350px]" alt="Product main image" />
+  </div>
+
+</div>
+
+      
     )
 }
 
@@ -68,13 +78,50 @@ export function ProductDescription({setProductVerification, descriptions}){
 export function ProductAuction({products, bids, amount, handleChange, disableBtn,watchListHandler, bidHandler, bidLoading, watchListLoading }){
 
     const {user} = useStore();
+    const [loading, setLoading] = useState(false);
 
+    const paymentHandler = async()=>{
+        setLoading(true);
+        const endpoint = "/payment"
+        const body = {
+            "amount": Number(products?.soldPrice),
+            "userId": user?.id,
+            "id": products?.id,
+            "status": "pending"   
+        }
+        try{
+            const response = await axiosInstance.post(endpoint, body);
+            const data = await response.data;
+            if(response.status == 200){
+                Toast.fire({
+                    icon: "success",
+                    title: data.message
+                })
+                const flatData = {
+                    ...data.data,
+                    ...data.data.item 
+                  };
+                delete flatData.item;
+                localStorage.setItem("auctionData", JSON.stringify(flatData));
+                window.location.reload();
+            }
+        }catch(error){
+            Toast.fire({
+                icon: "error",
+                title: "the bidder for this item, try again!",
+            })
+        }finally{
+        setLoading(false);
+        }
+    }
   
     const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false; 
     const userProduct = user ? products?.userId == user?.id : false 
     const endTime = calculateTimeLeft(products.endTime) 
     const toStart = calculateTimeToStart(products.startTime) 
     const timeStatus = endTime == "00:00:00:00" ? true : false;
+
+// console.log(user?.id)
 // console.log(products)
     return(
     <>
@@ -84,7 +131,12 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                 <p>{products.description}</p>
             </div>
         </div>
-        <div className="bg-[#554AA2] text-white p-6 mb-12 rounded-b-2xl">
+        <div className={classNames({
+            "text-white p-6 mb-12 rounded-b-2xl" : true,
+            "bg-[#554AA2] " : !products?.soldPrice,
+            "bg-gray-500" : products?.soldPrice
+        })}>
+
             <div className="flex xl:flex-row flex-col xl:gap-0 gap-8 justify-between">
                 <div className="space-y-4">
                     <div>
@@ -105,7 +157,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                     </div>
                 </div>
 
-                {(!products?.soldPrice && products?.bidderId != user?.id) ?
+                {(!products?.soldPrice || products?.bidderId != user?.id) ?
                 <div className="space-y-4 xl:w-1/3">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="lastName">Enter amount</label>
@@ -143,14 +195,30 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                            {bidLoading ? <Rings width={30} height={30}/> : "Bid"}
                         </button>
                     </div>
+                    {products?.paymentAmount &&
+                    <strong>This product has been sold out</strong>
+                    }
                 </div>
                 :
-                <Link href="#" className="flex flex-col">
-                    <button className="bg-orange-500 rounded-xl h-1/2 p-4 font-semibold shadow-xl hover:scale-95 transition-transform duration-500 ease-in-out cursor-pointer">
-                            Make Payment Now
+                <div className="flex flex-col">
+                    <button 
+                    className={classNames({
+                        "relative flex items-center justify-center  rounded-xl h-1/2 p-4 font-semibold shadow-xl hover:scale-95 transition-transform duration-500 ease-in-out cursor-pointer" : true,
+                        "bg-orange-500": (!loading && !products?.paymentAmount),
+                        "bg-gray-400": loading || products?.paymentAmount 
+
+                    })}
+                    disabled={loading || products?.paymentAmount}
+                    >
+                    <PaystackButtonComponent
+                    price={50000}
+                    className={"absolute bg-transparent w-full h-12 "}
+                    onSuccess={paymentHandler}
+                    />
+                            {loading ? <Rings width={30} height={30}/> : products?.paymentAmount ? "Payment Done" : "Make Payment Now"}
                     </button>
-                    <small>You won the bid with: <strong className="border-b">{products?.soldPrice}</strong></small>
-                </Link>
+                    <small>You won the bid with: <strong className="border-b">{Number(products?.soldPrice).toLocaleString()}</strong></small>
+                </div>
                 }
             </div>
         </div>

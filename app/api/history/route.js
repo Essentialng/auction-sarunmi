@@ -9,7 +9,24 @@ export async function POST(request) {
     const itemSold = await prisma.itemSold.findMany({
       where: { ownerId: userId },
       include: {
-        item: true
+        item: {
+          select: {
+            name: true,
+            userId: true,
+            modelId: true,
+            price: true,
+            endTime: true,
+            images: true,
+            description:true,
+            location:true,
+            details:true,
+            startTime:true,
+            status: true,
+            createdAt: true,
+            updatedAt:true
+          }
+        }
+
       },
     });
 
@@ -19,9 +36,19 @@ export async function POST(request) {
         item: {
           select: {
             name: true,
+            userId: true,
+            modelId: true,
             price: true,
             endTime: true,
-          },
+            images: true,
+            description:true,
+            location:true,
+            details:true,
+            startTime:true,
+            status: true,
+            createdAt: true,
+            updatedAt:true
+          }
         },
       },
     });
@@ -32,9 +59,19 @@ export async function POST(request) {
         item: {
           select: {
             name: true,
+            userId: true,
+            modelId: true,
             price: true,
             endTime: true,
-          },
+            images: true,
+            description:true,
+            location:true,
+            details:true,
+            startTime:true,
+            status: true,
+            createdAt: true,
+            updatedAt:true
+          }
         },
       },
     });

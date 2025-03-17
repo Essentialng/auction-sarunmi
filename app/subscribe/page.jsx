@@ -14,6 +14,8 @@ export default function SubscriptionPage() {
     const {user, initializeUser} = useStore();
     const [index, setIndex] = useState(0);
     const [subscribe, setSubscribe] = useState(false);
+
+    
     const subscriptions = [
         
       {

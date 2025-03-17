@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 export default function PaymentPage() {
 
   const {sub, amount} = useParams();
+ 
   const [togglePayment, setTogglePayment] = useState("card");
 
   return (

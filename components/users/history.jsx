@@ -34,9 +34,9 @@ const History = () => {
         setHistoryData(data)
       }
     }catch(error){
-      Toast({
-        title: "error",
-        message: "try again!",
+      Toast.fire({
+        icon: "error",
+        title: "try again!",
       })
     }finally{
       setLoading(false);
@@ -49,10 +49,7 @@ const History = () => {
       ...data,
       ...data.item 
     };
-
     delete flatData.item; 
-  
-    // console.log(flatData);
     localStorage.setItem("auctionData", JSON.stringify(flatData));
     router.push("/description");
   }

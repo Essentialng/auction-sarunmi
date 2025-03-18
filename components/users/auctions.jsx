@@ -3,14 +3,32 @@ import { AuctionItems } from "./auction_items";
 import {  useEffect } from "react";
 import Link from "next/link";
 import useStore from "@/app/store";
+import { axiosInstance } from "@/package/axios";
+import { useState } from "react";
+
 
 export default function Auctions() {
 
   const {fetchAllProduct, cars, properties, others, user} = useStore()
 
+   const [auctions, setAuctions] = useState([])
+  
+  
+      const fetchAuction = async()=>{
+        try{
+          const response = await axiosInstance.get("/listing")
+          const data = await response.data;
+          if(response.status == 200){
+            setAuctions(data.items)
+          }
+        }catch(error){
+          console.log(error)
+        }
+    }
 
   useEffect(() => {
     fetchAllProduct();
+    fetchAuction();
   }, []);
 
 
@@ -37,6 +55,22 @@ export default function Auctions() {
 
   return (
     <div className="lg:px-[4rem]  px-[2rem] py-24 bg-gray-100">
+
+
+      {auctions.length != 0 &&
+       <>
+          <h1 className="lg:text-[30px] text-[22px] font-[700] py-12">
+            Recent Listings
+          </h1>
+          <div>
+              <AuctionItems auctions={auctions} />
+          </div>
+      </>
+      }
+
+
+
+      <>
           <h1 className="lg:text-[30px] text-[22px] font-[700] py-12">
             Top Auctions
           </h1>
@@ -55,7 +89,8 @@ export default function Auctions() {
               )
             ))}
           </div>
-        
+      </>
+     
     </div>
   );
 }

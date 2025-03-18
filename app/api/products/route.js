@@ -10,6 +10,11 @@ export async function GET(request) {
 
     if(categoryId == "all"){
       const itemsData = await prisma.item.findMany({
+        where: {
+          NOT: {
+            status: "listing",
+          },
+        },
         orderBy: {
           createdAt: 'desc', 
         },
@@ -88,7 +93,7 @@ export async function POST(request) {
         startTime,
         endTime,
         details,
-        status:"auction", 
+        status:"listing", 
       }
     })
     return NextResponse.json({model: newCar }, {status: 200});

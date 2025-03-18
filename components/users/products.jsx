@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { statesData } from "@/utils/location";
+import { statesLists } from "@/utils/location";
 import { Header, ProductNav } from "./productSections";
 
 export default function Products({page, headline, detail, category, style, data, productsFiter, locationHandler, typeFilter, amountFiltering}){
@@ -25,7 +25,7 @@ export default function Products({page, headline, detail, category, style, data,
             <ProductNav
                 page={page}
                 category={category}
-                statesData={statesData}
+                statesData={statesLists}
                 data={data}
                 productsFiter={productsFiter} 
                 locationHandler={locationHandler} 

@@ -109,7 +109,7 @@ export const productFilter = (filterItem, id)=>{
 export const locationFilter = (filterItem, location) => {
   const filteredItems = filterItem.filter(product => {
     const locationParts = product.location.split('/'); 
-    const firstLocationWord = locationParts[0]; 
+    const firstLocationWord = locationParts[1]; 
     return firstLocationWord.includes(location); 
   });
   

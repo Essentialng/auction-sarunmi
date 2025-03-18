@@ -28,7 +28,7 @@ export function AuctionItems({ auctions, page }) {
       router.push("/description");
     }
   };
-
+  
   return (
     <div>
       {auctions?.length != 0 ?

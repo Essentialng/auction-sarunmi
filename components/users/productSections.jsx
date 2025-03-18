@@ -3,9 +3,11 @@ import { RiArrowDownSFill } from "react-icons/ri";
 import { AuctionItems } from "./auction_items";
 import { useState, useEffect } from "react";
 import { getAuctionStatus } from "@/utils/methods";
+import { IoIosArrowBack } from "react-icons/io";
+import { statesLists } from "@/utils/location";
 
-const filter_con = "flex 2xl:flex-row xl:flex-row md:flex-row flex-col gap-2 2xl:items-center xl:items-center md:items-center";
-const filter_text = "flex items-center gap-2 border broder-white bg-[#35318E] outline-none 2xl:px-12 xl:px-12 md:px-12 px-2 2xl:py-4 xl:py-4 md:py-4 py-1 rounded-md";
+const filter_con = "relative flex 2xl:flex-row xl:flex-row md:flex-row flex-col gap-2 2xl:items-center xl:items-center md:items-center";
+const filter_text = "relative flex items-center gap-2 border broder-white bg-[#35318E] outline-none xl:px-12 px-2 xl:py-4  py-1 rounded-md";
 
 export function Header({page, headline, detail, style}){
     return(
@@ -41,32 +43,46 @@ export function Header({page, headline, detail, style}){
 }
 
 
-export function ProductNav({page, category, statesData, data, productsFiter, locationHandler, typeFilter, amountFiltering}){
+export function ProductNav({page, category, data, productsFiter, locationHandler, typeFilter, amountFiltering}){
     const [sortedData, setSortedData] = useState(data);
-
-      const sortHandler = (value) => {
-        let filtered = [...data];
+    const [selectBtn, setSelectBtn] = useState(false);
+    const [lga, setLga] = useState([]);
     
-        if (value === 'Ending soon') {
-          filtered = filtered
-            .filter(item => getAuctionStatus(item.startTime, item.endTime) === 'Ongoing')
-            .sort((a, b) => new Date(a.endTime) - new Date(b.endTime));
-        } else if (value === 'Ended') {
-          filtered = filtered.filter(item => getAuctionStatus(item.startTime, item.endTime) === 'Ended');
-        } else if (value === 'Upcoming') {
-          filtered = filtered.filter(item => getAuctionStatus(item.startTime, item.endTime) === 'Upcoming');
-        } else {
-          filtered = [...data]; // All
-        }
+    //   const sortHandler = (value) => {
+    //     let filtered = [...data];
     
-        setSortedData(filtered);
-      };
+    //     if (value === 'Ending soon') {
+    //       filtered = filtered
+    //         .filter(item => getAuctionStatus(item.startTime, item.endTime) === 'Ongoing')
+    //         .sort((a, b) => new Date(a.endTime) - new Date(b.endTime));
+    //     } else if (value === 'Ended') {
+    //       filtered = filtered.filter(item => getAuctionStatus(item.startTime, item.endTime) === 'Ended');
+    //     } else if (value === 'Upcoming') {
+    //       filtered = filtered.filter(item => getAuctionStatus(item.startTime, item.endTime) === 'Upcoming');
+    //     } else {
+    //       filtered = [...data]; // All
+    //     }
+    
+    //     setSortedData(filtered);
+    //   };
 
+    const toggleSelectBtn = ()=>{
+        setSelectBtn(!selectBtn);
+        setLga([]);
+    };
+
+    const locationSelected= (location)=>{
+        locationHandler(location)
+        setSelectBtn(false);
+        setLga([]);
+    }
 
       useEffect(()=>{
         setSortedData(data)
-      },[data])
+      },[data]);
+      
     
+      const dropDown = "max-h-[300px] w-full flex flex-col overflow-auto absolute xl:mt-16 mt-6 bg-[#35318E] z-10 cursor-pointer"
     return(
         <>
         {(page !== "valuers" || page !== "vendors") &&
@@ -85,15 +101,50 @@ export function ProductNav({page, category, statesData, data, productsFiter, loc
                     </select>
                     <div className={filter_con}>
                         <p className="pr-4">Location:</p>
-                        <select 
-                        className={filter_text}
-                        onChange={(e) => locationHandler(e.target.value)}
+                        <div 
+                        className={`flex-col w-full relative flex items-center gap-2 bg-[#35318E]`}
                         >
-                            <option value="" disabled={true}>select location</option>
-                            {statesData.map((state, index)=>(
-                                <option key={index} value={Object.keys(state)}>{Object.keys(state)}</option>
-                            ))}
-                        </select>
+                            <button
+                            className="w-full xl:py-4 py-1 xl:px-12 px-8 xl:rounded-xl rounded-md border broder-white outline-none"  
+                            onClick={toggleSelectBtn}
+                            >select location
+                            </button>
+
+                            {(selectBtn && lga?.length == 0)&&
+                            <div className={dropDown}>
+                                {statesLists.map((location, index)=>(
+                                <p 
+                                key={index} 
+                                className="p-4 hover:bg-slate-300 hover:text-black"
+                                onClick={()=>(setLga(statesLists[index].lgas))}
+                                >
+                                    {location.state}
+                                </p>
+                                ))}
+                            </div>
+                            }
+
+                            {lga != 0 &&
+                            <div className={dropDown}>
+                                <div className="flex items-center gap-2 font-400 text-gray-500 px-4 
+                                cursor-pointer hover:bg-red-400 hover:text-white"
+                                onClick={()=>setLga([])}>
+                                    <IoIosArrowBack color="white"/>
+                                    <small>return to states</small>
+                                </div>
+                                
+                                {lga?.map((location, index)=>(
+                                <p 
+                                key={index} 
+                                className="p-4 hover:bg-slate-300 hover:text-black"
+                                onClick={()=>locationSelected(location)}
+                                >
+                                    {location}
+                                </p>
+                                ))}
+                            </div>
+                            }
+                        </div>
                     </div>
                     {/* <div className={filter_con}>
                         <p className="pr-4">Sort:</p>

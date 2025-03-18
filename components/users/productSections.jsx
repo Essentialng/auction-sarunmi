@@ -41,9 +41,8 @@ export function Header({page, headline, detail, style}){
 }
 
 
-export function ProductNav({page, category, statesData, data, productsFiter, locationHandler}){
+export function ProductNav({page, category, statesData, data, productsFiter, locationHandler, typeFilter, amountFiltering}){
     const [sortedData, setSortedData] = useState(data);
-
 
       const sortHandler = (value) => {
         let filtered = [...data];
@@ -63,6 +62,7 @@ export function ProductNav({page, category, statesData, data, productsFiter, loc
         setSortedData(filtered);
       };
 
+
       useEffect(()=>{
         setSortedData(data)
       },[data])
@@ -78,6 +78,7 @@ export function ProductNav({page, category, statesData, data, productsFiter, loc
                     className={"flex gap-2 items-center bg-[#35318E] 2xl:text-lg xl:text-md border-none outline-none"}
                     onChange={(e) => productsFiter(e.target.value)}
                     >
+                        <option value={"All"}>All</option>
                         {category?.map((value, index)=>(
                             <option key={index} value={value.id}>{value?.name}</option>
                         ))}
@@ -94,13 +95,35 @@ export function ProductNav({page, category, statesData, data, productsFiter, loc
                             ))}
                         </select>
                     </div>
-                    <div className={filter_con}>
+                    {/* <div className={filter_con}>
                         <p className="pr-4">Sort:</p>
                         <select className={filter_text} onChange={(e) => sortHandler(e.target.value)}>
                             <option value="All">All</option>
                             <option value="Ending soon">Ending soon</option>
                             <option value="Ended">Ended</option>
                             <option value="Upcoming">Upcoming</option>
+                        </select>
+                    </div> */}
+                    {page == "Property" &&
+                    <div className={filter_con}>
+                        <p className="pr-4">Type:</p>
+                        <select className={filter_text} onChange={(e) => typeFilter(e.target.value)}>
+                            <option value="All">All</option>
+                            <option value="sale">Sale</option>
+                            <option value="rent">Rent</option>
+                        </select>
+                    </div>
+                    }
+
+                    <div className={filter_con}>
+                        <p className="pr-4">amount:</p>
+                        <select className={filter_text} onChange={(e) => amountFiltering(e.target.value)}>
+                            <option value="All">All</option>
+                            <option value="Low">Under 500k</option>
+                            <option value="High">500k - 5M</option>
+                            <option value="Higher">5M - 20M</option>
+                            <option value="More higher">20M - 200M</option>
+                            <option value="Highest">More than 200M</option>
                         </select>
                     </div>
                 </div>

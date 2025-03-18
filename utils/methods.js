@@ -99,9 +99,12 @@ export const formatText = (text) => {
 
 
 export const productFilter = (filterItem, id)=>{
+  if(id == "All"){
+    return filterItem
+  }else{
   const filterItems = filterItem.filter(product => product.modelId == id);
   return filterItems;
-};
+}};
 
 export const locationFilter = (filterItem, location) => {
   const filteredItems = filterItem.filter(product => {
@@ -111,6 +114,15 @@ export const locationFilter = (filterItem, location) => {
   });
   
   return filteredItems;
+};
+
+export const amountFilter = (filterItem, selectedRange)=>{
+  return  selectedRange === "Low" ? filterItem.filter(product => product.price < 500000)
+  : selectedRange === "High" ? filterItem.filter(product => product.price >= 500000 && product.price <= 5000000)
+  : selectedRange === "Higher" ? filterItem.filter(product => product.price > 5000000 && product.price <= 20000000)
+  : selectedRange === "More higher" ? filterItem.filter(product => product.price > 20000000 && product.price <= 200000000)
+  : selectedRange === "Highest" ? filterItem.filter(product => product.price > 200000000)
+  : filterItem; 
 };
 
 

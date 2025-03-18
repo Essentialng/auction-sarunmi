@@ -2,7 +2,6 @@ import prisma from '@/lib/global_client';
 import { NextResponse } from 'next/server';
 
 
-
 export async function GET(request) {
   try {
 
@@ -11,6 +10,9 @@ export async function GET(request) {
 
     if(categoryId == "all"){
       const itemsData = await prisma.item.findMany({
+        orderBy: {
+          createdAt: 'desc', 
+        },
         include: {
           model: {
             select: {
@@ -123,4 +125,32 @@ export async function DELETE(request) {
       { status: 500 }
     );
   }
-}
+};
+
+
+
+
+
+
+//  const { searchParams } = new URL(request.url);
+//     const categoryId = searchParams.get('categoryId');
+//     const page = parseInt(searchParams.get('page')) || 1; 
+//     const limit = parseInt(searchParams.get('limit')) || 10;
+//     const skip = (page - 1) * limit;
+
+//     if(categoryId == "all"){
+//       const itemsData = await prisma.item.findMany({
+//         skip: skip,
+//         take: limit,
+//         orderBy: {
+//           createdAt: 'desc', 
+//         },
+//         include: {
+//           model: {
+//             select: {
+//               categoryId: true
+//             }
+//           },
+//           watchlist: true
+//         }
+//       })

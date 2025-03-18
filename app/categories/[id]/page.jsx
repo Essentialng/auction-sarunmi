@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 import useFetchProducts from "@/utils/category";
 import OtherCategories from "@/tabs/users/otherCategory";
 import { axiosInstance } from "@/package/axios";
-import { productFilter, locationFilter } from "@/utils/methods";
+import { productFilter, locationFilter, amountFilter } from "@/utils/methods";
 
 
 export default function Page(){
@@ -47,7 +47,19 @@ export default function Page(){
     const locationHandler = useCallback((location)=>{
         const items = locationFilter(filterItems, location);
         setOthers(items);
-    },[others])
+    },[others]);
+
+
+    const amountFiltering = useCallback((range)=>{
+        if(range == "All"){
+            setProperty(others)
+        }{
+        const items = amountFilter(filterItems, range)
+        setOthers(items)
+    }
+    },[others]);
+
+
 
     useEffect(() => {
         fetchOthers(id)
@@ -88,6 +100,7 @@ export default function Page(){
                     data={others}
                     productsFiter={othersFilter}
                     locationHandler={locationHandler}
+                    amountFiltering={amountFiltering}
                     />
                 </div>
             </div>

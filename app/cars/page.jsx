@@ -2,7 +2,7 @@
 import Products from "@/components/users/products"
 import { useState, useEffect, useCallback } from "react";
 import { axiosInstance } from "@/package/axios";
-import { productFilter, locationFilter } from "@/utils/methods";
+import { productFilter, locationFilter, amountFilter } from "@/utils/methods";
 
 export default function Page(){
 
@@ -36,6 +36,15 @@ export default function Page(){
         setCars(items);
     },[cars])
 
+    const amountFiltering = useCallback((range)=>{
+        if(range == "All"){
+            setCars(cars)
+        }{
+        const items = amountFilter(filterItems, range)
+        setCars(items)
+    }
+    },[cars])
+
     
      
     useEffect(() => {
@@ -55,6 +64,7 @@ export default function Page(){
             data={cars}
             productsFiter={carFilter}
             locationHandler={locationHandler}
+            amountFiltering={amountFiltering}
             />
             
         </>

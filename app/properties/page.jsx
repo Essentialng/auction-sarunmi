@@ -2,7 +2,7 @@
 import Products from "@/components/users/products"
 import { useState, useEffect, useCallback } from "react";
 import { axiosInstance } from "@/package/axios";
-
+import { locationFilter, productFilter, amountFilter } from "@/utils/methods";
 
 
 export default function Page(){
@@ -31,15 +31,35 @@ export default function Page(){
         fetchProperties()
     }, []);
 
-
     const propertyFilter = useCallback((id)=>{
-            const filteredProperties = productFilter(filterItems, id);
-            setProperty(filteredProperties);
-        },[property]);
+        const filteredProperties = productFilter(filterItems, id);
+        setProperty(filteredProperties);
+    },[property]);
+
     
     const locationHandler = useCallback((location)=>{
-        const items = locationFilter(filterItems, location);
+        const items = locationFilter(property, location);
         setProperty(items);
+    },[property])
+
+
+    const typeFilter = useCallback((type)=>{
+        if(type == "All"){
+            setProperty(property)
+        }else{
+        const items = property.filter(product => product.details?.propertyStatus?.toLowerCase() == type);
+        setProperty(items)
+        }
+    },[property])
+
+
+    const amountFiltering = useCallback((range)=>{
+        if(range == "All"){
+            setProperty(property)
+        }{
+        const items = amountFilter(filterItems, range)
+        setProperty(items)
+    }
     },[property])
 
     return(
@@ -54,6 +74,8 @@ export default function Page(){
             data={property}
             productsFiter={propertyFilter}
             locationHandler={locationHandler}
+            typeFilter={typeFilter}
+            amountFiltering={amountFiltering}
             />
         </>
     )

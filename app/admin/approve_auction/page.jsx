@@ -139,8 +139,8 @@ export default function Approve(){
     useEffect(()=>{
         fetchVendors();
     },[])
-
-
+const items = contents.map((content)=>{content.items})
+console.log(items)
     return(
     <div className="w-10/12 ml-auto mt-24 px-8 py-20 bg-white flex flex-col gap-12">
         <Header
@@ -178,7 +178,7 @@ export default function Approve(){
 
                                 <div className="flex flex-col gap-8">                                
                                     <div className="flex flex-col gap-4 font-normal text-sm">
-                                    <small className="text-[#EF6509]">Car Details</small>
+                                    <small className="text-[#EF6509]"> Details</small>
                                     {carDetails.map((item, index)=>(
                                         <small>{item}</small>
                                     ))}

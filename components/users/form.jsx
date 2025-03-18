@@ -1,7 +1,6 @@
 import PopUp from "./signup-pop";
 import { Rings } from 'react-loading-icons';
 import SelectStateLGA from "./location";
-import useStore from "@/app/store";
 
 export default function FormField({
     submitHandler,
@@ -22,9 +21,9 @@ export default function FormField({
     categories,
     setFormValues
 }){
-const {user} = useStore()
-    const input_style = "mt-1 p-2 border border-gray-300 rounded w-full bg-[#F4FDFF]";
-    const label_style = "block text-gray-700 text-[14px]";
+
+  const input_style = "mt-1 p-2 border border-gray-300 rounded w-full bg-[#F4FDFF]";
+  const label_style = "block text-gray-700 text-[14px]";
 
     return (
         
@@ -72,7 +71,7 @@ const {user} = useStore()
                 </select>
               </div>
               <div>
-                <label className={label_style}>Product Name</label>
+                <label className={label_style}>Product Title</label>
                 <input
                   type="text"
                   placeholder="Type your product name"
@@ -102,7 +101,7 @@ const {user} = useStore()
                   </div>
                 </div>
     
-                <div className="w-full flex items-center space-x-4 pt-6">
+                <div className="w-4/5 flex items-center space-x-4 pt-6 overflow-x-auto scrollbar-hide">
                   {formValues.images.map((image, index) => (
                   <div  key={index} className="relative">
                     <img
@@ -181,31 +180,51 @@ const {user} = useStore()
     
     
               <div className="grid grid-cols-3 gap-3 items-center">
-                {formFields.map((data, index) => (
-                  <div key={index}>
-                    <label className={label_style}>{data?.label}</label>
-                    {data?.dataType === "file" ? (
-                      <input
-                        type="file"
-                        name={data?.value}
-                        className={input_style}
-                        onChange={(e) => certificateOfOcupancy(e, data?.value)} 
-                        required
-                      />
-                    ) : (
-                      <input
-                        type={data?.dataType}
-                        name={data?.value}
-                        placeholder={data?.placeholder}
-                        className={input_style}
-                        value={formValues.details[data?.value]} 
-                        onChange={detailHandler}
-                        required
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
+              {formFields.map((data, index) => (
+                <div key={index}>
+                  <label className={label_style}>{data?.label}</label>
+
+                  {data?.dataType === "file" ? (
+                    // File input
+                    <input
+                      type="file"
+                      name={data?.value}
+                      className={input_style}
+                      onChange={(e) => certificateOfOcupancy(e, data?.value)}
+                      required={data?.required}
+                    />
+                  ) : data?.dataType === "select" ? (
+                    // Select input
+                    <select
+                      name={data?.value}
+                      className={input_style}
+                      value={formValues.details[data?.value]}
+                      onChange={detailHandler}
+                      required={data?.required}
+                    >
+                      <option value="">Select {data?.label}</option>
+                      {data?.options?.map((option, i) => (
+                        <option key={i} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    // Regular input
+                    <input
+                      type={data?.dataType}
+                      name={data?.value}
+                      placeholder={data?.placeholder}
+                      className={input_style}
+                      value={formValues.details[data?.value]}
+                      onChange={detailHandler}
+                      required={data?.required}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+
       
     
             <div className=" text-red-600 flex flex-col gap-2 text-start">

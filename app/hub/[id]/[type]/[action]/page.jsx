@@ -23,7 +23,6 @@ const Hub = () => {
   
   const navBtn = "block text-lg text-start font-semibold"
 
-  
   return (
     <div className="min-h-screen flex flex-col sm:px-24 px-2 mt-40">
       <div className="lg:grid grid-cols-5 2xl:gap-12 xl:gap-4">

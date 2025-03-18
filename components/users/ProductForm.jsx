@@ -3,6 +3,7 @@ import { axiosInstance } from "@/package/axios";
 import { handleCloudinary } from "@/utils/cloudinary";
 import FormField from "./form";
 import NotificationHandler from "@/utils/notification";
+import { Toast } from "@/package/alert";
 
 const ProductUpload = ({id, product, handleClick}) => {
 
@@ -98,9 +99,17 @@ const ProductUpload = ({id, product, handleClick}) => {
     };
 
 
-
     const submitHandler = async (e) => {
       e.preventDefault();
+
+      if(formValues.images.length < 5 || formValues.images.length > 10){
+        Toast.fire({
+          icon: 'error',
+          title: 'Please upload between 5 to 10 images',
+        })
+        return;
+      }
+
       setLoading(true)
 
       try{

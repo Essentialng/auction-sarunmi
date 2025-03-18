@@ -94,3 +94,33 @@ export async function POST(request) {
     return NextResponse.json({ success: false, message: `Failed to create car: ${error.message}` }, { status: 500 });
   }
 }
+
+
+
+export async function DELETE(request) {
+  try {
+    const body = await request.json();
+    const { id } = body;
+
+    // Check if item exists
+    const existingItem = await prisma.Item.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!existingItem) {
+      return NextResponse.json({ message: 'Item not found' }, { status: 404 });
+    }
+
+    // Delete item
+    await prisma.Item.delete({
+      where: { id: parseInt(id) },
+    });
+
+    return NextResponse.json({ message: 'Item deleted successfully' }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: `Failed to delete item: ${error.message}` },
+      { status: 500 }
+    );
+  }
+}

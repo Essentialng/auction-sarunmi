@@ -11,7 +11,6 @@ export default function Submitted({data}){
             <div className="flex flex-col gap-8">
                 <p> {data.description}</p>
                 <ul className="w-2/3 flex flex-col gap-3">
-                {/* Object.entries(description).map(([key, value], index) => ( */}
                     {Object.entries(data?.details)?.map(([key, value], index)=>(
                     <li className="grid grid-cols-2" key={index}>
                         <p>{key}:</p>

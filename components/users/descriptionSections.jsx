@@ -10,41 +10,51 @@ import classNames from "classnames";
 
 export function ProductImages({products, setActiveImage, activeImage}){
 
-
     return(
         <div className="col-span-3 flex flex-col xl:grid xl:grid-cols-4 gap-6">
 
-  {/* Thumbnails */}
-  <div className="flex xl:grid xl:grid-flow-row grid-cols-1 flex-row xl:flex-col items-center xl:gap-20 gap-8 w-full col-span-1 order-2 xl:order-1 justify-center xl:justify-start
-  max-h-[100px] xl:max-h-[500px] overflow-x-auto xl:overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+            
+            <div className="flex xl:grid xl:grid-flow-row grid-cols-1 flex-row xl:flex-col items-center xl:gap-20 gap-8 w-full col-span-1 order-2 xl:order-1 justify-center xl:justify-start
+            max-h-[100px] xl:max-h-[500px] overflow-x-auto xl:overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
 
-    {products?.images?.map((image, index) => (
-      activeImage !== image && (
-        <div
-          key={index}
-          className="relative flex border border-[#FF9354] rounded-2xl h-full w-full items-center justify-center cursor-pointer overflow-hidden max-w-[80px]"
-          onClick={() => setActiveImage(image)}
-        >
-          <img src={image} className="rounded-md object-cover h-20 w-20" alt="Product thumbnail" />
+                {products?.images?.map((image, index) => (
+                activeImage !== image && (
+                    <div
+                    key={index}
+                    className="relative flex border border-[#FF9354] rounded-2xl h-full w-full items-center justify-center cursor-pointer overflow-hidden max-w-[80px]"
+                    onClick={() => setActiveImage(image)}
+                    >
+                    <img src={image} className="rounded-md object-cover h-20 w-20" alt="Product thumbnail" />
+                    </div>
+                )
+                ))}
+
+            </div>
+
+            {/* Main Image */}
+            <div className="w-full col-span-3 p-4 flex justify-center items-center h-full order-1 xl:order-2">
+                <img src={activeImage} className="rounded-md w-full object-contain xl:max-h-[400px] max-h-[350px]" alt="Product main image" />
+            </div>
+
         </div>
-      )
-    ))}
-
-  </div>
-
-  {/* Main Image */}
-  <div className="w-full col-span-3 p-4 flex justify-center items-center h-full order-1 xl:order-2">
-    <img src={activeImage} className="rounded-md w-full object-contain xl:max-h-[400px] max-h-[350px]" alt="Product main image" />
-  </div>
-
-</div>
-
-      
     )
-}
+};
+
+
 
 
 export function ProductDescription({setProductVerification, descriptions}){
+    const [previewImage, setPreviewImage] = useState(null);
+
+  const handleViewImage = (imageUrl) => {
+    setPreviewImage(imageUrl);
+  };
+
+  const closePreview = () => {
+    setPreviewImage(null);
+  };
+
+
     return(
     <div className="flex flex-col gap-8 xl:col-span-2">
         <div className="flex flex-wrap lg:flex-nowrap gap-8">
@@ -62,17 +72,47 @@ export function ProductDescription({setProductVerification, descriptions}){
                 </div>
                 <div className="bg-gray-50 py-4 xl:px-12 px-4 rounded-2xl border border-[#EF6509]">
                 <h2 className="text-lg font-semibold mb-4 text-center py-2">Specification</h2>
-                <ul className="space-y-2 p-2 shadow-xl border-black border rounded-xl overflow-hidden">
-                    {Object.entries(descriptions).map(([key, value], index)=>(
-                    <li key={index} className="w-full border-b py-1 border-b-black flex justify-between"><strong className="font-bold">{key}:</strong> {value}</li>
-                ))}
-                </ul>
+            <ul className="space-y-2 p-2 shadow-xl border-black border rounded-xl overflow-hidden">
+                {Object.entries(descriptions).map(([key, value], index) => {
+                const formattedKey = key.replace(/([A-Z])/g, ' $1').trim();
+
+             return (
+            <li
+              key={index}
+              className="w-full border-b py-1 border-b-black flex justify-between items-center"
+            >
+              <strong className="font-bold">{formattedKey}:</strong>
+              {typeof value === 'string' && value.startsWith('https://') ? (
+                <button
+                  className="bg-blue-500 text-white px-3 py-1 rounded"
+                  onClick={() => handleViewImage(value)}
+                >
+                  View
+                </button>
+              ) : (
+                <span>{value}</span>
+              )}
+            </li>
+            );
+            })}
+        </ul>
+                {previewImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50"
+          onClick={closePreview}
+        >
+          <img src={previewImage} alt="Preview" className="max-h-[90%] max-w-[90%] rounded" />
+        </div>
+      )}
                 </div>
             </div>
         </div>
     </div>
     )
-}
+};
+
+
+
 
 
 export function ProductAuction({products, bids, amount, handleChange, disableBtn,watchListHandler, bidHandler, bidLoading, watchListLoading }){
@@ -121,8 +161,6 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
     const toStart = calculateTimeToStart(products.startTime) 
     const timeStatus = endTime == "00:00:00:00" ? true : false;
 
-// console.log(user?.id)
-// console.log(products)
     return(
     <>
         <div className="w-full mt-24">
@@ -177,7 +215,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         <button
                             className={`border border-white py-3 rounded-md w-full flex items-center justify-center ${isInWatchlist && "bg-gray-200"}`}
                             onClick={() => watchListHandler(products.id)}
-                            disabled={isInWatchlist || (timeStatus && !toStart) || userProduct}
+                            disabled={isInWatchlist || timeStatus || userProduct}
                         >
                             {watchListLoading ? <Rings width={30} height={30}/> : "Add to Watchlist"}
                         </button>

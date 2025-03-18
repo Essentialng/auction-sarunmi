@@ -74,6 +74,57 @@ export async function POST(request) {
 
 
 
+export async function PUT(request) {
+  try {
+    const body = await request.json();
+
+    const {
+      id,           
+      categoryId,
+      label,
+      value,
+      placeholder,
+      dataType,
+      required,
+      options,
+    } = body;
+
+    const existingField = await prisma.field.findUnique({
+      where: { id },
+    });
+
+    if (!existingField) {
+      return NextResponse.json({ message: `Field not found` }, { status: 404 });
+    }
+
+    const updatedField = await prisma.field.update({
+      where: { id },
+      data: {
+        categoryId: categoryId ?? existingField.categoryId,
+        label: label ?? existingField.label,
+        value: value ?? existingField.value,
+        placeholder: placeholder ?? existingField.placeholder,
+        dataType: dataType ?? existingField.dataType,
+        required: required ?? existingField.required,
+        options: options ?? existingField.options,
+      },
+    });
+
+    return NextResponse.json(
+      { message: 'Field updated successfully', field: updatedField },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: `Internal server error: ${error.message}` },
+      { status: 500 }
+    );
+  }
+}
+
+
+
+
 export async function DELETE(request) {
   try {
     const { id, fieldId } = await request.json();

@@ -86,7 +86,7 @@ model Field {
   placeholder String     
   dataType    String      
   required    Boolean     @default(false)
-  options     String?    
+  options     Json?    
   category    Category    @relation(fields: [categoryId], references: [id])
 }
 

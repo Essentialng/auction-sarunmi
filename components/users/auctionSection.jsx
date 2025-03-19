@@ -6,11 +6,11 @@ import { FaCircle } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
 import classNames from "classnames";
 import useStore from "@/app/store";
+import Link from "next/link";
 
 
 
-
-export function AuctionCard ({ item, page, onViewAuction }) {
+export function AuctionCard ({ item, page, onViewAuction, link }) {
   const timeLeft = calculateTimeLeft(item?.endTime);
   const timeToStart = calculateTimeToStart(item?.startTime);
 
@@ -35,8 +35,16 @@ export function AuctionCard ({ item, page, onViewAuction }) {
           timeToStart={timeToStart}
           onPreBid={() => onViewAuction(item)}
           userId={item?.userId}
+          link={link}
+          itemId = {item?.model?.categoryId}
         />
       </div>
+      {link &&
+      <div className="flex items-center gap-2 border p-2 shadow-md rounded-md font-medium">
+        <small>{item?.modelId == 5 ? "Land Properties" : item?.modelId == 3 && "Apartment Properties" }</small>
+        <small className="font-semibold bg-gray-200 py-1 px-2">{item?.count} Ads</small> 
+      </div>
+      }
     </div>
   );
 };
@@ -116,7 +124,7 @@ const AuctionDetails = ({ type, description, price }) => (
 
 
 
-const AuctionActions = ({ timeLeft, timeToStart, onPreBid, userId }) => {
+const AuctionActions = ({ timeLeft, timeToStart, onPreBid, userId, link, itemId }) => {
 
   const {user} = useStore();
 
@@ -138,7 +146,7 @@ const AuctionActions = ({ timeLeft, timeToStart, onPreBid, userId }) => {
       onClick={onPreBid}
       >VIEW AUCTION
       </button>
-      
+      {!link ?
       <button 
       disabled={user?.id == userId } 
       className={classNames({
@@ -148,6 +156,11 @@ const AuctionActions = ({ timeLeft, timeToStart, onPreBid, userId }) => {
       onClick={onPreBid}>
         PRE BID
       </button>
+      :
+      <Link href={`/listingItems/${itemId}`} className={btn_class}>
+          VIEW ALL
+      </Link>
+      }
     </div>
   );
 };

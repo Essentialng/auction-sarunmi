@@ -19,6 +19,9 @@ const useStore = create((set) => ({
   models: [],
   allUsers : [],
   subscribers: [],
+  carsCount: [],
+  propertiesCount: [],
+  othersCount: [],
   
 
 
@@ -58,6 +61,7 @@ const useStore = create((set) => ({
             othersData.push(item);
           }
         });
+
         set({ 
           cars: carsData, 
           properties: propertiesData, 
@@ -65,6 +69,9 @@ const useStore = create((set) => ({
           products: false,
           categoryName: data.category,
           auctions: data.items,
+          carsCount: carsData.length,
+          propertiesCount: propertiesData.length,
+          othersCount: othersData.length,
          });
 
       }
@@ -134,7 +141,7 @@ const useStore = create((set) => ({
       }catch(error){
           console.log(error)
       }
-  }
+    },
 
 }));
 

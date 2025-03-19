@@ -5,7 +5,7 @@ import Loading from "@/tabs/admin/loading";
 import useStore from "@/app/store";
 import { AuctionCard } from "./auctionSection";
 
-export function AuctionItems({ auctions, page }) {
+export function AuctionItems({ auctions, page, link, count}) {
   const router = useRouter();
   const { loading } = useStore();
   const [stateUpdated, setStateUpdated] = useState(false);
@@ -39,7 +39,7 @@ export function AuctionItems({ auctions, page }) {
         })}
       >
         {auctions?.map((item, index) => (
-            <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} />
+            <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} link= {link} />
         ))}
 
         

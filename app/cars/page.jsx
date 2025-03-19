@@ -9,7 +9,9 @@ export default function Page(){
     const [cars, setCars] = useState([]);
     const [models, setModels] = useState([]);
     const [filterItems, setFilterItems] = useState([]);
-       
+    const [locationNums, setLocationNums] = useState([]);
+
+
     const fetchCars = async()=>{
         try{
             const response = await axiosInstance.get(`/cars`)

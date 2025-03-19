@@ -1,6 +1,8 @@
 import PopUp from "./signup-pop";
 import { Rings } from 'react-loading-icons';
 import SelectStateLGA from "./location";
+import Loading from "@/tabs/admin/loading";
+
 
 export default function FormField({
     submitHandler,
@@ -29,7 +31,7 @@ export default function FormField({
         
           <form
           onSubmit={submitHandler} 
-          className="space-y-6">
+          className="space-y-6 relative">
             <div className="flex flex-col gap-8">
               {
               product.name == "Others" &&
@@ -242,6 +244,8 @@ export default function FormField({
             {success &&
             <PopUp details={details}/>
             }
+
+            {loading && <Loading/>}
     
           </form>
       );

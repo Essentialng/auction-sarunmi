@@ -43,7 +43,7 @@ export function Header({page, headline, detail, style}){
 }
 
 
-export function ProductNav({page, category, data, productsFiter, locationHandler, typeFilter, amountFiltering}){
+export function ProductNav({page, category, data, productsFiter, locationHandler, typeFilter, amountFiltering, link}){
     const [sortedData, setSortedData] = useState(data);
     const [selectBtn, setSelectBtn] = useState(false);
     const [lga, setLga] = useState([]);
@@ -85,8 +85,9 @@ export function ProductNav({page, category, data, productsFiter, locationHandler
       const dropDown = "max-h-[300px] w-full flex flex-col overflow-auto absolute xl:mt-16 mt-6 bg-[#35318E] z-10 cursor-pointer"
     return(
         <>
-        {(page !== "valuers" || page !== "vendors") &&
-            <>            
+        {((page !== "valuers" || page !== "vendors") ) &&
+            <>
+                {!link &&
                 <div className="flex justify-between items-center bg-[#35318E] rounded-2xl 2xl:px-12 
                 xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
                 >
@@ -178,7 +179,8 @@ export function ProductNav({page, category, data, productsFiter, locationHandler
                         </select>
                     </div>
                 </div>
-
+                }
+                
                 <AuctionItems 
                 auctions={sortedData} 
                 page={page}

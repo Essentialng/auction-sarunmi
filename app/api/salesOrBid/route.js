@@ -15,31 +15,32 @@ export async function GET(request) {
 
     const itemsWithHighestBids = await prisma.item.findMany({
       where: {
-        userId,
-        status: { not: "sold" },
-        // bids: { some: {} },
+          status: "auction",
+          bids: {
+              some: {}, 
+          },
       },
       include: {
-        bids: {
-          orderBy: { amount: "desc" },
-          take: 1,
-          select: {
-            id: true,
-            amount: true,
-            userId: true,
-            createdAt: true,
-            user: {
+          bids: {
+              orderBy: { amount: "desc" }, 
+              take: 1, 
               select: {
-                firstName: true,
-                lastName: true,
-                profilePicture: true,
-                phoneNumber: true,
+                  id: true,
+                  amount: true,
+                  userId: true,
+                  createdAt: true,
+                  user: {
+                      select: {
+                          firstName: true,
+                          lastName: true,
+                          profilePicture: true,
+                          phoneNumber: true,
+                      },
+                  },
               },
-            },
           },
-        },
       },
-    });
+  });
 
     const formattedItems = itemsWithHighestBids.map((item) => ({
       ...item,

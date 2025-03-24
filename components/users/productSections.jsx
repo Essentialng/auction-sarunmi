@@ -43,7 +43,7 @@ export function Header({page, headline, detail, style}){
 }
 
 
-export function ProductNav({page, category, data, productsFiter, locationHandler, typeFilter, amountFiltering, link}){
+export function ProductNav({page, category, data, productsFiter, locationHandler, typeFilter, amountFiltering, link, onPage}){
     const [sortedData, setSortedData] = useState(data);
     const [selectBtn, setSelectBtn] = useState(false);
     const [lga, setLga] = useState([]);
@@ -87,7 +87,7 @@ export function ProductNav({page, category, data, productsFiter, locationHandler
         <>
         {((page !== "valuers" || page !== "vendors") ) &&
             <>
-                {!link &&
+               
                 <div className="flex justify-between items-center bg-[#35318E] rounded-2xl 2xl:px-12 
                 xl:px-12 px-4 2xl:py-4 xl:py-4 md:py-4 py-1 text-white 2xl:text-[14px] xl:text-[14px] md:text-[10px] text-[8px]"
                 >
@@ -179,11 +179,12 @@ export function ProductNav({page, category, data, productsFiter, locationHandler
                         </select>
                     </div>
                 </div>
-                }
                 
                 <AuctionItems 
                 auctions={sortedData} 
                 page={page}
+                link={link}
+                onPage={onPage}
                 />
             </>
         }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import useStore from "@/app/store";
 import { axiosInstance } from "@/package/axios";
 import { useState } from "react";
+import axios from "axios";
 
 
 export default function Auctions() {
@@ -26,6 +27,10 @@ export default function Auctions() {
         }
     }
 
+  
+
+
+   
   useEffect(() => {
     fetchAllProduct();
     fetchAuction();
@@ -82,7 +87,7 @@ export default function Auctions() {
               (items?.data?.length != 0 &&
               <section className="flex flex-col gap-6" key={index}>
                 <div className="flex justify-between ">
-                  <span className={header}>{items.name} <small className="text-base px-4 py-1 bg-gray-200 rounded-lg font-normal shadow-md">{items.count} Ads</small></span>
+                  <span className={header}>{items.name} <small className="text-base px-4 py-1 bg-orange-300 border-2 rounded-lg font-normal shadow-md">{items.count} Ads</small></span>
                   <Link href={items.link} className={small}>
                     View all
                   </Link>

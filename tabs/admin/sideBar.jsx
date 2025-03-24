@@ -39,17 +39,17 @@ export default function SideBar() {
     
     { 
       name: "Auction Management",
-      prePath: "/admin/approve_auction",
-      path: "/admin/approve_auction",
+      prePath: "/admin/auction_management",
+      path: "/admin/auction_management/approve_auction",
        dropdown: [
         {
           name : "Approve Auction",
-          url : "/admin/approve_auction",
+          url : "/admin/auction_management/approve_auction",
 
         },
         {
           name : "Schedule Auction",
-          url: "#"
+          url: "/admin/auction_management/schedule_auction"
         },
         { 
           name: "Monitor Live Auction",

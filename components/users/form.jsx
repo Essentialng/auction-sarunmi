@@ -2,6 +2,8 @@ import PopUp from "./signup-pop";
 import { Rings } from 'react-loading-icons';
 import SelectStateLGA from "./location";
 import Loading from "@/tabs/admin/loading";
+import { PiWarningCircleBold } from "react-icons/pi";
+
 
 
 export default function FormField({
@@ -28,7 +30,7 @@ export default function FormField({
   const label_style = "block text-gray-700 text-[14px]";
 
     return (
-        
+        <> 
           <form
           onSubmit={submitHandler} 
           className="space-y-6 relative">
@@ -142,7 +144,7 @@ export default function FormField({
                 <label className={label_style}>Location</label>
                 <SelectStateLGA input_style={input_style} formValues={formValues} setFormValues={setFormValues}/>
             </div>
-            <div className="flex items-center justify-between gap-8">
+            {/* <div className="flex items-center justify-between gap-8">
               <div className="w-full">
                 <label className={label_style}>Start Time</label>
                 <input 
@@ -155,7 +157,7 @@ export default function FormField({
                  />
               </div>
     
-              <div className="w-full">
+              <div className="w-full ">
                 <label className={label_style}>End Time</label>
                 <input 
                 name="endTime"
@@ -166,9 +168,10 @@ export default function FormField({
                 onChange={changeHandler}
                  />
               </div>
-            </div>
-            <div className="w-1/2">
-                <label className={label_style}>Price</label>
+            </div> */}
+            <div className="w-full flex items-center justify-between gap-8">
+              <div className="w-full">
+                <label className={label_style}>Minimum Amount</label>
                 <input
                   type="number"
                   placeholder="Type your Auction Price"
@@ -179,6 +182,30 @@ export default function FormField({
                   required
                 />
               </div>
+              <div className="w-full">
+                <div>
+                  <div className="w-fit flex items-center gap-1 relative group">
+                      <PiWarningCircleBold className="cursor-pointer" color="red"/>
+                      <div className="absolute border bg-white w-[200px] text-black p-4 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                          <small>
+                          The Pay Off feature allows buyers to offer a price to purchase your product immediately, without waiting for the auction to begin.
+                          </small>
+                      </div>
+                      <label className={label_style}>Pay Off</label>
+                  </div>               
+                </div>
+                
+                <input
+                  type="number"
+                  placeholder="Type your Pay off Price (Optional)"
+                  name="payOff"
+                  className={input_style}
+                  value={formValues.payOff}
+                  onChange={changeHandler}
+                  required
+                />
+              </div>
+            </div>
     
     
               <div className="grid grid-cols-3 gap-3 items-center">
@@ -238,15 +265,13 @@ export default function FormField({
               </button>
               <small>{errorMessage}</small>
             </div>
-    
-    
-    
-            {success &&
+          </form>
+
+         {success &&
             <PopUp details={details}/>
             }
 
             {loading && <Loading/>}
-    
-          </form>
+          </>
       );
 }

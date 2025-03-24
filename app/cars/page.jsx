@@ -10,7 +10,7 @@ export default function Page(){
     const [models, setModels] = useState([]);
     const [filterItems, setFilterItems] = useState([]);
     const [locationNums, setLocationNums] = useState([]);
-
+    
 
     const fetchCars = async()=>{
         try{

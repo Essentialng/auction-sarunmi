@@ -29,7 +29,7 @@ export default function Page(){
                 const items = data.data.map(other => other.items).flat();
                 setFilterItems(items)
                 setOthers(items);
-                setModels(data.data); 
+                 
                 }
             }catch(error){
                 console.log(error)
@@ -38,10 +38,12 @@ export default function Page(){
 
         const fetchAuction = async()=>{
             try{
-              const response = await axiosInstance.post("/listing", id)
+              const response = await axiosInstance.post("/listing", {id: parseInt(id)})
               const data = await response.data;
               if(response.status == 200){
                 setAuctions(data.items)
+                setFilterItems(data.items)
+                setModels(data.models);
               }
             }catch(error){
               console.log(error)
@@ -51,24 +53,24 @@ export default function Page(){
 
 
     const othersFilter = useCallback((id)=>{
-        const filteredCars = productFilter(filterItems, id);
-        setOthers(filteredCars);
-    },[others]);
+        const filtered = productFilter(filterItems, id);
+        setAuctions(filtered);
+    },[auctions]);
 
     const locationHandler = useCallback((location)=>{
         const items = locationFilter(filterItems, location);
-        setOthers(items);
-    },[others]);
+        setAuctions(items);
+    },[auctions]);
 
 
     const amountFiltering = useCallback((range)=>{
         if(range == "All"){
-            setProperty(others)
+            setAuctions(auctions)
         }{
         const items = amountFilter(filterItems, range)
-        setOthers(items)
+        setAuctions(items)
     }
-    },[others]);
+    },[auctions]);
 
 
 
@@ -107,6 +109,7 @@ export default function Page(){
                     locationHandler={locationHandler}
                     amountFiltering={amountFiltering}
                     link={true}
+                    onPage = {true}
                     />
                 </div>
             </div>

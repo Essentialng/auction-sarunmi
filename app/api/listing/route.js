@@ -6,7 +6,7 @@ export async function GET() {
     // Step 1: Fetch all items
     const itemsData = await prisma.item.findMany({
       where: {
-        status: "listing",
+        status: "uploaded",
       },
       orderBy: {
         createdAt: 'desc', // Most recent first
@@ -19,8 +19,14 @@ export async function GET() {
           },
         },
         watchlist: true,
+        user: {
+          select:{
+          firstName: true,
+          lastName: true
+        }}
       },
     });
+
 
 
     const carsData = itemsData.filter(
@@ -45,8 +51,6 @@ export async function GET() {
     const landProperties = propertiesData.filter(
       (property) => property.modelId === 5 // Lands: any other model ID
     );
-
-    
 
     // Select a single house and land property if they exist
 
@@ -78,35 +82,36 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const { id } = await request.json(); // 'id' refers to categoryId
+    const { id } = await request.json(); 
 
-    // Fetch items where the model's categoryId matches the provided id
     const itemsData = await prisma.item.findMany({
       where: {
-        model: {
-          categoryId: id,
-        },
-        status: "listing", // Ensure only "listing" status items are included
+        status: "uploaded",
       },
       orderBy: {
-        createdAt: 'desc', // Order items by their creation date
+        createdAt: 'desc', 
       },
       include: {
-        model: {
+        model: true,
+        user: {
           select: {
-            categoryId: true, // Include categoryId from the related model
+            firstName: true,
+            lastName: true,
           },
         },
       },
     });
 
-    return NextResponse.json({ items: itemsData }, { status: 200 });
+    const allModels = await prisma.model.findMany();
+
+    return NextResponse.json(
+      { items: itemsData, models: allModels }, 
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
-      { success: false, message: `Failed to fetch items: ${error.message}` },
+      { success: false, message: `Failed to fetch data: ${error.message}` },
       { status: 500 }
     );
   }
 }
-
-

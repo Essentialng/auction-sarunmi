@@ -87,7 +87,7 @@ export default function SliderProduct({ products, bidProducts }) {
               </div>
 
               {/* Second Container */}
-              {(products.length) &&
+              {(products.length > 1) &&
                 <div 
                   className={`col-span-1 w-full px-2 ${bidProducts && "cursor-pointer"} ${products.length > 1 ? "xl:block hidden" : ""}`}
                   
@@ -131,10 +131,10 @@ export default function SliderProduct({ products, bidProducts }) {
                 <MdArrowBackIos size={35}/>
               </button>
               <button className={classNames({
-                "bg-gray-300 text-gray-50" : navigate + 2 == productLength,
+                "bg-gray-300 text-gray-50" : (navigate + 2 == productLength || products.length < 2 ),
                 [navigationBtn] : true,
                 })} 
-                disabled={navigate + 2 == productLength}
+                disabled={(navigate + 2 == productLength || products.length < 2 )}
                 onClick={()=>setNavigate(navigate + 1)}
                 >
                 <MdArrowForwardIos size={35}/>

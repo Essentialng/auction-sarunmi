@@ -5,7 +5,7 @@ export async function GET() {
     try {
         const cars = await prisma.model.findMany({
             where: {
-                categoryId: 1
+                categoryId: 1,
             },
             include: {
                 items: {

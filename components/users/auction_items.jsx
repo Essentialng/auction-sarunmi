@@ -5,7 +5,7 @@ import Loading from "@/tabs/admin/loading";
 import useStore from "@/app/store";
 import { AuctionCard } from "./auctionSection";
 
-export function AuctionItems({ auctions, page, link, count}) {
+export function AuctionItems({ auctions, page, link, onPage, count}) {
   const router = useRouter();
   const { loading } = useStore();
   const [stateUpdated, setStateUpdated] = useState(false);
@@ -31,7 +31,7 @@ export function AuctionItems({ auctions, page, link, count}) {
   
   return (
     <div>
-      {auctions?.length != 0 ?
+     
       <div
         className={classNames("grid md:grid-cols-2 grid-cols-1 gap-4 relative", {
           "lg:grid-cols-4": page !== "categories",
@@ -39,18 +39,14 @@ export function AuctionItems({ auctions, page, link, count}) {
         })}
       >
         {auctions?.map((item, index) => (
-            <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} link= {link} />
+            <AuctionCard key={index} item={item} page={page} onViewAuction={handleViewAuction} link= {link} onPage={onPage}/>
         ))}
 
         
         
         {loading && <Loading />}
       </div>
-      :
-      <div className="w-full flex items-center justify-center text-center font-bold">
-        <h1>No Item available</h1>
-      </div>
-      }
+     
     </div>
   );
 }

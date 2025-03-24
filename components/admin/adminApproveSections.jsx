@@ -32,11 +32,6 @@ export function CheckBox({carDetails, report}){
                 <input type="checkbox" />
             ))}
         </div>
-        <div className="flex flex-col justify-between pt-10 h-full">
-            {report.map(()=>(
-                <input type="checkbox" />
-            ))}
-        </div>
     </>
     )
 }

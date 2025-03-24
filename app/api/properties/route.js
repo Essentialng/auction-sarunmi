@@ -6,7 +6,7 @@ export async function GET() {
     try {
         const properties = await prisma.model.findMany({
             where: {
-                categoryId: 2
+                categoryId: 2,
             },
             include: {
                 items: true 

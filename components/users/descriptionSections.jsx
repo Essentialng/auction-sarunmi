@@ -7,6 +7,10 @@ import { axiosInstance } from "@/package/axios";
 import { useState } from "react";
 import { Toast } from '@/package/alert';
 import classNames from "classnames";
+import { FaEye } from "react-icons/fa";
+import { PiWarningCircleBold } from "react-icons/pi";
+
+
 
 export function ProductImages({products, setActiveImage, activeImage}){
 
@@ -72,7 +76,7 @@ export function ProductDescription({setProductVerification, descriptions}){
                 </div>
                 <div className="bg-gray-50 py-4 xl:px-12 px-4 rounded-2xl border border-[#EF6509]">
                 <h2 className="text-lg font-semibold mb-4 text-center py-2">Specification</h2>
-            <ul className="space-y-2 p-2 shadow-xl border-black border rounded-xl overflow-hidden">
+            <ul className="space-y-4 p-2 shadow-xl border-black border rounded-xl overflow-hidden">
                 {Object.entries(descriptions).map(([key, value], index) => {
                 const formattedKey = key.replace(/([A-Z])/g, ' $1').trim();
 
@@ -119,7 +123,7 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
 
     const {user} = useStore();
     const [loading, setLoading] = useState(false);
-
+    
     const paymentHandler = async()=>{
         setLoading(true);
         const endpoint = "/payment"
@@ -154,18 +158,39 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
         setLoading(false);
         }
     }
+
   
     const isInWatchlist = user ? products?.watchlist?.some(check => check.userId == user.id) : false; 
     const userProduct = user ? products?.userId == user?.id : false 
     const endTime = calculateTimeLeft(products.endTime) 
     const toStart = calculateTimeToStart(products.startTime) 
     const timeStatus = endTime == "00:00:00:00" ? true : false;
+    const payOffBtn = products?.payOff && endTime
+
+    const dataItems = [
+        { label: "Time Left", value: endTime },
+        { label: "Bid Status", value: "Ongoing" },
+        // { label: "Starting Bid", value: `₦${products?.price?.toLocaleString()}` },
+        { label: "Current Bid", value: `₦${bids?.length > 0 ? bids[0] : "0.00"}`},
+        { label: "Auction Duration", value: calculateDays(products.startTime, products.endTime) },
+        { label: "Sale Name", value: `${products?.user?.firstName?.toUpperCase()} ${products?.user?.lastName?.toUpperCase()}`, isBold: true },
+        { label: "Sale Location", value: products?.location },
+        { label : "Status", value: products?.status?.toUpperCase(), isBold: true}
+      ];
+
+      const styles = {
+        container: "space-y-4",
+        label: "font-semibold",
+        value: "ml-2",
+        boldValue: "ml-2 font-bold",
+        iconContainer: "flex items-center gap-2"
+      };
 
     return(
     <>
         <div className="w-full mt-24">
             <div className="bg-gray-50 p-4 rounded-t-2xl shadow-xl xl:pb-24 pb-12">
-                <h2 className="text-lg font-semibold mb-4 border-b border-[#EF6509]">Vehicle Description</h2>
+                <h2 className="text-lg font-bold mb-4 border-b border-[#EF6509]">Description</h2>
                 <p>{products.description}</p>
             </div>
         </div>
@@ -176,27 +201,17 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
         })}>
 
             <div className="flex xl:flex-row flex-col xl:gap-0 gap-8 justify-between">
-                <div className="space-y-4">
-                    <div>
-                        <span className="font-semibold">Time Left:</span>
-                        <span className="ml-2">{endTime}</span>
+                <div className={styles.container}>
+                    {dataItems.map((item, index) => (
+                        <div key={index}>
+                        <span className={styles.label}>{item.label}:</span>
+                        <span className={item.isBold ? styles.boldValue : styles.value}>{item.value}</span>
                         </div>
-                        <div>
-                        <span className="font-semibold">Bid Status:</span>
-                        <span className="ml-2">Ongoing</span>
-                        </div>
-                        <div>
-                        <span className="font-semibold">Current Bid:</span>
-                        <span className="ml-2">₦{bids ? bids : products.price?.toLocaleString()}</span>
-                        </div>
-                        <div>
-                        <span className="font-semibold">Auction Duration:</span>
-                        <span className="ml-2">{calculateDays(products.startTime, products.endTime)}</span>
-                    </div>
+                    ))}
                 </div>
 
                 {(!products?.soldPrice || products?.bidderId != user?.id) ?
-                <div className="space-y-4 xl:w-1/3">
+                <div className=" xl:w-1/3">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="lastName">Enter amount</label>
                         <input 
@@ -208,18 +223,20 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                         value={amount} 
                         onChange={handleChange}
                         />
+                        <small>(Starting bid  ₦{products?.price?.toLocaleString()})</small>
                     </div>
 
                     
-                    <div className="flex justify-between w-full gap-8">
+                    <div className="flex justify-between w-full gap-8 pt-6">
                         <button
                             className={`border border-white py-3 rounded-md w-full flex items-center justify-center ${isInWatchlist && "bg-gray-200"}`}
                             onClick={() => watchListHandler(products.id)}
-                            disabled={isInWatchlist || timeStatus || userProduct}
+                            disabled={isInWatchlist || (timeStatus) || userProduct}
                         >
                             {watchListLoading ? <Rings width={30} height={30}/> : "Add to Watchlist"}
                         </button>
                         
+                        { !products?.payOff ?
                         <button
                             className={
                                 ` ${disableBtn || (timeStatus && !toStart) || userProduct ? 
@@ -230,9 +247,39 @@ export function ProductAuction({products, bids, amount, handleChange, disableBtn
                             disabled={disableBtn || (timeStatus && !toStart) || userProduct || bidLoading}
                         >
                             
-                           {bidLoading ? <Rings width={30} height={30}/> : "Bid"}
+                           {bidLoading ? <Rings width={30} height={30}/> :  "Bid"}
                         </button>
+                        :
+                        <div className="relative flex flex-col items-center gap-2">
+                            <button className="bg-[#EF6509] hover:bg-[#e25d08] py-3 px-4  rounded-md w-full 
+                            flex items-center justify-center font-semibold">
+                                <PaystackButtonComponent
+                                price={products?.payOff}
+                                className={"absolute bg-transparent w-full h-12 "}
+                                onSuccess={paymentHandler}
+                                />
+                            ₦{ products?.payOff?.toLocaleString() }
+                            </button>
+                           
+                        </div>
+                    }
                     </div>
+
+                    { products?.payOff &&
+                    <div className="w-full justify-end relative flex gap-1 items-center font-semibold text-xs">
+                        <div className="w-fit relative group">
+                            <PiWarningCircleBold className="cursor-pointerrounded-full" />
+                            <div className="absolute border bg-white w-[200px] text-black p-4 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                <small>
+                                    Pay Off allows you to secure a listed product immediately by offering an amount before the auction begins. If your Pay Off price 
+                                    meets the seller's expectations, the product can be yours without waiting for the auction to start.
+                                </small>
+                            </div>
+                        </div>
+                        <small>BUY NOW OFF AUCTION</small>
+                    </div>
+                    }
+
                     {products?.paymentAmount &&
                     <strong>This product has been sold out</strong>
                     }

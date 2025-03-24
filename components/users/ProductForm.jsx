@@ -28,10 +28,8 @@ const ProductUpload = ({id, product, handleClick}) => {
        will review your submission shortly. Please note that a verification fee of 20,000 
        naira is required for the admin to conduct the inspection and validation of your auction item.
       `,
-      btn: "PAY  LATER",
-      btn2: "PROCEED TO PAYMENT",
-      link: "/",
-      link2: "/payment"
+      btn2: "PROCEED TO DASHBOARD",
+      link2: "/dashboard",
     }
 
     const changeHandler = (e) => {

@@ -11,9 +11,7 @@ export async function GET(request) {
     if(categoryId == "all"){
       const itemsData = await prisma.item.findMany({
         where: {
-          NOT: {
-            status: "listing",
-          },
+          status: "auction",
         },
         orderBy: {
           createdAt: 'desc', 
@@ -24,7 +22,13 @@ export async function GET(request) {
               categoryId: true
             }
           },
-          watchlist: true
+          watchlist: true,
+          user: {
+            select:{
+            firstName: true,
+            lastName: true
+          }},
+          bids: true
         }
       })
 
@@ -59,7 +63,6 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json()
-
     const {
       id,
       modelId,     
@@ -68,8 +71,7 @@ export async function POST(request) {
       description,
       location,
       price,
-      startTime,
-      endTime,
+      payOff,
       details,  
 
     } = body
@@ -90,10 +92,9 @@ export async function POST(request) {
         description,
         location,
         price:Number(price),
-        startTime,
-        endTime,
+        payOff: Number(payOff),
         details,
-        status:"listing", 
+        status:"uploaded", 
       }
     })
     return NextResponse.json({model: newCar }, {status: 200});

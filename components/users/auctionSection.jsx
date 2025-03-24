@@ -7,16 +7,20 @@ import { TbCurrencyNaira } from "react-icons/tb";
 import classNames from "classnames";
 import useStore from "@/app/store";
 import Link from "next/link";
+import { LuBadgeInfo } from "react-icons/lu";
 
 
 
-export function AuctionCard ({ item, page, onViewAuction, link }) {
+
+export function AuctionCard ({ item, page, onViewAuction, link, onPage }) {
   const timeLeft = calculateTimeLeft(item?.endTime);
   const timeToStart = calculateTimeToStart(item?.startTime);
 
   return (
     <div className="flex flex-col gap-2 items-center justify-center hover:scale-95 transition-all duration-500 ease-in-out">
+      {!link &&
       <AuctionTimer timeLeft={timeLeft} timeToStart={timeToStart} />
+      }
       <div
         className={classNames(
           "py-4 px-[20px] rounded-[10px] items-center flex flex-col gap-4 border font-[700] shadow-md h-fit",
@@ -28,8 +32,20 @@ export function AuctionCard ({ item, page, onViewAuction, link }) {
         )}
       >
         <AuctionImage src={item?.images[0]} />
+        {!link ?
+        <>
         <AuctionStatus timeLeft={timeLeft} timeToStart={timeToStart} />
         <AuctionDetails type={item?.type} description={item?.description} price={item?.price} />
+        </>
+        :
+        <div className="w-full text-start flex flex-col gap-4">
+          <div>
+          <h3>{item?.name}</h3>
+          <p className="text-gray-500 font-normal">BUY NOW</p>
+          </div>
+          <h1 className="flex items-center"><TbCurrencyNaira size={16} /> {item?.payOff?.toLocaleString()}</h1>
+        </div>
+        }
         <AuctionActions
           timeLeft={timeLeft}
           timeToStart={timeToStart}
@@ -37,12 +53,16 @@ export function AuctionCard ({ item, page, onViewAuction, link }) {
           userId={item?.userId}
           link={link}
           itemId = {item?.model?.categoryId}
+          onPage={onPage}
         />
       </div>
-      {link &&
+      {(link && !onPage) &&
       <div className="flex items-center gap-2 border p-2 shadow-md rounded-md font-medium">
-        <small>{item?.modelId == 5 ? "Land Properties" : item?.modelId == 3 && "Apartment Properties" }</small>
-        <small className="font-semibold bg-gray-200 py-1 px-2">{item?.count} Ads</small> 
+        <small className="font-bold">{(
+          item?.modelId == 5 && item?.model?.categoryId == 2) ? "Land Properties" :
+          ( item?.modelId == 3 && item?.model?.categoryId == 2) ? "Apartment Properties" :
+          (item?.model?.categoryId == 1) ? "Car Properties" : "Electronics Properties" }</small>
+        <small className="font-medium bg-orange-300 py-1 px-2 rounded-md border-2">{item?.count} Ads</small> 
       </div>
       }
     </div>
@@ -124,16 +144,16 @@ const AuctionDetails = ({ type, description, price }) => (
 
 
 
-const AuctionActions = ({ timeLeft, timeToStart, onPreBid, userId, link, itemId }) => {
+const AuctionActions = ({ timeLeft, timeToStart, onPreBid, userId, link, itemId, onPage }) => {
 
   const {user} = useStore();
 
   const btn_class = `bg-[#EF6509] text-white lg:text-[15px] md:text-[15px] text-[12px] font-[500] 
     px-5 py-2 rounded-lg hover:bg-[#35318E] hover:shadow-black shadow-sm`;
 
-  return !timeToStart ? (
+  return (!timeToStart && !link) ? (
     <button
-      className={`${timeLeft === "00:00:00:00" ? "bg-gray-200 text-[#989FA1] hover:bg-gray-200 shadow-none" : "bg-[#FF9354]"} ${btn_class}`}
+      className={`${timeLeft === "00:00:00:00" ? "bg-gray-200 text-[#989FA1] hover:bg-gray-200 shadow-none" : "bg-[#FF7B58]"} ${btn_class}`}
       onClick={onPreBid}
       // disabled={timeLeft === "00:00:00:00"}
     >
@@ -157,6 +177,7 @@ const AuctionActions = ({ timeLeft, timeToStart, onPreBid, userId, link, itemId 
         PRE BID
       </button>
       :
+      !onPage &&
       <Link href={`/listingItems/${itemId}`} className={btn_class}>
           VIEW ALL
       </Link>

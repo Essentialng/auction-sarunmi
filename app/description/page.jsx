@@ -138,6 +138,7 @@ export default function Page(){
     }
   },[products])
 
+ 
   return(
 <div className="xl:p-10 bg-gray-100 mt-28 xl:px-24 px-4  py-8 relative">
 
@@ -148,10 +149,10 @@ export default function Page(){
   />
   }
   
-  <div className=" gap-4 flex item-center mb-4 text-gray-600">
+  <div className=" gap-4 flex item-center mb-4 text-center text-gray-600">
     <Link href="/" className="hover:underline text-sm">Home</Link> 
     <Link href="/dashboard" className="hover:underline text-sm">Auctions</Link> 
-    <small>{products.name}</small>
+    <small className="font-semibold">{products.name}</small>
   </div>
 
   <div className="">
